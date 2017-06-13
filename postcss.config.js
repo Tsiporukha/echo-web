@@ -5,6 +5,7 @@ module.exports = {
     'postcss-import': {root: __dirname},
     'postcss-mixins': {},
     'postcss-each': {},
-    'postcss-cssnext': {}
+    'postcss-cssnext': {},
+    'postcss-nested': {}
   },
 };
