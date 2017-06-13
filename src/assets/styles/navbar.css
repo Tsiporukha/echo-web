@@ -1,0 +1,58 @@
+:root{
+  --navHeight: 50px;
+}
+
+.root{
+  width: 100%;
+  height: var(--navHeight);
+  display: block;
+}
+
+.fixed{
+  composes: root;
+  position: fixed;
+  background-color: #23365a;
+}
+
+.reg{
+  height: var(--navHeight);
+}
+.leftReg{
+  composes: col-xs-8 from './bootstrap.css';
+  composes: reg;
+}
+.rightReg{
+  composes: col-xs-4 from './bootstrap.css';
+  composes: reg;
+}
+
+
+.brand{
+  composes: col-md-offset-1 from './bootstrap.css';
+  composes: col-md-2 from './bootstrap.css';
+  height: var(--navHeight);
+  padding: 2px;  
+  min-width: 108px;
+
+  a{
+    height: 46px;
+    display: inline-block;
+  }
+
+  .logo{
+    width: 24px;
+    height: 24px;
+    position: relative;
+    top: -2px;
+  }
+
+  .title{
+    font-size: 27px;
+    font-weight: 700;
+    padding-left: 3px;
+    position: relative;
+    top: 4px;
+    letter-spacing: 1.5px;
+    color: white;
+  }
+}

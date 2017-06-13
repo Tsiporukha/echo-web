@@ -1,0 +1,16 @@
+@import "./bootstrap.css";
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&subset=cyrillic-ext,greek-ext');
+
+
+html, body {
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #f2f2f2;
+}
+
+a{
+  color: initial;
+  &:hover, &:focus, &:active{
+    text-decoration: none;
+    color: initial;
+  }
+}
