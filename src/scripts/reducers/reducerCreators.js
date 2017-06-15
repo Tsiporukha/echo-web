@@ -1,0 +1,33 @@
+const getObjDiff = (a, b) =>
+ Object.keys(a).reduce((newState, key) => Object.keys(b).includes(key) ? newState : ({...newState, [key]: a[key]}), {})
+
+
+export const createNamedAUDReducer = name => (state = {}, action) => {
+  switch (action.type) {
+    case `ADD_${name}S`: return {...state, ...action.payload};
+    case `UPDATE_${name}S`: return {...state, ...action.payload};
+    case `DELETE_${name}S`: return getObjDiff(state, action.payload);
+    default: return state;
+  }
+  return state;
+};
+
+export const createSubFeedReducer = (name, defaultState = {}) => (state = defaultState, action) => {
+  switch (action.type) {
+    case `SET_${name}`: return action.payload;
+    case `SET_${name}_ITEMS`: return {...state, items: action.payload};
+    case `ADD_ITEMS_TO_${name}`: return {...state, items: state.items.concat(action.payload)};
+    case `DELETE_ITEMS_FROM_${name}`: return {...state, items: state.items.filter(item => !action.payload.includes(item))};
+    case `SET_${name}_FILTERS`: return {...state, filters: action.payload}
+    default: return state;
+  }
+  return state;
+}
+
+export const createVisibilityFilterReducer = (name, defaultFilter = '') => (state = defaultFilter, action) => {
+  switch (action.type) {
+    case `SET_${name}_VISIBILITY_FILTER`: return action.payload;
+    default: return state;
+  }
+  return state;
+}
