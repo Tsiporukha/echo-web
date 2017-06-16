@@ -6,6 +6,7 @@
   width: 100%;
   height: var(--navHeight);
   display: block;
+  z-index: 1;
 }
 
 .fixed{
@@ -31,7 +32,7 @@
   composes: col-md-offset-1 from './bootstrap.css';
   composes: col-md-2 from './bootstrap.css';
   height: var(--navHeight);
-  padding: 2px;  
+  padding: 2px;
   min-width: 108px;
 
   a{

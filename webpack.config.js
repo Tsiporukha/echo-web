@@ -28,19 +28,13 @@ const commonConfig = {
       },
       {
         test: /\.p?css$/,
-        use: [
-          "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              modules: true,
-              sourceMap: true,
-              importLoaders: 1,
-              localIdentName: "[name]--[local]--[hash:base64:8]"
-            }
-          },
-          "postcss-loader" // has separate config, see wp.postcss.config.js nearby
-        ]
+        use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use:[
+          'css-loader?' + JSON.stringify({modules: true, sourceMap: true, importLoaders: 1, localIdentName: '[name]__[local]___[hash:base64:5]'}),
+          'postcss-loader' // has separate config, see wp.postcss.config.js nearby
+          ]
+        })
       },
       {
         test: /\.woff2?$|\.ttf$|\.eot$|.svg$/,
