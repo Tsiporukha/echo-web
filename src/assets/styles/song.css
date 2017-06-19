@@ -1,0 +1,40 @@
+.root{
+  background-color: white;
+  display: flex;
+  &:hover, &:active{
+    background-color: #e5e5e5;
+  }
+}
+
+.artwork{
+  width: 90px;
+  height: 68px;
+  img{
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.info{
+  width: calc(100% - 90px - 80px);
+  padding-left: 18px;
+
+  .title, .artist{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .artist{
+    padding: 4px 0 2px 0;
+  }
+
+  .artist, .duration{
+    font-size: 13px;
+    color: #9a9a9a;
+  }
+}
+
+.icons{
+  width: 80px;
+}
