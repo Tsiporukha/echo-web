@@ -1,0 +1,10 @@
+import {createAUDConsts, createSubFeedConsts} from './actionTypesCreators';
+
+
+export const {ADD_STREAMS, UPDATE_STREAMS, DELETE_STREAMS} = createAUDConsts('STREAM');
+export const {ADD_USERS, UPDATE_USERS, DELETE_USERS} = createAUDConsts('USER');
+export const {ADD_PLAYLISTS, UPDATE_PLAYLISTS, DELETE_PLAYLISTS} = createAUDConsts('PLAYLIST');
+export const {ADD_SONGS, UPDATE_SONGS, DELETE_SONGS} = createAUDConsts('SONG');
+
+export const {SET_GLOBAL, SET_GLOBAL_ITEMS, ADD_TO_GLOBAL_ITEMS, DELETE_FROM_GLOBAL_ITEMS, SET_GLOBAL_FILTERS} = createSubFeedConsts('GLOBAL');
+export const {SET_POPULAR, SET_POPULAR_ITEMS, ADD_TO_POPULAR_ITEMS, DELETE_FROM_POPULAR_ITEMS, SET_POPULAR_FILTERS} = createSubFeedConsts('POPULAR');
