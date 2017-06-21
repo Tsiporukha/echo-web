@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 import moment from 'moment';
-import {playlistDuration, duration} from '../lib/duration';
 
 import styles from '../../assets/styles/streamDescription.css';
 
@@ -31,7 +30,7 @@ const StreamDescription = props => (
             <i className={styles.lengthIcon}>queue_music</i> {props.playlist.songs.length}
           </span>
           <span className={styles.duration}>
-            <i className={styles.durationIcon}>access_time</i> {duration(playlistDuration(props.songs))}
+            <i className={styles.durationIcon}>access_time</i> {props.duration}
           </span>
         </div>
 

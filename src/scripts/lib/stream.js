@@ -1,3 +1,5 @@
+import {playlistDuration, duration} from './duration';
+
 const createIdKeyHash = item => ({[item.id]: item});
 
 export const normalize = stream => ({
@@ -24,5 +26,5 @@ export const getStreamAndNestedEntities = (state, id) => ({
   stream:  state.streams[id],
   user: state.users[state.streams[id].user],
   playlist: state.playlists[state.streams[id].playlist],
-  songs: state.playlists[state.streams[id].playlist].songs.map(song => state.songs[song])
+  duration: duration(playlistDuration(state.playlists[state.streams[id].playlist].songs.map(song => state.songs[song])))
 });

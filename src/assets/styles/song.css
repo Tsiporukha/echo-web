@@ -3,6 +3,7 @@
   display: flex;
   &:hover, &:active{
     background-color: #e5e5e5;
+    .icons{visibility: visible;}
   }
 }
 
@@ -16,7 +17,7 @@
 }
 
 .info{
-  width: calc(100% - 90px - 80px);
+  width: calc(100% - 90px - 40px);
   padding-left: 18px;
 
   .title, .artist{
@@ -36,5 +37,14 @@
 }
 
 .icons{
-  width: 80px;
+  width: 40px;
+  margin: auto;
+  visibility: hidden;
+}
+
+.addIcon{
+  composes: material-icons from './fonts.css';
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 50%;
 }
