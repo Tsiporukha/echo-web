@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {cloneSongsAndAdd, cloneSongsAndAddToTop} from '../actions/QueueActions';
+import {cloneSongsAndAdd, cloneSongsAndAddToTop, remove as removeFromQueue} from '../actions/QueueActions';
 
 import {duration} from '../lib/duration';
 
@@ -9,7 +9,7 @@ import styles from '../../assets/styles/song.css';
 
 const mapStateToProps = (state, ownProps) => ({
   song: state.songs[ownProps.id],
-  inQueue: state.queue.items.includes(ownProps.id)
+  inQueue: state.queue.items.some(item => item.id === ownProps.id)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -30,7 +30,7 @@ const Song = props => (
     </div>
     <div className={styles.icons}>
       {props.inQueue ?
-        <i onClick={props.removeFromQueue}>close</i>
+        <i className={styles.removeIcon} onClick={props.removeFromQueue}>close</i>
         :
         <i className={styles.addIcon} onClick={props.addToQueue(props.song)}>add</i>
       }

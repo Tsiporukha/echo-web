@@ -1,5 +1,5 @@
 .root{
-  background-color: white;
+  background-color: transparent;
   display: flex;
   &:hover, &:active{
     background-color: #e5e5e5;
@@ -42,7 +42,7 @@
   visibility: hidden;
 }
 
-.addIcon{
+.removeIcon, .addIcon{
   composes: material-icons from './fonts.css';
   padding: 6px;
   cursor: pointer;
