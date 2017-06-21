@@ -1,0 +1,35 @@
+.profile{
+  padding-top: 28px;
+}
+
+.content{
+  composes: col-md-offset-2 from './bootstrap.css';
+  composes: col-md-8 from './bootstrap.css';
+}
+
+.userInfo{
+  display: flex;
+  .avatar{
+    height: 30px;
+    width: 30px;
+  }
+  .info{
+    padding-left: 16px;
+    padding-left: 16px;
+    position: relative;
+    top: -6px;
+    .name{
+      font-size: 17px;
+      color: #61b3fa;
+    }
+    .followersCount{
+      font-size: 12px;
+      color: #7c7c7c;
+
+    }
+  }
+}
+
+.streams{
+
+}
