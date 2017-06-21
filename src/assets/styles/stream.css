@@ -1,0 +1,19 @@
+.root{
+  background-color: white;
+  width: 100%;
+}
+
+
+.full{
+  display: inline-block;
+}
+.fullStream{
+  composes: col-md-offset-2 from './bootstrap.css';
+  composes: col-md-8 from './bootstrap.css';
+}
+
+
+.tabs{
+  background-color: white;
+  height: 100%;
+}
