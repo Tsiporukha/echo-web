@@ -21,6 +21,7 @@
 .leftReg{
   composes: col-xs-8 from './bootstrap.css';
   composes: reg;
+  display: flex;
 }
 .rightReg{
   composes: col-xs-4 from './bootstrap.css';
@@ -34,11 +35,7 @@
   height: var(--navHeight);
   padding: 2px;
   min-width: 108px;
-
-  a{
-    height: 46px;
-    display: inline-block;
-  }
+  display: inline-flex;
 
   .logo{
     width: 24px;
@@ -55,5 +52,39 @@
     top: 4px;
     letter-spacing: 1.5px;
     color: white;
+  }
+}
+
+.search{
+  composes: col-md-8 from './bootstrap.css';
+  composes: col-sm-10 from './bootstrap.css';
+  padding: 0;
+  height: var(--navHeight);
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  display: inline-flex;
+
+
+  input{
+    width: 100%;
+    padding: 4px 8px;
+    font-size: 15px;
+    border: 0 none;
+    background-color: #3b4868;
+    border-radius: 4px;
+    outline: none;
+    color: white;
+
+    &::-webkit-input-placeholder{color: white;}
+    &:-ms-input-placeholder{color: white;}
+    &::-moz-placeholder{color: white;}
+
+    &:focus, &:focus{
+      background-color: white;
+      color: #343434;
+      box-shadow: none;
+    }
+
   }
 }

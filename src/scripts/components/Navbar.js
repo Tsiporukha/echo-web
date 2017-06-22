@@ -8,10 +8,13 @@ const Navbar = () => (
     <div className={styles.fixed}>
       <div className={styles.leftReg}>
         <div className={styles.brand}>
-          <Link to='/feed'>
+          <Link to='/'>
             <img src={require('../../assets/images/echo_logo.png')} alt='echo logo' className={styles.logo} />
             <span className={styles.title}>ECHO</span>
           </Link>
+        </div>
+        <div className={styles.search}>
+          <input type='text' placeholder='Search Genre, Mood' />
         </div>
       </div>
       <div className={styles.rightReg}>
