@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {cloneSongsAndAdd, cloneSongsAndAddToTop, remove as removeFromQueue} from '../actions/QueueActions';
+import {addClonedSongs, addClonedSongToTopAndPlay, remove as removeFromQueue} from '../actions/QueueActions';
+import {setCurrentSong, pause, play} from '../actions/PlayerActions';
 
 import {duration} from '../lib/duration';
 
@@ -9,19 +10,36 @@ import styles from '../../assets/styles/song.css';
 
 const mapStateToProps = (state, ownProps) => ({
   song: state.songs[ownProps.id],
+  isCurrentSong: state.player.currentSong.id === ownProps.id,
+  isPlaying: state.player.playing && (state.player.currentSong.id === ownProps.id),
   inQueue: state.queue.items.some(item => item.id === ownProps.id)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  addToQueue: song => () =>  dispatch(cloneSongsAndAdd([song])),
-  addToQueueTop: song => () => dispatch(cloneSongsAndAddToTop([song])),
-  removeFromQueue: () => dispatch(removeFromQueue(ownProps.id))
+  addToQueue: song => () =>  dispatch(addClonedSongs([song])),
+  addToQueueAndPlay: song => () => dispatch(addClonedSongToTopAndPlay(song)),
+  removeFromQueue: () => dispatch(removeFromQueue(ownProps.id)),
+  setCurrentSong: song => () => dispatch(setCurrentSong(song)),
+
+  play: () => dispatch(play()),
+  pause: () => dispatch(pause())
 });
+
+const getPlayAction = (song, inQueue, isCurrentSong, play, setCurrentSong, addToQueueAndPlay) => inQueue ?
+  isCurrentSong ? play : setCurrentSong(song)
+  :
+  addToQueueAndPlay(song);
 
 const Song = props => (
   <div className={styles.root}>
     <div className={styles.artwork}>
       <img src={props.song.artwork_url} />
+      <span className={styles.playPause}>
+        {props.isPlaying ?
+          <i className={styles.pauseIcon} onClick={props.pause}>pause</i> :
+          <i onClick={getPlayAction(props.song, props.inQueue, props.isCurrentSong, props.play, props.setCurrentSong, props.addToQueueAndPlay)}
+            className={styles.playIcon}>play_arrow</i>}
+      </span>
     </div>
     <div className={styles.info}>
       <div className={styles.title}>{props.song.title}</div>

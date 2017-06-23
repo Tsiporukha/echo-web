@@ -1,6 +1,7 @@
 .root{
   background-color: transparent;
   display: flex;
+  margin: 10px 0;
   &:hover, &:active{
     background-color: #e5e5e5;
     .icons{visibility: visible;}
@@ -27,6 +28,7 @@
   }
 
   .artist{
+    color: #343434;
     padding: 4px 0 2px 0;
   }
 
@@ -47,4 +49,25 @@
   padding: 6px;
   cursor: pointer;
   border-radius: 50%;
+}
+
+
+.playPause{
+  position: relative;
+  width: 40px;
+  height: 40px;
+  left: 24px;
+  bottom: 55px;
+}
+
+.playIcon, .pauseIcon{
+  composes: material-icons from './fonts.css';
+  font-size: 26px;
+  color: white;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 60px;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  &:hover, &:active {background-color: rgba(0, 0, 0, 0.8);}
 }

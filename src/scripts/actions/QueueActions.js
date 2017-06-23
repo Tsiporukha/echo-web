@@ -3,18 +3,19 @@ import {
 } from '../constants/ActionTypes';
 
 import {addSongs} from './EntitiesAUDActions';
+import {setCurrentSong} from './PlayerActions';
 
 import v4 from 'uuid/v4';
 
 
-export const add = ids => ({
+export const add = references => ({
   type: ADD_TO_QUEUE,
-  payload: ids
+  payload: references
 });
 
-export const addToTop = ids => ({
+export const addToTop = references => ({
   type: ADD_TO_QUEUE_TOP,
-  payload: ids
+  payload: references
 });
 
 export const remove = id => ({
@@ -23,13 +24,25 @@ export const remove = id => ({
 });
 
 
-const clone = item => ({...item, id: v4()});
-const cloneSongsAndDispatch = action => songs => dispatch => {
-  const sngs = songs.map(clone);
-  dispatch(addSongs(sngs.reduce((sngsObj, song) => ({...sngsObj, [song.id]: song}), {}) ));
-  return dispatch(action(sngs.map(song => ({id: song.id, type: 'song'}))));
+// entities
+export const clone = item => ({...item, id: v4()});
+export const reduceToObj = items => items.reduce((itms, item) => ({...itms, [item.id]: item}), {});
+
+
+// songs
+const dispatchSongs = action => songs => dispatch => {
+  dispatch(addSongs(reduceToObj(songs)));
+  return dispatch(action(songs.map(song => ({id: song.id, type: 'song'}))));
 }
 
+const dispatchClonedSongs = action => songs => dispatchSongs(action)(songs.map(clone))
+export const addClonedSongs = dispatchClonedSongs(add);
+export const addClonedSongsToTop = dispatchClonedSongs(addToTop);
 
-export const cloneSongsAndAdd = cloneSongsAndDispatch(add);
-export const cloneSongsAndAddToTop = cloneSongsAndDispatch(addToTop);
+
+export const addClonedSongsToTopAndPlay = songs => dispatch => {
+  const sngs = songs.map(clone);
+  dispatchSongs(addToTop)(sngs)(dispatch);
+  return dispatch(setCurrentSong(sngs[0]));
+};
+export const addClonedSongToTopAndPlay = song => addClonedSongsToTopAndPlay([song]);
