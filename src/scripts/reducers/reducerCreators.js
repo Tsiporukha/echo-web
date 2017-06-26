@@ -15,10 +15,8 @@ export const createNamedAUDReducer = name => (state = {}, action) => {
 export const createSubFeedReducer = (name, defaultState = {}) => (state = defaultState, action) => {
   switch (action.type) {
     case `SET_${name}`: return action.payload;
-    case `SET_${name}_ITEMS`: return {...state, items: action.payload};
-    case `ADD_ITEMS_TO_${name}`: return {...state, items: state.items.concat(action.payload)};
-    case `DELETE_ITEMS_FROM_${name}`: return {...state, items: state.items.filter(item => !action.payload.includes(item))};
-    case `SET_${name}_FILTERS`: return {...state, filters: action.payload}
+    case `ADD_TO_${name}`: return state.concat(action.payload);
+    case `REMOVE_FROM_${name}`: return state.filter(item => !action.payload.includes(item));
     default: return state;
   }
   return state;
