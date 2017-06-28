@@ -13,6 +13,8 @@
 }
 
 .material-icons {
+  user-select: none;
+
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;

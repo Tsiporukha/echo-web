@@ -10,3 +10,7 @@ a{
     color: initial;
   }
 }
+
+img{
+  user-select: none;
+}
