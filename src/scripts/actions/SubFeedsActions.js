@@ -1,6 +1,10 @@
 import {
-  SET_GLOBAL, ADD_TO_GLOBAL, DELETE_FROM_GLOBAL
+  SET_LATEST, ADD_TO_LATEST, REMOVE_FROM_LATEST,
+  SET_POPULAR, ADD_TO_POPULAR, REMOVE_FROM_POPULAR,
+  SET_LONGEST, ADD_TO_LONGEST, REMOVE_FROM_LONGEST
 } from '../constants/ActionTypes';
+
+import {Latest, Popular, Longest} from '../constants/creatorsArgs';
 
 import {createSubFeedActions} from './actionsCreators';
 
@@ -22,7 +26,15 @@ export const fetchAndReceiveStreams = (setItemsAction, addItemsAction) => (filte
 );
 
 
-// Sub Feeds
+/// Sub Feeds
 
-export const {setGlobal, addToGlobal, removeFromGlobal} = createSubFeedActions('Global')(SET_GLOBAL, ADD_TO_GLOBAL, DELETE_FROM_GLOBAL);
-export const fetchAndReceiveGlobalStreams = fetchAndReceiveStreams(setGlobal, addToGlobal);
+
+//Global
+export const {setLatest, addToLatest, removeFromLatest} = createSubFeedActions(Latest)(SET_LATEST, ADD_TO_LATEST, REMOVE_FROM_LATEST);
+export const fetchAndReceiveGlobalStreams = fetchAndReceiveStreams(setLatest, addToLatest);
+
+export const {setPopular, addToPopular, removeFromPopular} = createSubFeedActions(Popular)(SET_POPULAR, ADD_TO_POPULAR, REMOVE_FROM_POPULAR);
+export const fetchAndReceivePopularStreams = fetchAndReceiveStreams(setPopular, addToPopular);
+
+export const {setLongest, addToLongest, removeFromLongest} = createSubFeedActions(Longest)(SET_LONGEST, ADD_TO_LONGEST, REMOVE_FROM_LONGEST);
+export const fetchAndReceiveLongestStreams = fetchAndReceiveStreams(setLongest, addToLongest);
