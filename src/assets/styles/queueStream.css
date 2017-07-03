@@ -1,0 +1,117 @@
+.openInNewIcon, .timeIcon, .queueIcon, .openedIcon, .closedIcon, .closeIcon{
+  composes: material-icons from './fonts.css';
+}
+
+.root{
+  font-size: 15px;
+  color: #404040;
+  padding: 14px 0;
+  &.opened{background-color: #e6e6e6;}
+  &:hover{
+    background-color: #e5e5e5;
+    .icons{visibility: visible;}
+  }
+}
+
+.artwork{
+  display: inline-block;
+  margin-right: 20px;
+  height: 80px;
+  width: 80px;
+
+
+  img{
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.info{
+  display: inline-block;
+  height: 80px;
+  width: calc(100% - (80px + 20px) - 38px);
+  vertical-align: top;
+
+  .title{
+    font-weight: 400;
+
+    .openInNewIcon{
+      color: #797979;
+      font-size: 16px;
+      position: relative;
+      top: 3px;
+      margin-left: 10px;
+    }
+  }
+
+  .userAvatar{
+    padding: 9px 0;
+    font-size: 13px;
+
+    img{
+      height: 20px;
+      width: 20px;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+  }
+
+  .username{
+    color: #5bbbff;
+  }
+
+
+  .duration{
+    color: #6f6f6f;
+    font-size: 13px;
+    position: relative;
+    top: -6px;
+    .timeIcon{
+      font-size: 16px;
+      position: relative;
+      top: 3px;
+      margin-right: 3px;
+    }
+    .queueIcon{
+      font-size: 21px;
+      position: relative;
+      top: 6px;
+      margin: 0 2px 0 8px;
+    }
+    .closedIcon{
+      position: relative;
+      top: 8px;
+      transform: rotate(-90deg);
+      transition: transform .125s ease-in;
+    }
+    .openedIcon{
+      transform: rotate(0deg);
+      transition: transform .125s ease-out;
+      position: relative;
+      top: 7px;
+    }
+  }
+}
+
+.icons{
+  composes: icons from './song.css';
+  visibility: hidden;
+  width: auto;
+  height: auto;;
+  border: none;
+  display: inline-block;
+  vertical-align: top;
+
+}
+
+.songList{
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height .2s ease-out .15s, opacity .15s ease-out;
+  &.visible{
+    max-height: 9999999px;
+    opacity: 1;
+    transition: max-height .2s ease-in, opacity .1s ease-in .2s;
+  }
+}
