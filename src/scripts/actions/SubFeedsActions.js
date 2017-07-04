@@ -20,8 +20,8 @@ export const setOrAddItems = (setItemsCondition, setItemsAction, addItemsAction,
 
 
 // streams
-export const fetchAndReceiveStreams = (setItemsAction, addItemsAction) => (filters, setItemsCondition = filters.offset === 0) => dispatch =>
-  getStreams(filters).then(data => Promise.resolve(addNormalizedStreamsData(reduceStreamsToNormalized(data.streams))(dispatch))
+export const fetchAndReceiveStreams = (fetchAction, setItemsAction, addItemsAction) => (filters, setItemsCondition = filters.offset === 0) => dispatch =>
+  fetchAction(filters).then(data => Promise.resolve(addNormalizedStreamsData(reduceStreamsToNormalized(data.streams))(dispatch))
     .then(_ => setOrAddItems(setItemsCondition, setItemsAction, addItemsAction, data.streams.map(s => s.id))(dispatch))
 );
 
@@ -31,10 +31,10 @@ export const fetchAndReceiveStreams = (setItemsAction, addItemsAction) => (filte
 
 //Global
 export const {setLatest, addToLatest, removeFromLatest} = createSubFeedActions(Latest)(SET_LATEST, ADD_TO_LATEST, REMOVE_FROM_LATEST);
-export const fetchAndReceiveGlobalStreams = fetchAndReceiveStreams(setLatest, addToLatest);
+export const fetchAndReceiveLatestStreams = fetchAndReceiveStreams(getStreams, setLatest, addToLatest);
 
 export const {setPopular, addToPopular, removeFromPopular} = createSubFeedActions(Popular)(SET_POPULAR, ADD_TO_POPULAR, REMOVE_FROM_POPULAR);
-export const fetchAndReceivePopularStreams = fetchAndReceiveStreams(setPopular, addToPopular);
+export const fetchAndReceivePopularStreams = fetchAndReceiveStreams(getStreams, setPopular, addToPopular);
 
 export const {setLongest, addToLongest, removeFromLongest} = createSubFeedActions(Longest)(SET_LONGEST, ADD_TO_LONGEST, REMOVE_FROM_LONGEST);
-export const fetchAndReceiveLongestStreams = fetchAndReceiveStreams(setLongest, addToLongest);
+export const fetchAndReceiveLongestStreams = fetchAndReceiveStreams(getStreams, setLongest, addToLongest);
