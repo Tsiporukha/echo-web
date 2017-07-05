@@ -20,5 +20,5 @@ export const REMOVE_FROM_QUEUE = 'REMOVE_FROM_QUEUE';
 
 export const PLAY = 'PLAY';
 export const PAUSE = 'PAUSE';
-export const CLEAN_PLAYER = 'CLEAN_PLAYER';
+export const CLEAR_PLAYER = 'CLEAR_PLAYER';
 export const SET_CURRENT_SONG = 'SET_CURRENT_SONG';

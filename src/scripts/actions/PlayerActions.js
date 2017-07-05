@@ -1,11 +1,11 @@
-import {PLAY, PAUSE, CLEAN_PLAYER, SET_CURRENT_SONG} from "../constants/ActionTypes";
+import {PLAY, PAUSE, CLEAR_PLAYER, SET_CURRENT_SONG} from "../constants/ActionTypes";
 
 
 export const play = () => ({type: PLAY});
 
 export const pause = () => ({type: PAUSE});
 
-export const clean = () => ({type: CLEAN_PLAYER});
+export const clear = () => ({type: CLEAR_PLAYER});
 
 export const setCurrentSong = song => ({
   type: SET_CURRENT_SONG,
