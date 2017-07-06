@@ -18,9 +18,9 @@ export const addToTop = references => ({
   payload: references
 });
 
-export const remove = id => ({
+export const remove = ids => ({
   type: REMOVE_FROM_QUEUE,
-  payload: id
+  payload: ids
 });
 
 export const removeStreamSong = (playlist, songId) =>

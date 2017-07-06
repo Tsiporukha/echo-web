@@ -8,7 +8,7 @@ const items = (state = [], action) => {
   switch (action.type) {
     case ADD_TO_QUEUE: return state.concat(action.payload);
     case ADD_TO_QUEUE_TOP: return action.payload.concat(state);
-    case REMOVE_FROM_QUEUE: return state.filter(item => item.id !== action.payload);
+    case REMOVE_FROM_QUEUE: return state.filter(item => !action.payload.includes(item.id));
     default: return state;
   }
 };
