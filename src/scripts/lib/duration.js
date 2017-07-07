@@ -1,5 +1,5 @@
 export function duration(totalSeconds) {
-  const hours = Math.floor(totalSeconds / 3600) % 24,
+  const hours = Math.floor(totalSeconds / 3600),
   minutes = Math.floor(totalSeconds/ 60 ) % 60,
   seconds = Math.floor(totalSeconds % 60);
   return ((hours ? (hours+':' + ('0' + minutes).substr(-2)) : (''+ minutes)) + ':' + ('0' + seconds).substr(-2));
