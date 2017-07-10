@@ -1,6 +1,8 @@
-const createArgs = arg => ({
+const toSnakeUpperCase = str =>  str.split(/(?=[A-Z])/).join('_').toUpperCase();
+
+const createArgs = (arg, uppercaseArg = toSnakeUpperCase(arg)) => ({
   [arg]: arg,
-  [arg.toUpperCase()]: arg.toUpperCase()
+  [uppercaseArg]: uppercaseArg
 });
 
 //entities
@@ -13,3 +15,8 @@ export const {Song, SONG} = createArgs('Song');
 export const {Latest, LATEST} = createArgs('Latest');
 export const {Popular, POPULAR} = createArgs('Popular');
 export const {Longest, LONGEST} = createArgs('Longest');
+
+export const {LatestSearch, LATEST_SEARCH} = createArgs('LatestSearch');
+export const {PopularSearch, POPULAR_SEARCH} = createArgs('PopularSearch');
+export const {LongestSearch, LONGEST_SEARCH} = createArgs('LongestSearch');
+export const {Youtube, YOUTUBE} = createArgs('Youtube');
