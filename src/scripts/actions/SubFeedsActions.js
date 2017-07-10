@@ -10,7 +10,7 @@ import {createSubFeedActions} from './actionsCreators';
 
 import {addNormalizedStreamsData} from './EntitiesAUDActions';
 
-import {get as getStreams} from '../lib/ebApi/streams';
+import {get as getStreams, getPopular, getLongest} from '../lib/ebApi/streams';
 import {reduceToNormalized as reduceStreamsToNormalized} from '../lib/stream';
 
 
@@ -26,15 +26,12 @@ export const fetchAndReceiveStreams = (fetchAction, setItemsAction, addItemsActi
 );
 
 
-/// Sub Feeds
-
-
 //Global
 export const {setLatest, addToLatest, removeFromLatest} = createSubFeedActions(Latest)(SET_LATEST, ADD_TO_LATEST, REMOVE_FROM_LATEST);
 export const fetchAndReceiveLatestStreams = fetchAndReceiveStreams(getStreams, setLatest, addToLatest);
 
 export const {setPopular, addToPopular, removeFromPopular} = createSubFeedActions(Popular)(SET_POPULAR, ADD_TO_POPULAR, REMOVE_FROM_POPULAR);
-export const fetchAndReceivePopularStreams = fetchAndReceiveStreams(getStreams, setPopular, addToPopular);
+export const fetchAndReceivePopularStreams = fetchAndReceiveStreams(getPopular, setPopular, addToPopular);
 
 export const {setLongest, addToLongest, removeFromLongest} = createSubFeedActions(Longest)(SET_LONGEST, ADD_TO_LONGEST, REMOVE_FROM_LONGEST);
-export const fetchAndReceiveLongestStreams = fetchAndReceiveStreams(getStreams, setLongest, addToLongest);
+export const fetchAndReceiveLongestStreams = fetchAndReceiveStreams(getLongest, setLongest, addToLongest);

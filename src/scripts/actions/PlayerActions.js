@@ -22,12 +22,12 @@ const getStreamPlaylist = (playlists, stream) => playlists[stream.playlist];
 const getPlaylistSongs = (songs, playlist) => playlist.songs.map(songId => songs[songId]);
 const getStreamSongs = (songs, playlists, stream) => getPlaylistSongs(songs, getStreamPlaylist(playlists, stream));
 
-const getQueueSongs = state =>
-  state.queue.items.reduce((songs, s) => songs.concat(isSong(s) ? s : getStreamSongs(state.songs, state.playlists, state.streams[s.id])), []);
+export const getQueueSongs = store =>
+  store.queue.items.reduce((songs, s) => songs.concat(isSong(s) ? s : getStreamSongs(store.songs, store.playlists, store.streams[s.id])), []);
 
 
 const getNextSongId = (queueSongs, currentSong) => queueSongs[getNextSongIndex(getSongIndex(queueSongs, currentSong), queueSongs.length)].id;
 const getPrevSongId = (queueSongs, currentSong) => queueSongs[getPrevSongIndex(getSongIndex(queueSongs, currentSong), queueSongs.length)].id;
 
-export const getNextSong = state => state.songs[getNextSongId(getQueueSongs(state), state.player.currentSong)];
-export const getPrevSong = state => state.songs[getPrevSongId(getQueueSongs(state), state.player.currentSong)];
+export const getNextSong = store => store.songs[getNextSongId(getQueueSongs(store), store.player.currentSong)];
+export const getPrevSong = store => store.songs[getPrevSongId(getQueueSongs(store), store.player.currentSong)];

@@ -53,7 +53,6 @@ export const addClonedSongToTopAndPlay = song => addClonedSongsToTopAndPlay([son
 
 
 // streams
-
 const cloneStream = (stream, playlist, songs) => {
   const sngs = songs.map(clone), pllst = {...clone(playlist), songs: sngs.map(song => song.id)}, strm = {...clone(stream), playlist: pllst.id};
   return {stream: strm, playlist: pllst, songs: sngs};
