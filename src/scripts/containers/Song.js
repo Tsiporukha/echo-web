@@ -9,14 +9,14 @@ import {setCurrentSong, pause, play} from '../actions/PlayerActions';
 
 const mapStateToProps = (state, ownProps) => ({
   song: state.songs[ownProps.id],
-  isCurrentSong: false,
-  isPlaying: false,
+  isCurrentSong: state.songs[ownProps.id].uid === state.player.currentSong.uid,
+  isPlaying: state.player.playing && state.songs[ownProps.id].uid === state.player.currentSong.uid,
   inQueue: false
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   addToQueue: song => () =>  dispatch(addClonedSongs([song])),
-  play: song => () => dispatch(addClonedSongToTopAndPlay(song)),
+  play: () => dispatch(play()),
   setCurrentSong: song => () => dispatch(addClonedSongToTopAndPlay(song)),
 
   pause: () => dispatch(pause())
