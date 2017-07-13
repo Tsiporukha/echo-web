@@ -26,7 +26,7 @@ export const fetchAndReceiveStreams = (fetchAction, setItemsAction, addItemsActi
 );
 
 
-//Global
+
 export const {setLatest, addToLatest, removeFromLatest} = createSubFeedActions(Latest)(SET_LATEST, ADD_TO_LATEST, REMOVE_FROM_LATEST);
 export const fetchAndReceiveLatestStreams = fetchAndReceiveStreams(getStreams, setLatest, addToLatest);
 
