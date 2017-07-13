@@ -1,0 +1,74 @@
+.clearIcon, .backIcon{
+  composes: material-icons from './fonts.css';
+}
+.backIcon{
+  color: white;
+  position: fixed;
+  top: 12px;
+  left: 10px;
+  font-size: 26px;
+}
+.clearIcon{
+  position: relative;
+  top: 2px;
+}
+
+
+.root{
+  width: 100%;
+  display: flex;
+}
+
+
+.searchBox{
+  composes: input-group from './bootstrap.css';
+  width: 100%;
+}
+.inputAddon{
+  composes: input-group-addon from './bootstrap.css';
+  margin-left: 0!important;
+  border: none;
+  font-size: 24px;
+  height: 34px;
+  padding: 0 3px 0 0;
+  background-color: #3b4868;
+  color: rgba(255, 255, 255, 0.85);
+  &:hover, &:active, &:focus, &:target{
+    color: rgba(255, 255, 255, 0.85);
+    outline: none;
+  }
+}
+.input{
+  composes: form-control from './bootstrap.css';
+  width: 100%;
+  min-width: 100%;
+  padding: 4px 8px;
+  font-size: 15px;
+  border: 0 none;
+  background-color: #3b4868;
+  border-radius: 4px;
+  outline: none;
+  color: white;
+
+  &::-webkit-input-placeholder{color: white;}
+  &:-ms-input-placeholder{color: white;}
+  &::-moz-placeholder{color: white;}
+
+
+  &:focus, &:focus ~ span{
+    background-color: white;
+    color: #343434;
+    box-shadow: none;
+  }
+}
+
+
+.results{
+  position: fixed;
+  top: 50px;
+  left: 0;
+  background-color: #f2f2f2;
+  width: 100%;
+  height: calc(100% - 50px);
+  overflow: auto;
+}

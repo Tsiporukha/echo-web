@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Link, Route } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
+
+import Search from '../containers/Search';
 
 import styles from '../../assets/styles/navbar.css';
 
@@ -14,11 +16,11 @@ const Navbar = () => (
           </Link>
         </div>
         <div className={styles.search}>
-          <input type='text' placeholder='Search Genre, Mood' />
+          <Search />
         </div>
       </div>
       <div className={styles.rightReg}>
-        right
+
       </div>
     </div>
   </navbar>

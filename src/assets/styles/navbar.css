@@ -64,27 +64,4 @@
   justify-content: center;
   align-items:center;
   display: inline-flex;
-
-
-  input{
-    width: 100%;
-    padding: 4px 8px;
-    font-size: 15px;
-    border: 0 none;
-    background-color: #3b4868;
-    border-radius: 4px;
-    outline: none;
-    color: white;
-
-    &::-webkit-input-placeholder{color: white;}
-    &:-ms-input-placeholder{color: white;}
-    &::-moz-placeholder{color: white;}
-
-    &:focus, &:focus{
-      background-color: white;
-      color: #343434;
-      box-shadow: none;
-    }
-
-  }
 }
