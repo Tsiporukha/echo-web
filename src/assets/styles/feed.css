@@ -1,15 +1,45 @@
+.feedIcon, .whatshotIcon, .searchIcon{
+  composes: material-icons from './fonts.css';
+  font-size: 22px;
+}
+.searchIcon{
+  font-size: 38px;
+  margin-bottom: 8px;
+}
+.youtubeIcon{
+  composes: fa from './fontAwesome.css';
+  composes: fa-youtube-play from './fontAwesome.css';
+  font-size: 22px;
+  color: #dd001c;
+}
+.soundcloudIcon{
+  composes: fa from './fontAwesome.css';
+  composes: fa-soundcloud from './fontAwesome.css';
+  font-size: 22px;
+  color: #f50;
+}
+
 .root{
 
 }
 
 .leftReg{
-  composes: col-xs-8 from './bootstrap.css';
+  composes: col-md-8 from './bootstrap.css';
+  composes: col-xs-12 from './bootstrap.css';
+
+  .searchResultsPlaceholder{
+    position: absolute;
+    top: 142px;
+    left: 35%;
+    text-align: center;
+  }
 }
 
 .feedSourceContent{
   composes: col-md-offset-1 from './bootstrap.css';
   composes: col-md-10 from './bootstrap.css';
   padding: 0;
+  background-color: #f2f2f2;
 }
 
 .streams{
@@ -17,11 +47,31 @@
 }
 
 
-.feedIcon{
-  composes: material-icons from './fonts.css';
-  font-size: 22px;
+/// Tabs
+
+.navigation{
+  box-shadow: none;
 }
-.whatshotIcon{
-  composes: material-icons from './fonts.css';
-  font-size: 22px;
+
+.label{
+  padding: 6px 14px;
+  border-radius: 30px;
+  text-transform: none;
+
+  &.active{
+    color: white;
+    background-color: #6b6b6b;
+  }
+}
+
+.pointer{
+  display: none;
+}
+
+.navigation{
+  box-shadow: none;
+}
+
+.tab{
+  outline: none;
 }
