@@ -20,3 +20,4 @@ export const {LatestSearch, LATEST_SEARCH} = createArgs('LatestSearch');
 export const {PopularSearch, POPULAR_SEARCH} = createArgs('PopularSearch');
 export const {LongestSearch, LONGEST_SEARCH} = createArgs('LongestSearch');
 export const {Youtube, YOUTUBE} = createArgs('Youtube');
+export const {Soundcloud, SOUNDCLOUD} = createArgs('Soundcloud');
