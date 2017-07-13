@@ -8,9 +8,10 @@ import tabsTheme from '../../assets/styles/tabsTheme.css';
 
 export default class StreamDetails extends Component {
 
-  state = {index: 0}
-
   handleTabChange = index => this.setState({index});
+
+
+  state = {index: 0}
 
   render(){
     return (

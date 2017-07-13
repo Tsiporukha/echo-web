@@ -18,6 +18,15 @@ const StreamDescription = props => (
     <div className={styles.body}>
       <div className={styles.artwork}>
         <img src={props.stream.artwork_url} alt='artwork' className={styles.artworkImg} />
+
+        <span className={styles.playPause}>
+          {props.isPlaying ?
+            <i onClick={props.pause} className={styles.playIcon}>pause</i>
+            :
+            <i onClick={props.inQueue ? props.play : props.addToQueueTopAndPlay(props.stream, props.playlist, props.songs)}
+              className={styles.playIcon}>play_arrow</i>
+          }
+        </span>
       </div>
 
       <div className={styles.info}>
@@ -34,17 +43,18 @@ const StreamDescription = props => (
           </span>
         </div>
 
-        <div className={styles.description}>
+        {props.playlist.description && <div className={styles.description}>
           <b>Room description:</b> <br />
           <i>
-            <span>"{props.playlist.description || 'no description'}"</span>
+            <span>"{props.playlist.description}"</span>
           </i>
-        </div>
+        </div>}
       </div>
     </div>
 
     <div className={styles.tags}>
-      <span className={styles.t}>Tags:</span>{props.stream.all_tags.map(tag => (<span key={tag} className={styles.tag}>#{tag}</span>))}
+      {!!props.stream.all_tags.length &&
+        <span><span className={styles.t}>Tags:</span>{props.stream.all_tags.map(tag => (<span key={tag} className={styles.tag}>#{tag}</span>))}</span>}
     </div>
 
     <div className={styles.footer}>
@@ -54,7 +64,7 @@ const StreamDescription = props => (
         </div>
       </div>
       <div className={styles.rightReg}>
-        <span className={styles.iconDescription}>
+        <span className={styles.iconDescription} onClick={props.addToQueue(props.stream, props.playlist, props.songs)}>
           <i className={styles.playlistAddIcon}>playlist_add</i><span>Add to Queue</span>
         </span>
         <span className={styles.iconDescription}>
