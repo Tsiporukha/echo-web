@@ -1,3 +1,15 @@
+.youtubeIcon{
+  composes: fa from './fontAwesome.css';
+  composes: fa-youtube-play from './fontAwesome.css';
+  font-size: 22px;
+}
+.soundcloudIcon{
+  composes: fa from './fontAwesome.css';
+  composes: fa-soundcloud from './fontAwesome.css';
+  font-size: 22px;
+}
+
+
 .tab{
   padding: 17px 0px;
   outline: none;
@@ -9,6 +21,8 @@
 
   &.active{
     color: #23365a;
+    .youtubeIcon{color: #dd001c;}
+    .soundcloudIcon{color: #f50;}
   }
 }
 

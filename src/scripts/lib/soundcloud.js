@@ -13,7 +13,7 @@ const parseSong = song => {
   return {
     uid: song.uri,
     source: 'soundcloud',
-    artwork_url: song.artwork_url,
+    artwork_url: song.artwork_url || song.user.avatar_url,
     data_url: song.permalink_url,
     export_data_url: `${song.stream_url}?client_id=${SOUNDCLOUD_CLIENT_ID}`,
     artist,

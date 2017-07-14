@@ -7,16 +7,10 @@
   margin-bottom: 8px;
 }
 .youtubeIcon{
-  composes: fa from './fontAwesome.css';
-  composes: fa-youtube-play from './fontAwesome.css';
-  font-size: 22px;
-  color: #dd001c;
+  composes: youtubeIcon from './tabsTheme.css';
 }
 .soundcloudIcon{
-  composes: fa from './fontAwesome.css';
-  composes: fa-soundcloud from './fontAwesome.css';
-  font-size: 22px;
-  color: #f50;
+  composes: soundcloudIcon from './tabsTheme.css';
 }
 
 .root{
