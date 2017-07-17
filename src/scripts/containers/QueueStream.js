@@ -6,7 +6,7 @@ import QueueStreamSong from './QueueStreamSong';
 
 import {remove} from '../actions/QueueActions';
 import {playlistDuration, withHours as durationWithHours} from '../lib/duration';
-import {getStreamAndNestedEntities} from '../lib/stream';
+import {getStreamAndNestedEntities, maybeGetDefaultArtwork} from '../lib/stream';
 
 
 import bp from '../../assets/styles/bootstrap.css';
@@ -21,26 +21,25 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 class QueueStream extends Component {
 
-  state = {opened: false}
-
   toggleSongList = () => this.setState({opened: !this.state.opened});
 
   openStreamInNewTab = () => Promise.resolve(window.open(`http://beta.echoapplication.com/#/feed/${this.props.stream.id}`)).then(win => win.focus());
 
-  componentWillReceiveProps(nextProps){
-    return nextProps.playlist.songs.length ? false : this.props.remove();
-  }
+
+  state = {opened: false}
+
+  componentWillReceiveProps = nextProps => nextProps.playlist.songs.length ? false : this.props.remove();
 
   render(){
     return(
       <div className={`${styles.root} ${this.state.opened ? styles.opened : ''}`}>
         <div style={{cursor: 'pointer'}} onClick={this.toggleSongList}>
           <div className={styles.artwork}>
-            <img src={this.props.stream.artwork_url} />
+            <img src={maybeGetDefaultArtwork(this.props.stream.artwork_url)} />
           </div>
           <div className={styles.info}>
             <div className={styles.title}>
-              {this.props.playlist.title || 'no title'}
+              <span>{this.props.playlist.title || 'no title'}</span>
               <i className={styles.openInNewIcon} onClick={this.openStreamInNewTab}>open_in_new</i>
             </div>
             <div className={styles.userAvatar}>
@@ -56,7 +55,7 @@ class QueueStream extends Component {
             </div>
           </div>
           <div className={styles.icons}>
-            <i className={styles.closeIcon} onClick={this.remove}>close</i>
+            <i className={styles.closeIcon} onClick={this.props.remove}>close</i>
           </div>
         </div>
         <div className={`${styles.songList} ${this.state.opened ? styles.visible : ''}`}>

@@ -32,3 +32,5 @@ export const getStreamAndNestedEntities = (state, id) => ({
   inQueue: inQueue(state, id),
   isPlaying: inQueue(state, id) && state.player.playing
 });
+
+export const maybeGetDefaultArtwork = str => str || '/assets/images/no_artwork.png';

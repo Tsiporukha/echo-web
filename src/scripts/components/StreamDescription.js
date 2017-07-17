@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom';
 
 import moment from 'moment';
 
+import {maybeGetDefaultArtwork} from '../lib/stream';
+
 import styles from '../../assets/styles/streamDescription.css';
 
 const StreamDescription = props => (
@@ -17,7 +19,7 @@ const StreamDescription = props => (
 
     <div className={styles.body}>
       <div className={styles.artwork}>
-        <img src={props.stream.artwork_url} alt='artwork' className={styles.artworkImg} />
+        <img src={maybeGetDefaultArtwork(props.stream.artwork_url)} alt='artwork' className={styles.artworkImg} />
 
         <span className={styles.playPause}>
           {props.isPlaying ?
