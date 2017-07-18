@@ -19,19 +19,25 @@ const mapDispatchToProps = dispatch => ({
   play: () => dispatch(play())
 });
 
-class Stream extends Component {
 
-  render() {
-    const separated = !!this.props.match;
-    return(
-      <div className={`${styles.root} ${separated ? styles.full : ''}`}>
-        <div className={separated ? styles.fullStream : ''}>
-          <StreamDescription {...this.props} />
-          {separated && <StreamTabs {...this.props} />}
-        </div>
+const FeedStream = props => (
+  <div className={styles.root}>
+    <StreamDescription {...props} />
+  </div>
+);
+
+const SeparatedStream = props => (
+  <div className={styles.separated}>
+    <div className={styles.fullStreamContainer}>
+      <div className={styles.fullStream}>
+        <StreamDescription {...props} />
+        <StreamTabs {...props} />
       </div>
-    )
-  }
-}
+    </div>
+  </div>
+)
+
+
+const Stream = props => props.match ? <SeparatedStream {...props} /> : <FeedStream {...props} />
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stream);

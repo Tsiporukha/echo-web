@@ -1,15 +1,19 @@
 .root{
-  background-color: white;
   width: 100%;
 }
 
 
-.full{
+.separated{
+  width: 100%;
   display: inline-block;
 }
-.fullStream{
-  composes: col-md-offset-2 from './bootstrap.css';
+.fullStreamContainer{
   composes: col-md-8 from './bootstrap.css';
+  padding: 0;
+  background-color: white;
+}
+.fullStream{
+  composes: col-md-offset-1 from './bootstrap.css';
 }
 
 
