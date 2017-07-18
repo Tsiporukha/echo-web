@@ -19,11 +19,20 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 class Search extends Component {
 
+  keyCodeActions = (keyCode, target) => {
+    switch (keyCode) {
+      case 13: return this.props.updateSearchTerm(target.value);
+      case 27: return this.clear().then(target.blur());
+      default: return false;
+    }
+    return false
+  };
+
   isLocationChanged = (props, prevProps) => !(props.history.location == prevProps.history.location);
   isTermChanged = (props, nextProps) => !(props.term === nextProps.term);
   setInput = str => this.refs.input.value = str;
 
-  onInputKeyUp = e => e.keyCode == 13 ? this.props.updateSearchTerm(e.target.value) : false;
+  onInputKeyUp = e => this.keyCodeActions(e.keyCode, e.target);
   onInputFocus = () => this.setState({resultsVisibility: true});
   hideResults = () => Promise.resolve(this.setState({resultsVisibility: false})).then(this.setInput(''));
   clear = () => this.hideResults().then(this.props.updateSearchTerm(''));
