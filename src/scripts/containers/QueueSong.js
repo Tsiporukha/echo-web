@@ -15,7 +15,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  remove: () => dispatch(removeFromQueue(ownProps.id)),
+  remove: () => dispatch(removeFromQueue([ownProps.id])),
   setCurrentSong: song => () => dispatch(setCurrentSong(song)),
 
   play: () => dispatch(play()),
