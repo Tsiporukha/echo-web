@@ -25,8 +25,12 @@ export const ADD_TO_QUEUE = 'ADD_TO_QUEUE';
 export const ADD_TO_QUEUE_TOP = 'ADD_TO_QUEUE_TOP';
 export const REMOVE_FROM_QUEUE = 'REMOVE_FROM_QUEUE';
 
-
 export const PLAY = 'PLAY';
 export const PAUSE = 'PAUSE';
 export const CLEAR_PLAYER = 'CLEAR_PLAYER';
 export const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
+
+export const SET_TOKEN = 'SET_TOKEN';
+export const SET_USER_DATA = 'SET_USER_DATA';
+export const SET_SESSION = 'SET_SESSION';
+export const CLEAR_SESSION = 'CLEAR_SESSION';
