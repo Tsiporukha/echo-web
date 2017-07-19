@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
 import Search from '../containers/Search';
+import MaybeCurrentUser from '../containers/MaybeCurrentUser';
 
 import styles from '../../assets/styles/navbar.css';
 
@@ -20,7 +21,7 @@ const Navbar = () => (
         </div>
       </div>
       <div className={styles.rightReg}>
-
+        <MaybeCurrentUser />
       </div>
     </div>
   </navbar>

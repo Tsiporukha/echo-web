@@ -26,6 +26,8 @@
 .rightReg{
   composes: col-xs-4 from './bootstrap.css';
   composes: reg;
+  display: flex;
+  justify-content: flex-end;
 }
 
 
