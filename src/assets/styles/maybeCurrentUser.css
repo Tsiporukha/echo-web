@@ -1,0 +1,33 @@
+.root{
+  margin: auto 14px;
+}
+
+.avatar{
+  height: 28px;
+  width: 28px;
+  border-radius: 4px;
+}
+
+/// Sign in Button
+
+.icon{line-height: initial;}
+.button{
+  margin: auto 0;
+  .icon, span:not([data-react-toolbox='tooltip']){
+    line-height: normal;;
+  }
+}
+
+.raised{
+  padding: 0;
+  min-width: 88px;
+  color: #757575!important;
+  .icon{
+    font-size: 24px;
+    margin-right: 1px;
+  }
+  .signInTitle{
+    position: relative;
+    top: 1px;
+  }
+}
