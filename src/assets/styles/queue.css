@@ -1,0 +1,97 @@
+.clearIcon, .saveIcon {
+  composes: material-icons from './fonts.css';
+}
+.clearIcon{
+  color: #6f6f6f;
+  cursor: pointer;
+  font-size: 22px;
+  &.disabled{
+    color: darkgrey;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+
+.root{
+  composes: col-xs-4 from './bootstrap.css';
+  padding: 0;
+  position: fixed;
+  top: 50px;
+  right: 0;
+  height: calc(100vh - 50px - 50px);
+  background-color: #e5e5e5;
+}
+
+.header{
+  padding: 18px 14px;
+  font-size: 13px;
+  height: 54px;
+  color: #6a6a6a;
+  font-weight: 500;
+  display: flex;
+  background-color:  #eaeaea;
+
+  .length{
+    width: calc(100% - 50px);
+  }
+
+  .icons{
+    width: 50px;
+    display: flex;
+  }
+}
+
+.items{
+  padding: 0 14px;
+  height: calc(100% - 54px - 135px);
+  overflow: auto;
+  background-color:  #eaeaea;
+}
+
+
+
+/* IconMenu */
+.icon{}
+.iconMenu{
+  line-height: normal;
+  .icon{
+    height: auto;
+    line-height: normal;
+    margin-right: 10px;
+    width: initial;
+    span{
+      color: #6f6f6f;
+      line-height: normal;
+      font-size: 17px;
+      position: relative;
+      top: 1px;
+    }
+  }
+}
+
+.menuInner{
+  padding: 4px 0;
+}
+
+.menuItem{
+  height: 28px;
+  font-size: 12px;
+  padding: 8px;
+  .caption{
+    font-size: 12px;
+  }
+  .icon{
+    font-size: 16px;
+  }
+  &.disabled{
+    opacity: 1;
+    .caption, .icon{
+      color: black;
+    }
+  }
+}
+
+.menuDivider{
+  margin: 2px 0;
+}
