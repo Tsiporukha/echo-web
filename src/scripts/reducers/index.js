@@ -2,7 +2,10 @@ import {combineReducers} from 'redux';
 
 import {createNamedAUDReducer} from './reducerCreators';
 import feed from './feed';
+import search from './search';
 import queue from './queue';
+import player from './player';
+import session from './session';
 
 export default combineReducers({
   users: createNamedAUDReducer('USER'),
@@ -14,6 +17,12 @@ export default combineReducers({
     feed
   }),
 
-  queue
-  
+  search,
+
+  queue,
+
+  player,
+
+  session
+
 });
