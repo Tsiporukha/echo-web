@@ -10,14 +10,14 @@
 .userInfo{
   display: flex;
   .avatar{
-    height: 30px;
-    width: 30px;
+    height: 32px;
+    width: 32px;
   }
   .info{
     padding-left: 16px;
     padding-left: 16px;
     position: relative;
-    top: -6px;
+    top: -5px;
     .name{
       font-size: 17px;
       color: #61b3fa;

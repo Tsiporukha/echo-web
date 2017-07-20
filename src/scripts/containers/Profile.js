@@ -9,14 +9,14 @@ import {get as getStreams} from '../lib/ebApi/streams';
 import {getUser} from '../lib/ebApi/users';
 import {reduceToNormalized as reduceStreamsToNormalized} from '../lib/stream';
 
-import styles from '../../assets/styles/user.css';
+import styles from '../../assets/styles/profile.css';
 
 const mapStateToProps = (state, ownProps) => ({
   user: state.users[ownProps.match.params.id]
 });
 
 const mapDispatchToProps = dispatch => ({
-  addUsers: user => dispatch(addUsers(user)),
+  addUser: user => dispatch(addUsers({[user.id]: user})),
   addNormalizedStreamsData: normalizedData => dispatch(addNormalizedStreamsData(normalizedData))
 });
 
@@ -32,11 +32,12 @@ class Profile extends Component {
     return getStreams({user_id: this.props.match.params.id, offset: 0, limit: 5})
       .then(({streams}) => Promise.resolve(this.props.addNormalizedStreamsData(reduceStreamsToNormalized(streams)))
         .then(_ => this.setState({streams: streams.map(s => s.id)}) ))
-      .then(_ => getUser(this.props.match.params.id).then(user => this.props.addUsers({[user.id]: user})));
+      .then(_ => getUser(this.props.match.params.id).then(user => this.props.addUser(user)));
   }
 
   render() {
     return(
+      !!this.props.user &&
       <div className={styles.profile}>
         <div className={styles.content}>
           <div className={styles.userInfo}>
@@ -56,4 +57,4 @@ class Profile extends Component {
   }
 }
 
-export default  connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
