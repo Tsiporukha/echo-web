@@ -1,0 +1,161 @@
+/* Slider theme */
+@import 'react-toolbox/lib/slider/theme.css';
+:root {
+  --unit: 14px;
+  --slider-main-color: rgba(255, 255, 255, 1);
+  --slider-knob-size: calc(1 * var(--unit));
+  --slider-inner-knob-size: calc(1 * var(--unit));
+}
+.slider{
+  width: 100%;
+  &:focus .knob, &.pinned .innerknob, &.ring .innerknob {
+    background-color: var(--slider-main-color);
+  }
+  .innerknob{cursor: pointer;}
+  .progress .innerprogress {
+    background: #989ba1;
+
+    [data-ref='value'] {
+      background-color: #4a98c8;
+    }
+  }
+}
+/* end Slider theme */
+
+
+.playIcon, .pauseIcon, .prevIcon, .nextIcon, .volumeIcon, .currentQueueIcon, .currentQueueIconActive{
+  composes: material-icons from './fonts.css';
+}
+.playIcon, .pauseIcon{
+  font-size: 28px;
+  border-radius: 60px;
+  background-color: #5bbbff;
+  padding: 5px;
+  margin: 0;
+}
+.prevIcon, .nextIcon{font-size: 26px;}
+.volumeIcon{
+  margin: 0 0 0 10px;
+  font-size: 26px;
+}
+.currentQueueIcon{
+	font-size: 28px;
+	border-radius: 60px;
+	padding: 5px;
+	margin: 0 30px 0 16px;
+	color: #959fad;
+}
+.currentQueueIconActive{
+	composes: currentQueueIcon;
+	background-color: #525d7a;
+	color: white;
+}
+
+
+:root{
+  --playerHeight: 50px;
+}
+
+
+.root{
+  display: block;
+  position: absolute;
+  bottom: 0;
+  height: var(--playerHeight);
+  z-index: 2;
+}
+
+.bottomPlayer {
+	height: var(--playerHeight);
+	position:fixed;
+  bottom: 0;
+	display: flex;
+	align-items: center;
+	width: 100%;
+  background: #273558;
+	color: #fff;
+	font-size: 13px;
+
+  i{cursor: pointer;}
+
+	.artwork, .artwork img {
+		height: var(--playerHeight);
+    min-width: var(--playerHeight);
+	}
+
+	.songInfo {
+    padding-top: 8px;
+		width: 12%;
+		height: var(--playerHeight);
+		h5, h6 {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			font-size: 12px;
+			color: white;
+		}
+		h5{
+			position: relative;
+			top: -3px;
+			font-size: 14px;
+      margin-top: 0;
+      margin-bottom: 0;
+		}
+    h6 {
+      margin-top: 0;
+      font-weight: 400;
+    }
+	}
+
+	.songProgress, .playerVolume {
+		padding-top: 10px;
+		padding-bottom: 10px;
+		margin: 0 2px;
+	}
+	.playerVolume {
+		width: 10%;
+	}
+	.songProgress {
+		display: flex;
+		flex-grow: 2;
+	}
+
+  .plLength{
+		display: block;
+		position: absolute;
+		width: 16px;
+		height: 16px;
+		background-color: #0091ea;
+		border-radius: 600px;
+		bottom: 0;
+		right: 37px;
+		font-weight: 500;
+		color: white;
+		font-size: 10px;
+		padding-top: 2px;
+		text-align: center;
+	}
+
+	> * {
+		margin: 0 7px;
+    &:first-child {
+  		margin-left: 0;
+  	}
+	}
+
+}
+
+.reactPlayer{
+  position: fixed;
+  bottom: 50px;
+  right: 85px;
+  z-index: 1;
+}
+
+.currentQueue{
+  composes: col-xs-3 from './bootstrap.css';
+  position: fixed;
+  bottom: 62px;
+  height: 400px;
+  right: 0;
+}
