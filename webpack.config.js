@@ -56,7 +56,7 @@ const webAppConfig = {
   name: 'web',
 
   entry: {
-    bundle: joinToDirname(jointToWebAppDir('/index.js'))
+    bundle: joinToDirname(jointToWebAppDir('/index.js')),
   },
   output: {
     path: joinToDirname('/build/web'),
@@ -66,8 +66,10 @@ const webAppConfig = {
   plugins: [
     new CopyWebpackPlugin([{from: joinToDirname(jointToWebAppDir('/index.html'))}
     ]),
-    new ExtractTextPlugin({filename: 'styles.css', allChunks: true})
+    new ExtractTextPlugin({filename: 'styles.css', allChunks: true}),
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ],
+
 }
 
 const builds = {web: getFullConfig(webAppConfig)};
