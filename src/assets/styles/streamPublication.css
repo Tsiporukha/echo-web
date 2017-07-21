@@ -1,0 +1,67 @@
+.root{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+.header{
+  height: 50px;
+  background-color: #23365a;
+  color: white;
+  display: flex;
+}
+
+.leftReg{
+  composes: leftReg from './navbar.css';
+  composes: col-md-offset-1 from './bootstrap.css';
+  font-size: 15px;
+  font-weight: 500;
+
+  .title{
+    margin: auto 0;
+  }
+}
+.rightReg{
+  composes: rightReg from './navbar.css';
+  text-align: right;
+
+  .buttons{
+    display: inline-flex;
+    height: 100%;
+  }
+}
+
+
+
+/* Buttons theme */
+.icon{line-height: initial;}
+.button{
+  margin: auto 8px;
+  .icon, span:not([data-react-toolbox='tooltip']){
+    line-height: normal;;
+  }
+}
+
+.raised, .flat{
+  min-height: initial;
+  min-width: initial;
+  padding: 5px;
+  height: 27px;
+  line-height: normal;
+  display: inline-flex;
+  font-size: 13px;
+
+  .icon{
+    font-size: 20px;
+    position: relative;
+    top: -1px;
+  }
+}
+
+.neutral:not([disabled]).flat{
+  color: white;
+}

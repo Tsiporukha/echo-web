@@ -5,6 +5,7 @@ import {IconMenu, MenuItem, MenuDivider} from 'react-toolbox/lib/menu';
 
 import QueueSong from './QueueSong';
 import QueueStream from './QueueStream';
+import StreamPublication from './StreamPublication';
 
 import {remove} from '../actions/QueueActions';
 import {clear as clearPlayer, getQueueSongs} from '../actions/PlayerActions';
@@ -27,31 +28,41 @@ const itemTypes = {song: QueueSong, stream: QueueStream};
 const createJSXItem = (ItemComponent, itemId) => <ItemComponent key={itemId} id={itemId} />
 const createItem = item => createJSXItem(itemTypes[item.type], item.id);
 
-const Queue = props => (
-  <div className={styles.root}>
-    <div className={styles.header}>
-      <div className={styles.length}>
-        Your Queue: {(props.length)} songs
-      </div>
+class Queue extends Component {
 
-      <div className={styles.icons}>
-        <IconMenu icon='save' menuRipple theme={styles}>
-          <MenuItem icon='save' caption='Save To:' disabled theme={styles} />
-          <MenuDivider theme={styles} />
-          <MenuItem icon='create_new_folder' caption='Existing Room' theme={styles} />
-          <MenuItem icon='playlist_add' caption='New Room' theme={styles} />
-        </IconMenu>
+  toggleStreamPublication = () => this.setState({streamPublication: !this.state.streamPublication});
 
-        <i className={`${styles.clearIcon} ${props.items.length ? '' : styles.disabled}`}
-          onClick={props.clear(props.items.map(item => item.id))}>clear_all</i>
+  state = {streamPublication: false};
+
+  render(){
+    return(
+      <div className={styles.root}>
+        <div className={styles.header}>
+          <div className={styles.length}>
+            Your Queue: {(this.props.length)} songs
+          </div>
+
+          <div className={styles.icons}>
+            <IconMenu icon='save' menuRipple theme={styles}>
+              <MenuItem icon='save' caption='Save To:' disabled theme={styles} />
+              <MenuDivider theme={styles} />
+              <MenuItem icon='create_new_folder' caption='Existing Room' theme={styles} />
+              <MenuItem icon='playlist_add' caption='New Room' theme={styles} onClick={this.toggleStreamPublication} />
+            </IconMenu>
+            {this.state.streamPublication && <StreamPublication onCancel={this.toggleStreamPublication} />}
+
+            <i className={`${styles.clearIcon} ${this.props.items.length ? '' : styles.disabled}`}
+              onClick={this.props.clear(this.props.items.map(item => item.id))}>clear_all</i>
+          </div>
+        </div>
+
+        <div className={styles.items}>
+          {this.props.items.map(createItem)}
+        </div>
       </div>
-    </div>
-    
-    <div className={styles.items}>
-      {props.items.map(createItem)}
-    </div>
-  </div>
-);
+    )
+  }
+}
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Queue);
