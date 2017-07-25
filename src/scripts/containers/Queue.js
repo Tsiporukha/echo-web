@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import {IconMenu, MenuItem, MenuDivider} from 'react-toolbox/lib/menu';
 
+import LoginDialog from '../components/LoginDialog';
 import QueueSong from './QueueSong';
 import QueueStream from './QueueStream';
 import StreamPublication from './StreamPublication';
@@ -14,7 +15,8 @@ import styles from '../../assets/styles/queue.css';
 
 const mapStateToProps = state => ({
   items: state.queue.items,
-  length: getQueueSongs(state).length
+  length: getQueueSongs(state).length,
+  authed: !!state.session.token,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -49,7 +51,13 @@ class Queue extends Component {
               <MenuItem icon='create_new_folder' caption='Existing Room' theme={styles} />
               <MenuItem icon='playlist_add' caption='New Room' theme={styles} onClick={this.toggleStreamPublication} />
             </IconMenu>
-            {this.state.streamPublication && <StreamPublication onCancel={this.toggleStreamPublication} />}
+            {this.state.streamPublication && (
+              this.props.authed ?
+                <StreamPublication onCancel={this.toggleStreamPublication} />
+                :
+                <LoginDialog active={this.state.streamPublication} onEscKeyDown={this.toggleStreamPublication} />
+            )}
+
 
             <i className={`${styles.clearIcon} ${this.props.items.length ? '' : styles.disabled}`}
               onClick={this.props.clear(this.props.items.map(item => item.id))}>clear_all</i>

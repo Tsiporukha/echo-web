@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Button} from 'react-toolbox/lib/button';
-import Dialog from 'react-toolbox/lib/dialog';
 
-import Login from './Login';
+import LoginDialog from '../components/LoginDialog';
 
 import {clearSession} from '../actions/SessionActions';
 
@@ -50,12 +49,7 @@ class MaybeCurrentUser extends Component {
               theme={styles}
               onClick={this.toggleDialogVisibility}> <span className={styles.signInTitle}>Sign in</span> </Button>
 
-            <Dialog
-              active={this.state.dialogVisibility}
-              onEscKeyDown={this.toggleDialogVisibility}
-            >
-              <Login />
-            </Dialog>
+            <LoginDialog active={this.state.dialogVisibility} onEscKeyDown={this.toggleDialogVisibility} />
           </span>
         }
       </span>
