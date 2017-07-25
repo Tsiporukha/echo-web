@@ -104,7 +104,8 @@ class Player extends Component {
           />
         </div>
 
-        {this.state.queueVisibility && <div className={styles.currentQueue}> <CurrentQueue /></div>}
+        {this.state.queueVisibility && <CurrentQueue />}
+
       </div>
     )
   }

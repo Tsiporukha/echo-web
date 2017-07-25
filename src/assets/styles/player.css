@@ -148,8 +148,7 @@
 .reactPlayer{
   position: fixed;
   bottom: 50px;
-  right: 85px;
-  z-index: 1;
+  right: 100px;
 }
 
 .currentQueue{

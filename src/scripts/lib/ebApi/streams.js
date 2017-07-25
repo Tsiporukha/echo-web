@@ -1,5 +1,7 @@
 import luch, {getJson} from 'luch';
+import v4 from 'uuid/v4';
 import {getAbsoluteUrl} from './api';
+
 
 export const get = filters => luch.get(getAbsoluteUrl('/streams'), filters).then(getJson);
 export const getPopular = filters => luch.get(getAbsoluteUrl('/streams/popular'), filters).then(getJson);
