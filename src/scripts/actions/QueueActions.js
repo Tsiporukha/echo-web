@@ -5,6 +5,8 @@ import {
 import {addSongs, addStreams, addPlaylists, updatePlaylists} from './EntitiesAUDActions';
 import {setCurrentSong} from './PlayerActions';
 
+import {create as createStream} from '../lib/ebApi/streams';
+
 import v4 from 'uuid/v4';
 
 
@@ -76,3 +78,7 @@ export const addClonedStreamToTopAndPlay = (stream, playlist, songs) => dispatch
   dispatchStream(addToTop)(strm, pllst, sngs)(dispatch);
   return dispatch(setCurrentSong(sngs[0]));
 }
+
+
+export const publish = (playlist_title, playlist_description, tags, default_artwork_url, songs, token) => dispatch =>
+  createStream(playlist_title, playlist_description, tags, default_artwork_url, songs, token);
