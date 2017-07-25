@@ -1,11 +1,16 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import Button from 'react-toolbox/lib/button';
+import Tooltip from 'react-toolbox/lib/tooltip';
 
 import moment from 'moment';
 
 import {maybeGetDefaultArtwork} from '../lib/stream';
 
 import styles from '../../assets/styles/streamDescription.css';
+
+const TooltipButton = Tooltip(Button);
+
 
 const StreamDescription = props => (
   <div className={styles.root}>
@@ -66,15 +71,21 @@ const StreamDescription = props => (
         </div>
       </div>
       <div className={styles.rightReg}>
-        <span className={styles.iconDescription} onClick={props.addToQueue(props.stream, props.playlist, props.songs)}>
-          <i className={styles.playlistAddIcon}>playlist_add</i><span>Add to Queue</span>
-        </span>
-        <span className={styles.iconDescription}>
-          <i className={styles.likeIcon}>favorite</i><span>Like</span>
-        </span>
-        <span className={styles.iconDescription}>
-          <i className={styles.shareIcon}>share</i><span>Share</span>
-        </span>
+        <TooltipButton theme={styles} raised tooltip='Add to Queue' tooltipDelay={500} onClick={props.addToQueue(props.stream, props.playlist, props.songs)}>
+          <span className={styles.iconDescription}>
+            <i className={styles.playlistAddIcon}>playlist_add</i><span>Add to Queue</span>
+          </span>
+        </TooltipButton>
+        <TooltipButton theme={styles} raised tooltip='Save to My Likes' tooltipDelay={500}>
+          <span className={styles.iconDescription}>
+            <i className={styles.likeIcon}>favorite</i><span>Like</span>
+          </span>
+        </TooltipButton>
+        <TooltipButton theme={styles} raised tooltip='Share' tooltipDelay={500}>
+          <span className={styles.iconDescription}>
+            <i className={styles.shareIcon}>share</i><span>Share</span>
+          </span>
+        </TooltipButton>
       </div>
     </div>
   </div>
