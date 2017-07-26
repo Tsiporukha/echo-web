@@ -9,10 +9,12 @@
     "ecmaVersion": 7,
     "sourceType": "module"
   },
-  "ecmaFeatures": {
-    "jsx": true,
-    "spread": true,
-    "experimentalObjectRestSpread": true
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "spread": true,
+      "experimentalObjectRestSpread": true
+    }
   },
   "rules": {
     "fp/no-class": 0,

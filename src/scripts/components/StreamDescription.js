@@ -66,9 +66,9 @@ const StreamDescription = props => (
 
     <div className={styles.footer}>
       <div className={styles.leftReg}>
-        <div className={styles.flex}>
+        {props.stream.likes_count && <div className={styles.flex}>
           <i className={styles.likedIcon}>favorite</i><span>{props.stream.likes_count}</span>
-        </div>
+        </div>}
       </div>
       <div className={styles.rightReg}>
         <TooltipButton theme={styles} raised tooltip='Add to Queue' tooltipDelay={500} onClick={props.addToQueue(props.stream, props.playlist, props.songs)}>
