@@ -1,13 +1,13 @@
 import luch, {getJson} from 'luch';
 import v4 from 'uuid/v4';
-import {getAbsoluteUrl} from './api';
+import {getAbsoluteUrl, withoutUndefinedParams} from './api';
 
 
-export const get = filters => luch.get(getAbsoluteUrl('/streams'), filters).then(getJson);
-export const getPopular = filters => luch.get(getAbsoluteUrl('/streams/popular'), filters).then(getJson);
-export const getLongest = filters => luch.get(getAbsoluteUrl('/streams/longest'), filters).then(getJson);
+export const get = (filters, token) => luch.get(getAbsoluteUrl('/streams'), withoutUndefinedParams({...filters, token})).then(getJson);
+export const getPopular = (filters, token) => luch.get(getAbsoluteUrl('/streams/popular'), withoutUndefinedParams({...filters, token})).then(getJson);
+export const getLongest = (filters, token) => luch.get(getAbsoluteUrl('/streams/longest'), withoutUndefinedParams({...filters, token})).then(getJson);
 
-export const search = filters => luch.post(getAbsoluteUrl('/streams/search'), {term: filters.term}).then(getJson);
+export const search = (filters, token) => luch.post(getAbsoluteUrl('/streams/search'), withoutUndefinedParams({term: filters.term, token})).then(getJson);
 
 export const uploadArtwork = (image, token, key = `data/atrworks/${v4()}${image.name}`) =>
   luch.post(getAbsoluteUrl('/lists/upload_song_artwork'), {image, token, key})
@@ -20,3 +20,7 @@ export const create = (playlist_title, playlist_description, tags, default_artwo
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({playlist_title, playlist_description, tags: tags.join(), default_artwork_url, songs, token})
     });
+
+
+export const like = (id, token) => luch.post(getAbsoluteUrl(`/streams/${id}/add_like`), {token});
+export const unlike = (id, token) => luch.post(getAbsoluteUrl(`/streams/${id}/remove_like`), {token});

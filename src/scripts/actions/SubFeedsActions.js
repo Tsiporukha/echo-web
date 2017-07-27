@@ -8,9 +8,9 @@ import {Latest, Popular, Longest} from '../constants/creatorsArgs';
 
 import {createSubFeedActions} from './actionsCreators';
 
-import {addNormalizedStreamsData} from './EntitiesAUDActions';
+import {addNormalizedStreamsData, updateStreams} from './EntitiesAUDActions';
 
-import {get as getStreams, getPopular, getLongest} from '../lib/ebApi/streams';
+import {get as getStreams, getPopular, getLongest, like, unlike} from '../lib/ebApi/streams';
 import {reduceToNormalized as reduceStreamsToNormalized} from '../lib/stream';
 
 
@@ -26,7 +26,20 @@ export const fetchAndReceiveStreams = (fetchAction, setItemsAction, addItemsActi
 );
 
 
+const updateLikedStreamData = stream => ({[stream.id]: {...stream, likes_count: stream.likes_count + 1, your_likes: 1}});
+const updateUnlikedStreamData = stream => ({[stream.id]: {...stream, likes_count: stream.likes_count - 1, your_likes: 0}});
 
+const updateStreamAfterLikeAction = (updateStreamFunc, stream) => dispatch =>
+  resp => resp.status === 200 ? dispatch(updateStreams(updateStreamFunc(stream))) : false;
+
+export const likeStream = (stream, token) => dispatch =>
+  like(stream.id, token).then(updateStreamAfterLikeAction(updateLikedStreamData, stream)(dispatch));
+export const unlikeStream = (stream, token) => dispatch =>
+  unlike(stream.id, token).then(updateStreamAfterLikeAction(updateUnlikedStreamData, stream)(dispatch));
+
+
+
+// SubFeeds
 export const {setLatest, addToLatest, removeFromLatest} = createSubFeedActions(Latest)(SET_LATEST, ADD_TO_LATEST, REMOVE_FROM_LATEST);
 export const fetchAndReceiveLatestStreams = fetchAndReceiveStreams(getStreams, setLatest, addToLatest);
 

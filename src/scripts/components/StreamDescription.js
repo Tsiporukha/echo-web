@@ -5,12 +5,16 @@ import Tooltip from 'react-toolbox/lib/tooltip';
 
 import moment from 'moment';
 
+import {likeStream, unlikeStream} from '../actions/SubFeedsActions';
 import {maybeGetDefaultArtwork} from '../lib/stream';
 
 import styles from '../../assets/styles/streamDescription.css';
 
 const TooltipButton = Tooltip(Button);
 
+const getLikeButtonOnClick = (dispatchLikeAction, stream, token) =>
+  dispatchLikeAction(stream.your_likes ? unlikeStream : likeStream)(stream, token);
+const getLikeButtonTitle = liked => liked ? 'Liked' : 'Like';
 
 const StreamDescription = props => (
   <div className={styles.root}>
@@ -76,9 +80,10 @@ const StreamDescription = props => (
             <i className={styles.playlistAddIcon}>playlist_add</i><span>Add to Queue</span>
           </span>
         </TooltipButton>
-        <TooltipButton theme={styles} raised tooltip='Save to My Likes' tooltipDelay={500}>
+        <TooltipButton theme={styles} raised tooltip='Save to My Likes' tooltipDelay={500}
+          onClick={getLikeButtonOnClick(props.dispatchLikeAction, props.stream, props.token)}>
           <span className={styles.iconDescription}>
-            <i className={styles.likeIcon}>favorite</i><span>Like</span>
+            <i className={styles.likeIcon}>favorite</i><span>{getLikeButtonTitle(props.stream.your_likes)}</span>
           </span>
         </TooltipButton>
         <TooltipButton theme={styles} raised tooltip='Share' tooltipDelay={500}>

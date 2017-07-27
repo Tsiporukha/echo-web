@@ -10,13 +10,17 @@ import {getStreamAndNestedEntities} from '../lib/stream';
 
 import styles from '../../assets/styles/stream.css';
 
-const mapStateToProps = (state, ownProps) => getStreamAndNestedEntities(state, ownProps.id || ownProps.match.params.id);
+const mapStateToProps = (state, ownProps) => ({
+  ...getStreamAndNestedEntities(state, ownProps.id || ownProps.match.params.id),
+  token: state.session.token,
+});
 
 const mapDispatchToProps = dispatch => ({
   addToQueueTopAndPlay: (stream, playlist, songs) => () => dispatch(addClonedStreamToTopAndPlay(stream, playlist, songs)),
   addToQueue: (stream, playlist, songs) => () => dispatch(addClonedStream(stream, playlist, songs)),
   pause: () => dispatch(pause()),
-  play: () => dispatch(play())
+  play: () => dispatch(play()),
+  dispatchLikeAction: likeAction => (stream, token) => () => dispatch(likeAction(stream, token)),
 });
 
 
