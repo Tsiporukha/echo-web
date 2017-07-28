@@ -8,15 +8,16 @@ import {
 } from '../actions/SubFeedsActions';
 
 
-const mapStateToProps = store => ({
-  latest: store.feedSources.feed.latest,
-  popular: store.feedSources.feed.popular,
-  longest: store.feedSources.feed.longest,
-  initialFilters: {limit:5, offset: 0}
+const mapStateToProps = state => ({
+  latest: state.feedSources.feed.latest,
+  popular: state.feedSources.feed.popular,
+  longest: state.feedSources.feed.longest,
+  initialFilters: {limit:5, offset: 0},
+  token: state.session.token,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAndReceiveStreams: action => filters => dispatch(action(filters)),
+  fetchAndReceiveStreams: action => (filters, token) => dispatch(action(filters, token)),
   fetchAndReceiveLatestStreamsAction: fetchAndReceiveLatestStreams,
   fetchAndReceivePopularStreamsAction: fetchAndReceivePopularStreams,
   fetchAndReceiveLongestStreamsAction: fetchAndReceiveLongestStreams

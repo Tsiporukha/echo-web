@@ -20,10 +20,11 @@ export const setOrAddItems = (setItemsCondition, setItemsAction, addItemsAction,
 
 
 // streams
-export const fetchAndReceiveStreams = (fetchAction, setItemsAction, addItemsAction) => (filters, setItemsCondition = filters.offset === 0) => dispatch =>
-  fetchAction(filters).then(data => Promise.resolve(addNormalizedStreamsData(reduceStreamsToNormalized(data.streams))(dispatch))
-    .then(_ => setOrAddItems(setItemsCondition, setItemsAction, addItemsAction, data.streams.map(s => s.id))(dispatch))
-);
+export const fetchAndReceiveStreams =
+  (fetchAction, setItemsAction, addItemsAction) => (filters, token, setItemsCondition = filters.offset === 0) => dispatch =>
+    fetchAction(filters, token).then(data => Promise.resolve(addNormalizedStreamsData(reduceStreamsToNormalized(data.streams))(dispatch))
+      .then(_ => setOrAddItems(setItemsCondition, setItemsAction, addItemsAction, data.streams.map(s => s.id))(dispatch))
+    );
 
 
 const updateLikedStreamData = stream => ({[stream.id]: {...stream, likes_count: stream.likes_count + 1, your_likes: 1}});

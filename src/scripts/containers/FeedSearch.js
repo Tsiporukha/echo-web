@@ -8,15 +8,16 @@ import {
 } from '../actions/SearchActions';
 
 
-const mapStateToProps = store => ({
-  latest: store.search.latest,
-  popular: store.search.popular,
-  longest: store.search.longest,
-  initialFilters: {limit:5, offset: 0, term: store.search.term}
+const mapStateToProps = state => ({
+  latest: state.search.latest,
+  popular: state.search.popular,
+  longest: state.search.longest,
+  initialFilters: {limit:5, offset: 0, term: state.search.term},
+  token: state.session.token,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAndReceiveStreams: action => filters => dispatch(action(filters)),
+  fetchAndReceiveStreams: action => (filters, token) => dispatch(action(filters, token)),
   fetchAndReceiveLatestStreamsAction: fetchAndReceiveLatestStreamsSearch,
   fetchAndReceivePopularStreamsAction: fetchAndReceivePopularStreamsSearch,
   fetchAndReceiveLongestStreamsAction: fetchAndReceiveLongestStreamsSearch

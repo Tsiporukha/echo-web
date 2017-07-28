@@ -17,23 +17,29 @@ export default class Feed extends Component {
 
   incrementOffsetFilter = (n = this.state.filters.limit) => this.setState({filters:{...this.state.filters, offset: this.state.filters.offset + n}});
   setSearchingVisibility = searching => this.setState({searching});
-  loadMoreStreams = action => () => doWithProgressLine(() => this.props.fetchAndReceiveStreams(action)(this.state.filters), this.setSearchingVisibility)
-    .then(this.incrementOffsetFilter);
+  loadMoreStreams = action => (token = this.props.token) =>
+    doWithProgressLine(() => this.props.fetchAndReceiveStreams(action)(this.state.filters, token), this.setSearchingVisibility)
+      .then(this.incrementOffsetFilter);
 
   loadMoreLatestStreams = this.loadMoreStreams(this.props.fetchAndReceiveLatestStreamsAction);
   loadMorePopularStreams = this.loadMoreStreams(this.props.fetchAndReceivePopularStreamsAction);
   loadMoreLongestStreams = this.loadMoreStreams(this.props.fetchAndReceiveLongestStreamsAction);
 
-  loadSubFeedStreams = subFeedIndex => [this.loadMorePopularStreams, this.loadMoreLatestStreams, this.loadMoreLongestStreams][subFeedIndex]();
+  loadSubFeedStreams = subFeedIndex => token => [this.loadMorePopularStreams, this.loadMoreLatestStreams, this.loadMoreLongestStreams][subFeedIndex](token);
 
-  onSearchTermChange = filters => Promise.resolve(this.setState({filters})).then(_ => this.loadSubFeedStreams(this.state.activeSubFeed));
+  onSearchTermChange = (filters, token) => Promise.resolve(this.setState({filters})).then(_ => this.loadSubFeedStreams(this.state.activeSubFeed)(token));
 
   dispatchScrollListener = (() => {
     const element = document.getElementsByClassName(resultsClassName)[0] || window;
-    const handleScroll = () => onBottomReaching(() => this.loadSubFeedStreams(this.state.activeSubFeed), element);
+    const handleScroll = () => onBottomReaching(() => this.loadSubFeedStreams(this.state.activeSubFeed)(this.props.token), element);
 
     return actionName => element[actionName]('scroll', handleScroll);
   })();
+
+  maybeReloadOnPropsChange = (nextProps, props = this.props) =>
+    ((nextProps.initialFilters.term !== props.initialFilters.term) || (nextProps.token !== props.token)) ?
+      this.onSearchTermChange(nextProps.initialFilters, nextProps.token) : false;
+
 
   state = {
     filters: this.props.initialFilters,
@@ -42,12 +48,12 @@ export default class Feed extends Component {
     searching: false
   }
 
-  componentWillMount = () => this.loadSubFeedStreams(this.state.activeSubFeed);
+  componentWillMount = () => this.loadSubFeedStreams(this.state.activeSubFeed)(this.props.token);
+
   componentDidMount = () => this.dispatchScrollListener('addEventListener');
   componentWillUnmount = () => this.dispatchScrollListener('removeEventListener');
 
-  componentWillReceiveProps = nextProps =>
-    nextProps.initialFilters.term !== this.props.initialFilters.term ? this.onSearchTermChange(nextProps.initialFilters) : false;
+  componentWillReceiveProps = nextProps => this.maybeReloadOnPropsChange(nextProps, this.props)
 
   render(){
     return (
