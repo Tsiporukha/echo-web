@@ -12,7 +12,8 @@ import {reduceToNormalized as reduceStreamsToNormalized} from '../lib/stream';
 import styles from '../../assets/styles/profile.css';
 
 const mapStateToProps = (state, ownProps) => ({
-  user: state.users[ownProps.match.params.id]
+  user: state.users[ownProps.match.params.id],
+  token: state.session.token,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -22,18 +23,22 @@ const mapDispatchToProps = dispatch => ({
 
 class Profile extends Component {
 
+  initialLoad = (token = this.props.token) => getStreams({user_id: this.props.match.params.id, offset: 0, limit: 5}, token)
+    .then(({streams}) => Promise.resolve(this.props.addNormalizedStreamsData(reduceStreamsToNormalized(streams)))
+      .then(_ => this.setState({streams: streams.map(s => s.id)}) ))
+    .then(_ => getUser(this.props.match.params.id).then(user => this.props.addUser(user)));
+
+  reloadOnTokenChange = (nextProps, props) => nextProps.token !== props.token ? this.initialLoad(nextProps.token) : false;
+
   state = {
     offset: 0,
     limit: 5,
     streams: []
   }
 
-  componentWillMount(){
-    return getStreams({user_id: this.props.match.params.id, offset: 0, limit: 5})
-      .then(({streams}) => Promise.resolve(this.props.addNormalizedStreamsData(reduceStreamsToNormalized(streams)))
-        .then(_ => this.setState({streams: streams.map(s => s.id)}) ))
-      .then(_ => getUser(this.props.match.params.id).then(user => this.props.addUser(user)));
-  }
+  componentWillMount = () => this.initialLoad(this.props.token);
+
+  componentWillReceiveProps = nextProps => this.reloadOnTokenChange(nextProps, this.props);
 
   render() {
     return(
