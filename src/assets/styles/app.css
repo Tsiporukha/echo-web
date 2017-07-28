@@ -3,6 +3,10 @@ html, body {
   background-color: #f2f2f2;
 }
 
+html{
+  padding-bottom: 50px;
+}
+
 a{
   color: initial;
   &:hover, &:focus, &:active{
