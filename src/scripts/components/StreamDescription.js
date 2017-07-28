@@ -63,14 +63,13 @@ const StreamDescription = props => (
       </div>
     </div>
 
-    <div className={styles.tags}>
-      {!!props.stream.all_tags.length &&
-        <span><span className={styles.t}>Tags:</span>{props.stream.all_tags.map(tag => (<span key={tag} className={styles.tag}>#{tag}</span>))}</span>}
-    </div>
+    {!!props.stream.all_tags.length && <div className={styles.tags}>
+      <span><span className={styles.t}>Tags:</span>{props.stream.all_tags.map(tag => (<span key={tag} className={styles.tag}>#{tag}</span>))}</span>
+    </div>}
 
     <div className={styles.footer}>
       <div className={styles.leftReg}>
-        {props.stream.likes_count && <div className={styles.flex}>
+        {!!props.stream.likes_count && <div className={styles.flex}>
           <i className={styles.likedIcon}>favorite</i><span>{props.stream.likes_count}</span>
         </div>}
       </div>
