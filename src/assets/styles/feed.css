@@ -40,6 +40,18 @@
   padding: 2px 0;
 }
 
+.tags{
+  composes: tags from './streamDescription.css';
+}
+.tag{
+  composes: tag from './streamDescription.css';
+  cursor: pointer;
+}
+.selectedTag{
+  composes: tag;
+  background-color: #0e8ffc;
+  color: white;
+}
 
 /* Tabs */
 .navigation{

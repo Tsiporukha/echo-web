@@ -114,15 +114,14 @@
 
 .tags{
   padding-top: 5px;
-//  min-height: 25px;
-  line-height: 2;
   .t{margin-right: 8px;}
-  .tag{
-    margin: 0 6px;
-    background: #e8e8e8;
-    padding: 4px 14px;
-    border-radius: 12px;
-  }
+}
+.tag{
+  display: inline-block;
+  margin: 4px 6px;
+  background: #e8e8e8;
+  padding: 4px 14px;
+  border-radius: 12px;
 }
 
 .footer{
