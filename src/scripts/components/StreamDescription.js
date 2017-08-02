@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Button from 'react-toolbox/lib/button';
 import Tooltip from 'react-toolbox/lib/tooltip';
+
+import LoginDialog from './LoginDialog';
 
 import moment from 'moment';
 
@@ -12,11 +14,11 @@ import styles from '../../assets/styles/streamDescription.css';
 
 const TooltipButton = Tooltip(Button);
 
-const getLikeButtonOnClick = (dispatchLikeAction, stream, token) =>
-  dispatchLikeAction(stream.your_likes ? unlikeStream : likeStream)(stream, token);
+const getLikeButtonOnClick = (token, dispatchLikeAction, stream, showLogin) => token ?
+  dispatchLikeAction(stream.your_likes ? unlikeStream : likeStream)(stream, token) : showLogin;
 const getLikeButtonTitle = liked => liked ? 'Liked' : 'Like';
 
-const StreamDescription = props => (
+const StreamDescriptionRender = (props, loginVisibility, toggleLoginVisibility) => (
   <div className={styles.root}>
     <div className={styles.header}>
       <span><b>Updated</b> {moment(props.stream.updated_at).fromNow()} by </span>
@@ -80,7 +82,7 @@ const StreamDescription = props => (
           </span>
         </TooltipButton>
         <TooltipButton theme={styles} raised tooltip='Save to My Likes' tooltipDelay={500}
-          onClick={getLikeButtonOnClick(props.dispatchLikeAction, props.stream, props.token)}>
+          onClick={getLikeButtonOnClick(props.token, props.dispatchLikeAction, props.stream, toggleLoginVisibility)}>
           <span className={styles.iconDescription}>
             <i className={styles.likeIcon}>favorite</i><span>{getLikeButtonTitle(props.stream.your_likes)}</span>
           </span>
@@ -92,7 +94,22 @@ const StreamDescription = props => (
         </TooltipButton>
       </div>
     </div>
+
+    {!props.token && <LoginDialog active={loginVisibility} onEscKeyDown={toggleLoginVisibility} />}
   </div>
 )
 
-export default StreamDescription;
+
+export default class StreamDescription extends Component {
+
+  toggleLoginVisibility = () => this.setState({loginVisibility: !this.state.loginVisibility});
+
+
+  state = {
+    loginVisibility: false,
+  }
+
+  render(){
+    return StreamDescriptionRender(this.props, this.state.loginVisibility, this.toggleLoginVisibility)
+  }
+}
