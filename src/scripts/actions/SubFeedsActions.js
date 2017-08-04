@@ -10,7 +10,7 @@ import {createSubFeedActions} from './actionsCreators';
 
 import {addNormalizedStreamsData, updateStreams} from './EntitiesAUDActions';
 
-import {get as getStreams, getPopular, getLongest, like, unlike} from '../lib/ebApi/streams';
+import {getLatest, getPopular, getLongest, like, unlike} from '../lib/ebApi/streams';
 import {reduceToNormalized as reduceStreamsToNormalized} from '../lib/stream';
 
 
@@ -42,7 +42,7 @@ export const unlikeStream = (stream, token) => dispatch =>
 
 // SubFeeds
 export const {setLatest, addToLatest, removeFromLatest} = createSubFeedActions(Latest)(SET_LATEST, ADD_TO_LATEST, REMOVE_FROM_LATEST);
-export const fetchAndReceiveLatestStreams = fetchAndReceiveStreams(getStreams, setLatest, addToLatest);
+export const fetchAndReceiveLatestStreams = fetchAndReceiveStreams(getLatest, setLatest, addToLatest);
 
 export const {setPopular, addToPopular, removeFromPopular} = createSubFeedActions(Popular)(SET_POPULAR, ADD_TO_POPULAR, REMOVE_FROM_POPULAR);
 export const fetchAndReceivePopularStreams = fetchAndReceiveStreams(getPopular, setPopular, addToPopular);

@@ -13,7 +13,7 @@ import {createSubFeedActions} from './actionsCreators';
 import {addSongs} from './EntitiesAUDActions';
 import {fetchAndReceiveStreams, setOrAddItems} from './SubFeedsActions';
 
-import {search as searchStreams, getPopular, getLongest} from '../lib/ebApi/streams';
+import {getLatest, getPopular, getLongest} from '../lib/ebApi/streams';
 import {createIdKeyHash} from '../lib/stream';
 import {searchOnYoutube} from '../lib/youtube';
 import {search as searchOnSoundcloud} from '../lib/soundcloud';
@@ -48,7 +48,7 @@ export const updateSearchTerm = term => dispatch => Promise.resolve(clearSearchR
 //Echo
 export const {setLatestSearch, addToLatestSearch, removeFromLatestSearch} =
   createSubFeedActions(LatestSearch)(SET_LATEST_SEARCH, ADD_TO_LATEST_SEARCH, REMOVE_FROM_LATEST_SEARCH);
-export const fetchAndReceiveLatestStreamsSearch = fetchAndReceiveStreams(searchStreams, setLatestSearch, addToLatestSearch);
+export const fetchAndReceiveLatestStreamsSearch = fetchAndReceiveStreams(getLatest, setLatestSearch, addToLatestSearch);
 
 export const {setPopularSearch, addToPopularSearch, removeFromPopularSearch} =
   createSubFeedActions(PopularSearch)(SET_POPULAR_SEARCH, ADD_TO_POPULAR_SEARCH, REMOVE_FROM_POPULAR_SEARCH);
