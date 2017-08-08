@@ -5,12 +5,14 @@
 
 .separated{
   width: 100%;
-  display: inline-block;
+  position: absolute;
 }
 .fullStreamContainer{
   composes: col-md-8 from './bootstrap.css';
   padding: 0;
   background-color: white;
+  min-height: calc(100vh - 50px);
+  padding-bottom: 50px;
 }
 .fullStream{
   composes: col-md-offset-1 from './bootstrap.css';
