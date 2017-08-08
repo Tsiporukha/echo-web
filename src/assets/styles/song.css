@@ -1,4 +1,4 @@
-.removeIcon, .addIcon, .playIcon, .pauseIcon{
+.removeIcon, .addIcon, .playIcon, .pauseIcon, .likeIcon, .likedIcon{
   composes: material-icons from './fonts.css';
   cursor: pointer;
 }
@@ -14,6 +14,15 @@
   background-color: rgba(0, 0, 0, 0.5);
 
   &:hover, &:active {background-color: rgba(0, 0, 0, 0.8);}
+}
+.likeIcon{
+  color: #757575;
+  font-size: 44px;
+  margin: auto 14px;
+}
+.likedIcon{
+  composes: likeIcon;
+  color: #fc717b;
 }
 
 

@@ -1,14 +1,19 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import LoginDialog from './LoginDialog';
+
 import {duration} from '../lib/duration';
 
 import styles from '../../assets/styles/song.css';
 
 const getPlayAction = (isCurrentSong, playCurrentSong, setCurrentSong, song) => isCurrentSong ? playCurrentSong : setCurrentSong;
+const getLikeAction = (token, showLogin) => () => token ? false : showLogin();
 
-const Song = props => (
+const SongRender = (props, loginVisibility, toggleLoginVisibility) => (
   <div className={styles.root}>
+    {props.song.user_id && !props.inQueue &&
+      <i onClick={getLikeAction(props.token, toggleLoginVisibility)} className={props.song.liked ? styles.likedIcon : styles.likeIcon}>favorite</i>}
     <div className={styles.artwork}>
       <img src={props.song.artwork_url} />
       <span className={styles.playPause}>
@@ -30,12 +35,28 @@ const Song = props => (
         <i className={styles.addIcon} onClick={props.addToQueue(props.song)}>add</i>
       }
     </div>
+
+
+    {!props.token && <LoginDialog active={loginVisibility} onEscKeyDown={toggleLoginVisibility} />}
   </div>
 )
 
-Song.propTypes = {
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
-};
+
+export default class Song extends Component {
+
+  static propTypes = {
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+  };
 
 
-export default Song;
+  toggleLoginVisibility = () => this.setState({loginVisibility: !this.state.loginVisibility});
+
+
+  state = {
+    loginVisibility: false,
+  }
+
+  render(){
+    return SongRender(this.props, this.state.loginVisibility, this.toggleLoginVisibility)
+  }
+}

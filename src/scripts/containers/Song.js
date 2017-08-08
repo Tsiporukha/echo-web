@@ -11,7 +11,8 @@ const mapStateToProps = (state, ownProps) => ({
   song: state.songs[ownProps.id],
   isCurrentSong: state.songs[ownProps.id].uid === state.player.currentSong.uid,
   isPlaying: state.player.playing && state.songs[ownProps.id].uid === state.player.currentSong.uid,
-  inQueue: false
+  inQueue: false,
+  token: state.session.token,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
