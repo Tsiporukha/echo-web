@@ -1,6 +1,6 @@
 import {createAUDConsts, createSubFeedConsts} from './actionTypesCreators';
 import {
-  STREAM, USER, PLAYLIST, SONG,
+  STREAM, USER, PLAYLIST, SONG, COMMENT,
   LATEST, POPULAR, LONGEST,
   LATEST_SEARCH, POPULAR_SEARCH, LONGEST_SEARCH, YOUTUBE, SOUNDCLOUD
 } from './creatorsArgs';
@@ -9,6 +9,7 @@ export const {ADD_USERS, UPDATE_USERS, DELETE_USERS} = createAUDConsts(USER);
 export const {ADD_STREAMS, UPDATE_STREAMS, DELETE_STREAMS} = createAUDConsts(STREAM);
 export const {ADD_PLAYLISTS, UPDATE_PLAYLISTS, DELETE_PLAYLISTS} = createAUDConsts(PLAYLIST);
 export const {ADD_SONGS, UPDATE_SONGS, DELETE_SONGS} = createAUDConsts(SONG);
+export const {ADD_COMMENTS, UPDATE_COMMENTS, DELETE_COMMENTS} = createAUDConsts(COMMENT);
 
 export const {SET_LATEST, ADD_TO_LATEST, REMOVE_FROM_LATEST} = createSubFeedConsts(LATEST);
 export const {SET_POPULAR, ADD_TO_POPULAR, REMOVE_FROM_POPULAR} = createSubFeedConsts(POPULAR);

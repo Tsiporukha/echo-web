@@ -10,6 +10,7 @@ export const {User, USER} = createArgs('User');
 export const {Stream, STREAM} = createArgs('Stream');
 export const {Playlist, PLAYLIST} = createArgs('Playlist');
 export const {Song, SONG} = createArgs('Song');
+export const {Comment, COMMENT} = createArgs('Comment');
 
 //subFeeds
 export const {Latest, LATEST} = createArgs('Latest');
