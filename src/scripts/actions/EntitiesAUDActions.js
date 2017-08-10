@@ -17,8 +17,9 @@ export const {addSongs, updateSongs, deleteSongs} = createAUDActions(Song)(ADD_S
 export const {addComments, updateComments, deleteComments} = createAUDActions(Comment)(ADD_COMMENTS, UPDATE_COMMENTS, DELETE_COMMENTS);
 
 
-export const addNormalizedStreamsData = (({users, streams, playlists, songs}) => dispatch =>
+export const addNormalizedStreamsData = (({users, streams, playlists, songs, comments}) => dispatch =>
   Promise.resolve(dispatch(addUsers(users)))
     .then(dispatch(addStreams(streams)))
     .then(dispatch(addPlaylists(playlists)))
-    .then(dispatch(addSongs(songs))));
+    .then(dispatch(addSongs(songs)))
+    .then(dispatch(addComments(comments))));

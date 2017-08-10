@@ -9,27 +9,25 @@
 
 .userInfo{
   display: flex;
-  .avatar{
-    height: 32px;
-    width: 32px;
-  }
-  .info{
-    padding-left: 16px;
-    padding-left: 16px;
-    position: relative;
-    top: -5px;
-    .name{
-      font-size: 17px;
-      color: #61b3fa;
-    }
-    .followersCount{
-      font-size: 12px;
-      color: #7c7c7c;
-
-    }
-  }
+}
+.avatar{
+  height: 32px;
+  width: 32px;
+}
+.info{
+  padding-left: 16px;
+  padding-left: 16px;
+  position: relative;
+  top: -5px;
+}
+.name{
+  font-size: 17px;
+  color: #61b3fa;
+}
+.followersCount{
+  font-size: 12px;
+  color: #7c7c7c;
 }
 
 .streams{
-
 }

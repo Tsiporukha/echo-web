@@ -38,6 +38,7 @@
 
 .artwork{
   width: 90px;
+  min-width: 90px;
   height: 68px;
   img{
     height: 100%;
@@ -46,7 +47,7 @@
 }
 
 .info{
-  width: calc(100% - 90px - 40px);
+  width: calc(100% - 90px - 40px - (44px + 14px));
   padding-left: 18px;
 
   .title, .artist{

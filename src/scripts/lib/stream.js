@@ -2,23 +2,30 @@ import {playlistDuration, duration} from './duration';
 
 export const createIdKeyHash = item => ({[item.id]: item});
 
+const reduceToObject = items => items.reduce((itms, itm) => ({...itms, ...createIdKeyHash(itm)}), {});
+
+const replaceCommentUserWithRefId = comment => ({...comment, user: comment.user.id});
+const getCommentUser = comment => comment.user;
+
 export const normalize = stream => ({
   user: stream.user,
-  stream: {...stream, playlist: stream.playlist.id, user: stream.user.id},
+  stream: {...stream, playlist: stream.playlist.id, user: stream.user.id, comments: stream.comments.map(cmmnt => cmmnt.id)},
   playlist: {...stream.playlist, songs: stream.playlist.songs.map(song => song.id)},
-  songs: stream.playlist.songs
+  songs: stream.playlist.songs,
+  comments: stream.comments,
 });
 
-const addToNormalized = (nrmlzdData, {user, stream, playlist, songs}) => (
-  {users: {...nrmlzdData.users, ...createIdKeyHash(user)},
+const addToNormalized = (nrmlzdData, {user, stream, playlist, songs, comments}) => (
+  {users: {...nrmlzdData.users, ...createIdKeyHash(user), ...reduceToObject(comments.map(getCommentUser))},
   streams: {...nrmlzdData.streams, ...createIdKeyHash(stream)},
   playlists: {...nrmlzdData.playlists, ...createIdKeyHash(playlist)},
-  songs: {...nrmlzdData.songs, ...songs.reduce((sngs, sng) => ({...sngs, ...createIdKeyHash(sng)}), {})}
+  songs: {...nrmlzdData.songs, ...reduceToObject(songs)},
+  comments: {...nrmlzdData.comments, ...reduceToObject(comments.map(replaceCommentUserWithRefId))}
 });
 
 export const reduceToNormalized = streams => streams.reduce(
   (nrmlzdData, stream) => addToNormalized(nrmlzdData, normalize(stream)),
-  {users: {}, streams: {}, playlists: {}, songs: {}}
+  {users: {}, streams: {}, playlists: {}, songs: {}, comments: {}}
 );
 
 const inQueue = (state, id) => state.playlists[state.streams[id].playlist].songs.some(songId => state.songs[songId].uid === state.player.currentSong.uid);
