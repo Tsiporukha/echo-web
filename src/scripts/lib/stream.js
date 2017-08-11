@@ -8,19 +8,19 @@ const replaceCommentUserWithRefId = comment => ({...comment, user: comment.user.
 const getCommentUser = comment => comment.user;
 
 export const normalize = stream => ({
-  user: stream.user,
-  stream: {...stream, playlist: stream.playlist.id, user: stream.user.id, comments: stream.comments.map(cmmnt => cmmnt.id)},
+  users: stream.comments.map(getCommentUser).concat(stream.user),
+  stream: {...stream, playlist: stream.playlist.id, user: stream.user.id, comments: stream.comments.slice().reverse().map(cmmnt => cmmnt.id)},
   playlist: {...stream.playlist, songs: stream.playlist.songs.map(song => song.id)},
   songs: stream.playlist.songs,
-  comments: stream.comments,
+  comments: stream.comments.map(replaceCommentUserWithRefId),
 });
 
-const addToNormalized = (nrmlzdData, {user, stream, playlist, songs, comments}) => (
-  {users: {...nrmlzdData.users, ...createIdKeyHash(user), ...reduceToObject(comments.map(getCommentUser))},
-  streams: {...nrmlzdData.streams, ...createIdKeyHash(stream)},
+const addToNormalized = (nrmlzdData, {users, stream, playlist, songs, comments}) => (
+  {streams: {...nrmlzdData.streams, ...createIdKeyHash(stream)},
   playlists: {...nrmlzdData.playlists, ...createIdKeyHash(playlist)},
+  users: {...nrmlzdData.users, ...reduceToObject(users)},
   songs: {...nrmlzdData.songs, ...reduceToObject(songs)},
-  comments: {...nrmlzdData.comments, ...reduceToObject(comments.map(replaceCommentUserWithRefId))}
+  comments: {...nrmlzdData.comments, ...reduceToObject(comments)}
 });
 
 export const reduceToNormalized = streams => streams.reduce(
