@@ -10,11 +10,20 @@ import {Stream, User, Playlist, Song, Comment} from '../constants/creatorsArgs';
 
 import {createAUDActions} from './actionsCreators';
 
+import {createIdKeyHash, appendCommentRef} from '../lib/stream';
+import {addComment as publishComment} from '../lib/ebApi/streams';
+
+
 export const {addStreams, updateStreams, deleteStreams} = createAUDActions(Stream)(ADD_STREAMS, UPDATE_STREAMS, DELETE_STREAMS);
 export const {addUsers, updateUsers, deleteUsers} = createAUDActions(User)(ADD_USERS, UPDATE_USERS, DELETE_USERS);
 export const {addPlaylists, updatePlaylists, deletePlaylists} = createAUDActions(Playlist)(ADD_PLAYLISTS, UPDATE_PLAYLISTS, DELETE_PLAYLISTS);
 export const {addSongs, updateSongs, deleteSongs} = createAUDActions(Song)(ADD_SONGS, UPDATE_SONGS, DELETE_SONGS);
 export const {addComments, updateComments, deleteComments} = createAUDActions(Comment)(ADD_COMMENTS, UPDATE_COMMENTS, DELETE_COMMENTS);
+
+
+export const addComment = (stream, body, token) => dispatch => publishComment(stream.id, body, token)
+  .then(comment => Promise.resolve(dispatch(addComments(createIdKeyHash({...comment, user: comment.user.id}))))
+    .then(_ => dispatch(updateStreams(createIdKeyHash(appendCommentRef(stream, comment.id))))));
 
 
 export const addNormalizedStreamsData = (({users, streams, playlists, songs, comments}) => dispatch =>

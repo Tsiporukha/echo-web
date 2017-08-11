@@ -30,3 +30,6 @@ export const create = (playlist_title, playlist_description, tags, default_artwo
 
 export const like = (id, token) => luch.post(getAbsoluteUrl(`/streams/${id}/add_like`), {token});
 export const unlike = (id, token) => luch.post(getAbsoluteUrl(`/streams/${id}/remove_like`), {token});
+
+export const getComments = (id, limit, offset) => luch.get(getAbsoluteUrl(`/streams/${id}/comments`), {limit, offset}).then(getJson);
+export const addComment = (id, body, token) => luch.post(getAbsoluteUrl(`/streams/${id}/add_comment`), {body, token}).then(getJson);
