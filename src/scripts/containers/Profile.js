@@ -26,7 +26,7 @@ class Profile extends Component {
   initialLoad = (token = this.props.token) => getStreams({user_id: this.props.match.params.id, offset: 0, limit: 5}, token)
     .then(({streams}) => Promise.resolve(this.props.addNormalizedStreamsData(reduceStreamsToNormalized(streams)))
       .then(_ => this.setState({streams: streams.map(s => s.id)}) ))
-    .then(_ => getUser(this.props.match.params.id).then(user => this.props.addUser(user)));
+    .then(_ => getUser(this.props.match.params.id, token).then(user => this.props.addUser(user)));
 
   reloadOnTokenChange = (nextProps, props) => nextProps.token !== props.token ? this.initialLoad(nextProps.token) : false;
 
@@ -41,6 +41,7 @@ class Profile extends Component {
   componentWillReceiveProps = nextProps => this.reloadOnTokenChange(nextProps, this.props);
 
   render() {
+    console.log(this.props.user.is_followed);
     return(
       !!this.props.user &&
       <div className={styles.profile}>

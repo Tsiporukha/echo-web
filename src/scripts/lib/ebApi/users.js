@@ -1,4 +1,4 @@
 import luch, {getJson} from 'luch';
-import {getAbsoluteUrl} from './api';
+import {getAbsoluteUrl, withoutUndefinedParams} from './api';
 
-export const getUser = id => luch.get(getAbsoluteUrl(`/users/${id}`)).then(getJson);
+export const getUser = (id, token) => luch.get(getAbsoluteUrl(`/users/${id}`), withoutUndefinedParams({token})).then(getJson);
