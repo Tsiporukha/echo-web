@@ -1,5 +1,8 @@
 import {SET_TOKEN, SET_USER_DATA, SET_SESSION, CLEAR_SESSION} from "../constants/ActionTypes";
 
+import {addUsers} from './EntitiesAUDActions';
+import {createIdKeyHash} from '../lib/stream';
+
 import {emailLogin as emlLogin, networkLogin as ntwrkLogin, getCurrentUserData} from '../lib/ebApi/session';
 
 
@@ -21,7 +24,10 @@ export const setSession = sessionData => ({
 export const clearSession = token => ({type: CLEAR_SESSION});
 
 
-export const emailLogin = (email, password) => dispatch => emlLogin(email, password).then(sessionData => dispatch(setSession(sessionData)));
-export const networkLogin = (token, network) => dispatch => ntwrkLogin(token, network).then(sessionData => dispatch(setSession(sessionData)));
+const handleLogin = dispatch => sessionData =>
+  Promise.resolve(dispatch(setSession(sessionData))).then(_ => dispatch(addUsers(createIdKeyHash(sessionData.user))));
+
+export const emailLogin = (email, password) => dispatch => emlLogin(email, password).then(handleLogin(dispatch));
+export const networkLogin = (token, network) => dispatch => ntwrkLogin(token, network).then(handleLogin(dispatch));
 
 export const updateCurrentUserData = token => dispatch => getCurrentUserData(token).then(userData => dispatch(setUserData(userData)));

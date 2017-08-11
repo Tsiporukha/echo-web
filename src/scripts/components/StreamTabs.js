@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Tab, Tabs} from 'react-toolbox';
 
 import Song from '../containers/Song';
+import Comment from '../containers/Comment';
+import CommentPublication from '../containers/CommentPublication';
 
 import styles from '../../assets/styles/stream.css';
 import tabsTheme from '../../assets/styles/tabsTheme.css';
@@ -22,7 +24,10 @@ export default class StreamDetails extends Component {
               {this.props.playlist.songs.map(id => (<Song key={id} id={id} />))}
             </div>
           </Tab>
-          <Tab disabled label={`COMMENTS(${this.props.stream.comments.length})`}><small>comments</small></Tab>
+          <Tab label={`COMMENTS(${this.props.stream.comments_count})`}>
+            {[...this.props.stream.comments].map(commentId => <Comment id={commentId} key={commentId} />)}
+            <CommentPublication stream={this.props.stream} />
+          </Tab>
         </Tabs>
       </section>
     );
