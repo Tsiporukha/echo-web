@@ -1,0 +1,39 @@
+.root{
+  display: flex;
+  margin: 10px 0;
+}
+
+.avatar{
+  height: 34px;
+  width: 34px;
+  border-radius: 4px;
+}
+
+.info{
+  composes: info from './profile.css';
+}
+
+.name{
+  font-size: 15px;
+  color: #61b3fa;
+  font-weight: 500;
+}
+.time{
+  color: #797979;
+  font-size: 13px;
+  margin-left: 10px;
+}
+
+.commentBody{
+  color: #343434;
+}
+
+.materialInput{
+  margin: 0 12px;
+  width: 65%;
+}
+
+.publicationAvatar{
+  composes: avatar;
+  margin: auto 0;
+}

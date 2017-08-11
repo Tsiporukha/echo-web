@@ -41,3 +41,5 @@ export const getStreamAndNestedEntities = (state, id) => ({
 });
 
 export const maybeGetDefaultArtwork = str => str || '/assets/images/no_artwork.png';
+
+export const appendCommentRef = (stream, commentId) => ({...stream, comments: stream.comments.concat(commentId), comments_count: stream.comments_count + 1});
