@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
+import {Button} from 'react-toolbox/lib/button';
+
 import Stream from './Stream';
 
-import {addUsers, addNormalizedStreamsData} from '../actions/EntitiesAUDActions';
+import {addUsers, addNormalizedStreamsData, followUser, unfollowUser} from '../actions/EntitiesAUDActions';
 
 import {get as getStreams} from '../lib/ebApi/streams';
 import {getUser} from '../lib/ebApi/users';
@@ -18,7 +20,9 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   addUser: user => dispatch(addUsers({[user.id]: user})),
-  addNormalizedStreamsData: normalizedData => dispatch(addNormalizedStreamsData(normalizedData))
+  addNormalizedStreamsData: normalizedData => dispatch(addNormalizedStreamsData(normalizedData)),
+  follow: (user, token) => dispatch(followUser(user, token)),
+  unfollow: (user, token) => dispatch(unfollowUser(user, token)),
 });
 
 class Profile extends Component {
@@ -29,6 +33,10 @@ class Profile extends Component {
     .then(_ => getUser(this.props.match.params.id, token).then(user => this.props.addUser(user)));
 
   reloadOnTokenChange = (nextProps, props) => nextProps.token !== props.token ? this.initialLoad(nextProps.token) : false;
+
+  follow = () => this.props.follow(this.props.user, this.props.token);
+  unfollow = () => this.props.unfollow(this.props.user, this.props.token);
+
 
   state = {
     offset: 0,
@@ -41,21 +49,26 @@ class Profile extends Component {
   componentWillReceiveProps = nextProps => this.reloadOnTokenChange(nextProps, this.props);
 
   render() {
-    console.log(this.props.user.is_followed);
     return(
       !!this.props.user &&
       <div className={styles.profile}>
         <div className={styles.content}>
-          <div className={styles.userInfo}>
-            <img src={this.props.user.avatar_url} alt='avatar' className={styles.avatar} />
-            <div className={styles.info}>
-              <div className={styles.name}>{this.props.user.name}</div>
-              <div className={styles.followersCount}>{this.props.user.followers_count} followers</div>
+          <div className={styles.userData}>
+            <div className={styles.userInfo}>
+              <img src={this.props.user.avatar_url} alt='avatar' className={styles.avatar} />
+              <div className={styles.info}>
+                <div className={styles.name}>{this.props.user.name}</div>
+                <div className={styles.followersCount}>{this.props.user.followers_count} followers</div>
+              </div>
+              {this.props.token && (this.props.user.is_followed ?
+                <Button onClick={this.unfollow} className={styles.followedBtn} icon='done' label='followed' raised primary /> :
+                <Button onClick={this.follow} className={styles.followBtn} icon='add' label='follow' raised primary />
+              )}
             </div>
-          </div>
 
-          <div className={styles.streams}>
-            {this.state.streams.map(streamId => (<Stream key={streamId} id={streamId} />))}
+            <div className={styles.streams}>
+              {this.state.streams.map(streamId => (<Stream key={streamId} id={streamId} />))}
+            </div>
           </div>
         </div>
       </div>

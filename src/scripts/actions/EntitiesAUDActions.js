@@ -12,6 +12,7 @@ import {createAUDActions} from './actionsCreators';
 
 import {createIdKeyHash, appendCommentRef} from '../lib/stream';
 import {addComment as publishComment} from '../lib/ebApi/streams';
+import {follow, unfollow} from '../lib/ebApi/users';
 
 
 export const {addStreams, updateStreams, deleteStreams} = createAUDActions(Stream)(ADD_STREAMS, UPDATE_STREAMS, DELETE_STREAMS);
@@ -24,6 +25,13 @@ export const {addComments, updateComments, deleteComments} = createAUDActions(Co
 export const addComment = (stream, body, token) => dispatch => publishComment(stream.id, body, token)
   .then(comment => Promise.resolve(dispatch(addComments(createIdKeyHash({...comment, user: comment.user.id}))))
     .then(_ => dispatch(updateStreams(createIdKeyHash(appendCommentRef(stream, comment.id))))));
+
+
+const updateIsFollowed = (user, is_followed) => dispatch => dispatch(updateUsers(createIdKeyHash({...user, is_followed})));
+const maybeUpdateIsFollowed = (user, is_followed) => resp => resp.status === 200 ? updateIsFollowed(user, is_followed) : false;
+
+export const followUser = (user, token) => dispatch => follow(user.id, token).then(resp => maybeUpdateIsFollowed(user, true)(resp)(dispatch));
+export const unfollowUser = (user, token) => dispatch => unfollow(user.id, token).then(resp => maybeUpdateIsFollowed(user, false)(resp)(dispatch));
 
 
 export const addNormalizedStreamsData = (({users, streams, playlists, songs, comments}) => dispatch =>
