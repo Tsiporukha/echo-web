@@ -69,6 +69,11 @@ export default class Feed extends Component {
   render(){
     return (
       <div>
+        {this.props.initialFilters.term === undefined && <div className={styles.tags}>
+          {primaryTags.map(ptag =>
+            <span key={ptag} className={this.inTags(ptag) ? styles.selectedTag : styles.tag} onClick={this.handleTagClick(ptag)}>{ptag}</span>
+          )}
+        </div>}
         <Tabs theme={styles} index={this.state.activeSubFeed} onChange={this.handleTabChange}>
           <Tab label='Most Popular' onActive={this.loadMorePopularStreams}>
             <div className={styles.streams}>
@@ -76,11 +81,6 @@ export default class Feed extends Component {
             </div>
           </Tab>
           <Tab label='Latest' onActive={this.loadMoreLatestStreams}>
-            {this.props.initialFilters.term === undefined && <div className={styles.tags}>
-              {primaryTags.map(ptag =>
-                <span key={ptag} className={this.inTags(ptag) ? styles.selectedTag : styles.tag} onClick={this.handleTagClick(ptag)}>{ptag}</span>
-              )}
-            </div>}
             <div className={styles.streams}>
               {this.props.latest.map(s => <Stream id={s} key={s} />)}
             </div>
