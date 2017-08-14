@@ -8,8 +8,9 @@ export const get = (filters, token) => luch.get(getAbsoluteUrl('/streams'), with
 //export const getLongest = (filters, token) => luch.get(getAbsoluteUrl('/streams/longest'), withoutUndefinedParams({...filters, token})).then(getJson);
 //export const getLatest = (filters, token) => luch.get(getAbsoluteUrl('/streams/latest'), withoutUndefinedParams({...filters, token})).then(getJson);
 const getRoute = route => (filters, token) =>
-  luch(getAbsoluteUrl(`/streams/${route}?limit=${filters.limit}&offset=${filters.offset}${filters.tags.map(tag => `&tags[]=${tag}`).join('')}${token ? `&token=${token}` : ''}`))
-    .then(getJson);
+  luch(getAbsoluteUrl(`/streams/${route}?limit=${filters.limit}&offset=${filters.offset}${filters.tags.map(tag => `&tags[]=${tag}`).join('')}` +
+    `${token ? `&token=${token}` : ''}${filters.term ? `&term=${filters.term}` : ''}`))
+      .then(getJson);
 export const getPopular = getRoute('popular');
 export const getLongest = getRoute('longest');
 export const getLatest = getRoute('latest');

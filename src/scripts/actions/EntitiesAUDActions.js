@@ -27,7 +27,9 @@ export const addComment = (stream, body, token) => dispatch => publishComment(st
     .then(_ => dispatch(updateStreams(createIdKeyHash(appendCommentRef(stream, comment.id))))));
 
 
-const updateIsFollowed = (user, is_followed) => dispatch => dispatch(updateUsers(createIdKeyHash({...user, is_followed})));
+const incrOrDecrFollowersCount = (count, isFollowed) => count + (isFollowed ? +1 : -1);
+const updateIsFollowed = (user, is_followed, incFollowersCount) => dispatch =>
+  dispatch(updateUsers(createIdKeyHash({...user, is_followed, followers_count: incrOrDecrFollowersCount(user.followers_count, is_followed)})));
 const maybeUpdateIsFollowed = (user, is_followed) => resp => resp.status === 200 ? updateIsFollowed(user, is_followed) : false;
 
 export const followUser = (user, token) => dispatch => follow(user.id, token).then(resp => maybeUpdateIsFollowed(user, true)(resp)(dispatch));
