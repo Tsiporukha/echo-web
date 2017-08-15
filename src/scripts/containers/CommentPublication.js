@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 
 import {Input} from 'react-toolbox';
 
+import LoginDialog from '../components/LoginDialog';
+
 import {addComment} from '../actions/EntitiesAUDActions';
 
 import styles from '../../assets/styles/comment.css';
@@ -21,22 +23,29 @@ const mapDispatchToProps = dispatch => ({
 
 class CommentPublication extends Component {
 
+  toggleLoginVisibility = () => this.setState({loginVisibility: !this.state.loginVisibility});
   setComment = comment => this.setState({comment});
-  publishComment = () => this.state.comment.trim() ? this.props.addComment(this.props.stream, this.state.comment, this.props.token) : false;
-  onKeyUp = e => e.keyCode === 13 ? this.publishComment().then(_ => this.setState({comment: ''})) : false;
+
+  publish = () => this.props.addComment(this.props.stream, this.state.comment, this.props.token).then(_ => this.setComment(''));
+  maybePublish = () => this.props.token ? (this.state.comment.trim() ? this.publish() : false) : this.toggleLoginVisibility();
+
+  onKeyUp = e => e.keyCode === 13 ? this.maybePublish() : false;
 
 
   state = {
     comment: '',
+    loginVisibility: false,
   };
 
   render() {
     return(
-      !!this.props.token && <div className={styles.root}>
-        <img className={styles.publicationAvatar} src={this.props.user.avatar_url} alt='avatar' />
+      <div className={styles.root}>
+        {this.props.user && <img className={styles.publicationAvatar} src={this.props.user.avatar_url} alt='avatar' />}
         <Input type='text' name='comment' hint='Leave a comment'
           className={styles.materialInput} theme={inputTheme} maxLength={65535} value={this.state.comment}
           onChange={this.setComment} onKeyUp={this.onKeyUp} />
+
+        {!this.props.token && <LoginDialog active={this.state.loginVisibility} onEscKeyDown={this.toggleLoginVisibility} />}
       </div>
     )
   }
