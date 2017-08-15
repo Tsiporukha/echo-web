@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Tab, Tabs} from 'react-toolbox';
+import {Tab, Tabs, Button} from 'react-toolbox';
 
 import Song from '../containers/Song';
 import Comment from '../containers/Comment';
@@ -7,6 +7,8 @@ import CommentPublication from '../containers/CommentPublication';
 
 import styles from '../../assets/styles/stream.css';
 import tabsTheme from '../../assets/styles/tabsTheme.css';
+
+const commentsLoadLimit = 5;
 
 export default class StreamDetails extends Component {
 
@@ -25,6 +27,9 @@ export default class StreamDetails extends Component {
             </div>
           </Tab>
           <Tab label={`COMMENTS(${this.props.stream.comments_count})`}>
+            {this.props.stream.comments.length < this.props.stream.comments_count &&
+              <Button label='Load more comments'
+                onClick={this.props.loadComments(this.props.stream, commentsLoadLimit, this.props.stream.comments.length)} />}
             {[...this.props.stream.comments].map(commentId => <Comment id={commentId} key={commentId} />)}
             <CommentPublication stream={this.props.stream} />
           </Tab>

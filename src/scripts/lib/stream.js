@@ -2,7 +2,7 @@ import {playlistDuration, duration} from './duration';
 
 export const createIdKeyHash = item => ({[item.id]: item});
 
-const reduceToObject = items => items.reduce((itms, itm) => ({...itms, ...createIdKeyHash(itm)}), {});
+export const reduceToObject = items => items.reduce((itms, itm) => ({...itms, ...createIdKeyHash(itm)}), {});
 
 const replaceCommentUserWithRefId = comment => ({...comment, user: comment.user.id});
 const getCommentUser = comment => comment.user;
@@ -42,4 +42,6 @@ export const getStreamAndNestedEntities = (state, id) => ({
 
 export const maybeGetDefaultArtwork = str => str || '/assets/images/no_artwork.png';
 
-export const appendCommentRef = (stream, commentId) => ({...stream, comments: stream.comments.concat(commentId), comments_count: stream.comments_count + 1});
+export const appendCommentsRefs = (stream, commentsIds) => ({...stream, comments: commentsIds.concat(stream.comments)})
+export const appendPublishedCommentRef = (stream, commentId) =>
+  ({...stream, comments: stream.comments.concat(commentId), comments_count: stream.comments_count + 1});

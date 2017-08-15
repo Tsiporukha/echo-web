@@ -10,8 +10,8 @@ import {Stream, User, Playlist, Song, Comment} from '../constants/creatorsArgs';
 
 import {createAUDActions} from './actionsCreators';
 
-import {createIdKeyHash, appendCommentRef} from '../lib/stream';
-import {addComment as publishComment} from '../lib/ebApi/streams';
+import {createIdKeyHash, appendPublishedCommentRef, appendCommentsRefs, reduceToObject} from '../lib/stream';
+import {addComment as publishComment, getComments} from '../lib/ebApi/streams';
 import {follow, unfollow} from '../lib/ebApi/users';
 
 
@@ -22,9 +22,18 @@ export const {addSongs, updateSongs, deleteSongs} = createAUDActions(Song)(ADD_S
 export const {addComments, updateComments, deleteComments} = createAUDActions(Comment)(ADD_COMMENTS, UPDATE_COMMENTS, DELETE_COMMENTS);
 
 
+const receiveComments = comments => dispatch => Promise.resolve(dispatch(addUsers(reduceToObject(comments.map(comment => comment.user)))))
+  .then(_ => dispatch(addComments(reduceToObject(comments.map(comment => ({...comment, user: comment.user.id}))))));
+const updateStreamOnCommentsAction = appendCommentsRefsFn => (stream, commentsIds) => dispatch =>
+  dispatch(updateStreams(createIdKeyHash(appendCommentsRefsFn(stream, commentsIds))));
+const receiveCommentsAndUpdateStream = (stream, comments) => appendCommentsRefsFn => dispatch =>
+  receiveComments(comments)(dispatch).then(_ => updateStreamOnCommentsAction(appendCommentsRefsFn)(stream, comments.map(comment => comment.id))(dispatch));
+
 export const addComment = (stream, body, token) => dispatch => publishComment(stream.id, body, token)
-  .then(comment => Promise.resolve(dispatch(addComments(createIdKeyHash({...comment, user: comment.user.id}))))
-    .then(_ => dispatch(updateStreams(createIdKeyHash(appendCommentRef(stream, comment.id))))));
+  .then(comment => receiveCommentsAndUpdateStream(stream, [comment])(appendPublishedCommentRef)(dispatch));
+
+export const loadComments = (stream, limit, offset) => dispatch => getComments(stream.id, limit, offset)
+  .then(data => receiveCommentsAndUpdateStream(stream, data.comments.slice().reverse())(appendCommentsRefs)(dispatch));
 
 
 const incrOrDecrFollowersCount = (count, isFollowed) => count + (isFollowed ? +1 : -1);

@@ -5,6 +5,8 @@ import StreamDescription from '../components/StreamDescription';
 import StreamTabs from '../components/StreamTabs';
 import {addClonedStreamToTopAndPlay, addClonedStream} from '../actions/QueueActions';
 import {pause, play} from '../actions/PlayerActions';
+import {loadComments} from '../actions/EntitiesAUDActions';
+
 
 import {getStreamAndNestedEntities} from '../lib/stream';
 
@@ -21,6 +23,7 @@ const mapDispatchToProps = dispatch => ({
   pause: () => dispatch(pause()),
   play: () => dispatch(play()),
   dispatchLikeAction: likeAction => (stream, token) => () => dispatch(likeAction(stream, token)),
+  loadComments: (streamId, limit, offset) => () => dispatch(loadComments(streamId, limit, offset)),
 });
 
 
