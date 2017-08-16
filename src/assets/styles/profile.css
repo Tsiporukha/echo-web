@@ -1,3 +1,9 @@
+.feedIcon, .favoriteIcon{
+  composes: material-icons from './fonts.css';
+  font-size: 22px;
+}
+
+
 .profile{
   padding-top: 28px;
 }

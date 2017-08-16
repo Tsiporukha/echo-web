@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {Button} from 'react-toolbox/lib/button';
+import {Button, Tab, Tabs} from 'react-toolbox';
 
 import Stream from './Stream';
 
@@ -12,6 +12,9 @@ import {getUser} from '../lib/ebApi/users';
 import {reduceToNormalized as reduceStreamsToNormalized} from '../lib/stream';
 
 import styles from '../../assets/styles/profile.css';
+import tabsTheme from '../../assets/styles/tabsTheme.css';
+import favSubTabsTheme from '../../assets/styles/feed.css';
+
 
 const mapStateToProps = (state, ownProps) => ({
   user: state.users[ownProps.match.params.id],
@@ -27,6 +30,9 @@ const mapDispatchToProps = dispatch => ({
 
 class Profile extends Component {
 
+  handleTabChange = tab => this.setState({tab});
+  handleFavSubTabChange = favSubTab => this.setState({favSubTab});
+
   initialLoad = (token = this.props.token) => getStreams({user_id: this.props.match.params.id, offset: 0, limit: 5}, token)
     .then(({streams}) => Promise.resolve(this.props.addNormalizedStreamsData(reduceStreamsToNormalized(streams)))
       .then(_ => this.setState({streams: streams.map(s => s.id)}) ))
@@ -41,7 +47,10 @@ class Profile extends Component {
   state = {
     offset: 0,
     limit: 5,
-    streams: []
+    streams: [],
+
+    tab: 0,
+    favSubTab: 0,
   }
 
   componentWillMount = () => this.initialLoad(this.props.token);
@@ -66,9 +75,23 @@ class Profile extends Component {
               )}
             </div>
 
-            <div className={styles.streams}>
-              {this.state.streams.map(streamId => (<Stream key={streamId} id={streamId} />))}
-            </div>
+
+            <Tabs theme={tabsTheme} index={this.state.tab} onChange={this.handleTabChange}>
+              <Tab label={<i className={styles.feedIcon}>language</i>}>
+                {this.state.streams.map(streamId => (<Stream key={streamId} id={streamId} />))}
+              </Tab>
+              <Tab label={<i className={styles.favoriteIcon}>favorite</i>}>
+                <Tabs theme={favSubTabsTheme} index={this.state.favSubTab} onChange={this.handleFavSubTabChange}>
+                  <Tab label='Rooms'>
+                    rooms
+                  </Tab>
+                  <Tab label='Songs'>
+                    songs
+                  </Tab>
+                </Tabs>
+              </Tab>
+            </Tabs>
+
           </div>
         </div>
       </div>
