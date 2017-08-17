@@ -8,12 +8,13 @@ import {duration} from '../lib/duration';
 import styles from '../../assets/styles/song.css';
 
 const getPlayAction = (isCurrentSong, playCurrentSong, setCurrentSong, song) => isCurrentSong ? playCurrentSong : setCurrentSong;
-const getLikeAction = (token, showLogin) => () => token ? false : showLogin();
+const getLikeAction = (song, token, toggleLike, showLogin) => () => token ? toggleLike(song, token) : showLogin();
 
 const SongRender = (props, loginVisibility, toggleLoginVisibility) => (
   <div className={styles.root}>
     {props.song.user_id && !props.inQueue &&
-      <i onClick={getLikeAction(props.token, toggleLoginVisibility)} className={props.song.liked ? styles.likedIcon : styles.likeIcon}>favorite</i>}
+      <i onClick={getLikeAction(props.song, props.token, props.toggleLike, toggleLoginVisibility)}
+        className={props.song.liked ? styles.likedIcon : styles.likeIcon}>favorite</i>}
     <div className={styles.artwork}>
       <img src={props.song.artwork_url} />
       <span className={styles.playPause}>

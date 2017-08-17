@@ -13,6 +13,7 @@ import {createAUDActions} from './actionsCreators';
 import {createIdKeyHash, appendPublishedCommentRef, appendCommentsRefs, reduceToObject} from '../lib/stream';
 import {addComment as publishComment, getComments} from '../lib/ebApi/streams';
 import {follow, unfollow} from '../lib/ebApi/users';
+import {toggleLike as apiToggleSongLike} from '../lib/ebApi/songs';
 
 
 export const {addStreams, updateStreams, deleteStreams} = createAUDActions(Stream)(ADD_STREAMS, UPDATE_STREAMS, DELETE_STREAMS);
@@ -43,6 +44,11 @@ const maybeUpdateIsFollowed = (user, is_followed) => resp => resp.status === 200
 
 export const followUser = (user, token) => dispatch => follow(user.id, token).then(resp => maybeUpdateIsFollowed(user, true)(resp)(dispatch));
 export const unfollowUser = (user, token) => dispatch => unfollow(user.id, token).then(resp => maybeUpdateIsFollowed(user, false)(resp)(dispatch));
+
+
+const updateSongOnToggleLike = song => dispatch => dispatch(updateSongs(createIdKeyHash({...song, liked: !song.liked})));
+export const toggleSongLike = (song, token) => dispatch =>
+  apiToggleSongLike(song.id, token).then(resp => resp.status === 200 ? updateSongOnToggleLike(song)(dispatch) : false);
 
 
 export const addNormalizedStreamsData = (({users, streams, playlists, songs, comments}) => dispatch =>

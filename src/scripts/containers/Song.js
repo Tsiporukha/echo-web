@@ -5,6 +5,7 @@ import Song from '../components/Song';
 
 import {addClonedSongs, addClonedSongToTopAndPlay, remove as removeFromQueue} from '../actions/QueueActions';
 import {setCurrentSong, pause, play} from '../actions/PlayerActions';
+import {toggleSongLike} from '../actions/EntitiesAUDActions';
 
 
 const mapStateToProps = (state, ownProps) => ({
@@ -19,6 +20,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   addToQueue: song => () =>  dispatch(addClonedSongs([song])),
   play: () => dispatch(play()),
   setCurrentSong: song => () => dispatch(addClonedSongToTopAndPlay(song)),
+  toggleLike: (song, token) => dispatch(toggleSongLike(song, token)),
 
   pause: () => dispatch(pause())
 });
