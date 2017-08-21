@@ -36,6 +36,16 @@
   }
 }
 
+.likeArea{
+  display: flex;
+  text-align: center;
+  span{
+    color: #9a9a9a;
+    font-size: 13px;
+    margin: auto;
+  }
+}
+
 .artwork{
   width: 90px;
   min-width: 90px;

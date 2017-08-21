@@ -12,9 +12,11 @@ const getLikeAction = (song, token, toggleLike, showLogin) => () => token ? togg
 
 const SongRender = (props, loginVisibility, toggleLoginVisibility) => (
   <div className={styles.root}>
-    {props.song.user_id && !props.inQueue &&
+    {props.song.user_id && !props.inQueue && <span className={styles.likeArea}>
+      <span>{props.song.likers_count}</span>
       <i onClick={getLikeAction(props.song, props.token, props.toggleLike, toggleLoginVisibility)}
-        className={props.song.liked ? styles.likedIcon : styles.likeIcon}>favorite</i>}
+        className={props.song.liked ? styles.likedIcon : styles.likeIcon}>favorite</i>
+    </span>}
     <div className={styles.artwork}>
       <img src={props.song.artwork_url} />
       <span className={styles.playPause}>
