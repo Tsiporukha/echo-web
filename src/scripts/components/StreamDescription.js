@@ -54,6 +54,9 @@ const StreamDescriptionRender = (props, loginVisibility, toggleLoginVisibility) 
           <span className={styles.duration}>
             <i className={styles.durationIcon}>access_time</i> {props.duration}
           </span>
+          <span className={styles.commentsCount}>
+            <i className={styles.commentsIcon}>comment</i> {props.stream.comments_count}
+          </span>
         </div>
 
         {props.playlist.description && <div className={styles.description}>

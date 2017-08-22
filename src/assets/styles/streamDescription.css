@@ -1,4 +1,4 @@
-.lengthIcon, .durationIcon, .likeIcon, .likedIcon, .playlistAddIcon, .shareIcon, .playIcon, .pauseIcon{
+.lengthIcon, .durationIcon, .likeIcon, .likedIcon, .playlistAddIcon, .shareIcon, .playIcon, .pauseIcon, .commentsIcon{
   composes: material-icons from './fonts.css';
 }
 .lengthIcon, .durationIcon, .likeIcon, .likedIcon, .playlistAddIcon, .shareIcon{
@@ -13,7 +13,11 @@
 .durationIcon{
   font-size: 15px;
   top: 2px;
-  margin: 0 2px 0 14px;
+  margin: 0 2px 0 12px;
+}
+.commentsIcon{
+  font-size: 18px;
+  margin: 0 2px 0 12px;
 }
 .likeIcon, .likedIcon{
   font-size: 18px;
@@ -99,7 +103,7 @@
       margin: 14px 0;
       color: #757575;
       display: flex;
-      .length, .duration{
+      .length, .duration, .commentsCount{
         display: inline-flex;
       }
     }
