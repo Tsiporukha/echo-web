@@ -3,6 +3,7 @@ import {Tab, Tabs} from 'react-toolbox/lib/tabs';
 
 import Feed from '../containers/Feed';
 import FeedSearch from '../containers/FeedSearch';
+import PopularSongs from '../containers/PopularSongs';
 import Youtube from '../containers/Youtube';
 import Soundcloud from '../containers/Soundcloud';
 
@@ -11,15 +12,15 @@ import tabsTheme from '../../assets/styles/tabsTheme.css';
 
 const getFeedSourcesTabs = (search, activeTabIndex, handleTabChange) => (search ?
   <Tabs theme={tabsTheme} index={activeTabIndex} onChange={handleTabChange}>
+    <Tab label={<i className={styles.feedIcon}>language</i>}> <FeedSearch /> </Tab>
+    <Tab label={<i className={styles.whatshotIcon}>whatshot</i>}> <PopularSongs /> </Tab>
     <Tab label={<i className={styles.youtubeIcon} />}> <Youtube /> </Tab>
     <Tab label={<i className={styles.soundcloudIcon} />}> <Soundcloud /> </Tab>
-    <Tab label={<i className={styles.feedIcon}>language</i>}> <FeedSearch /> </Tab>
-    <Tab label={<i className={styles.whatshotIcon}>whatshot</i>}><small>whatshot</small></Tab>
   </Tabs>
   :
   <Tabs theme={tabsTheme} index={activeTabIndex} onChange={handleTabChange}>
     <Tab label={<i className={styles.feedIcon}>language</i>}> <Feed /> </Tab>
-    <Tab label={<i className={styles.whatshotIcon}>whatshot</i>}><small>whatshot</small></Tab>
+    <Tab label={<i className={styles.whatshotIcon}>whatshot</i>}> <PopularSongs /> </Tab>
   </Tabs>
 );
 

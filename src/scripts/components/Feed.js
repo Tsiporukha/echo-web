@@ -11,7 +11,7 @@ import styles from '../../assets/styles/feed.css';
 import {results as resultsClassName} from '../../assets/styles/search.css';
 
 import tags from '../../assets/tags.json';
-const primaryTags = Object.keys(tags);
+const primaryTags = Object.keys(tags).slice(12);
 
 export default class Feed extends Component {
 
