@@ -46,7 +46,8 @@ export const followUser = (user, token) => dispatch => follow(user.id, token).th
 export const unfollowUser = (user, token) => dispatch => unfollow(user.id, token).then(resp => maybeUpdateIsFollowed(user, false)(resp)(dispatch));
 
 
-const updateSongOnToggleLike = song => dispatch => dispatch(updateSongs(createIdKeyHash({...song, liked: !song.liked})));
+const updateSongOnToggleLike = song => dispatch =>
+  dispatch(updateSongs(createIdKeyHash({...song, liked: !song.liked, likers_count: song.likers_count + (song.liked ? -1 : 1)})));
 export const toggleSongLike = (song, token) => dispatch =>
   apiToggleSongLike(song.id, token).then(resp => resp.status === 200 ? updateSongOnToggleLike(song)(dispatch) : false);
 
