@@ -40,7 +40,7 @@ export const getStreamAndNestedEntities = (state, id) => ({
   isPlaying: inQueue(state, id) && state.player.playing
 });
 
-export const maybeGetDefaultArtwork = str => str || '/assets/images/no_artwork.png';
+export const maybeGetDefaultArtwork = str => str || require('../../assets/images/no_artwork.png');
 
 export const appendCommentsRefs = (stream, commentsIds) => ({...stream, comments: commentsIds.concat(stream.comments)})
 export const appendPublishedCommentRef = (stream, commentId) =>

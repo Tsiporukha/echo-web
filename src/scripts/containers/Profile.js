@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {Button, Tab, Tabs} from 'react-toolbox';
 
 import Stream from './Stream';
+import UserLikes from './UserLikes';
 
 import {addUsers, addNormalizedStreamsData, followUser, unfollowUser} from '../actions/EntitiesAUDActions';
 
@@ -13,12 +14,12 @@ import {reduceToNormalized as reduceStreamsToNormalized} from '../lib/stream';
 
 import styles from '../../assets/styles/profile.css';
 import tabsTheme from '../../assets/styles/tabsTheme.css';
-import favSubTabsTheme from '../../assets/styles/feed.css';
 
 
 const mapStateToProps = (state, ownProps) => ({
   user: state.users[ownProps.match.params.id],
   token: state.session.token,
+  currentUser: state.session.user,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -28,10 +29,17 @@ const mapDispatchToProps = dispatch => ({
   unfollow: (user, token) => dispatch(unfollowUser(user, token)),
 });
 
+const initialState = {
+  offset: 0,
+  limit: 5,
+  streams: [],
+
+  tab: 0,
+};
+
 class Profile extends Component {
 
   handleTabChange = tab => this.setState({tab});
-  handleFavSubTabChange = favSubTab => this.setState({favSubTab});
 
   initialLoad = (token = this.props.token) => getStreams({user_id: this.props.match.params.id, offset: 0, limit: 5}, token)
     .then(({streams}) => Promise.resolve(this.props.addNormalizedStreamsData(reduceStreamsToNormalized(streams)))
@@ -39,23 +47,18 @@ class Profile extends Component {
     .then(_ => getUser(this.props.match.params.id, token).then(user => this.props.addUser(user)));
 
   reloadOnTokenChange = (nextProps, props) => nextProps.token !== props.token ? this.initialLoad(nextProps.token) : false;
+  reinitOnUserChange = (nextProps, props) => nextProps.match.params.id !== props.match.params.id ?
+    Promise.resolve(this.setState(initialState)).then(this.initialLoad) : false;
 
   follow = () => this.props.follow(this.props.user, this.props.token);
   unfollow = () => this.props.unfollow(this.props.user, this.props.token);
 
 
-  state = {
-    offset: 0,
-    limit: 5,
-    streams: [],
-
-    tab: 0,
-    favSubTab: 0,
-  }
+  state = {...initialState};
 
   componentWillMount = () => this.initialLoad(this.props.token);
 
-  componentWillReceiveProps = nextProps => this.reloadOnTokenChange(nextProps, this.props);
+  componentWillReceiveProps = nextProps => this.reinitOnUserChange(nextProps, this.props) || this.reloadOnTokenChange(nextProps, this.props);
 
   render() {
     return(
@@ -69,7 +72,7 @@ class Profile extends Component {
                 <div className={styles.name}>{this.props.user.name}</div>
                 <div className={styles.followersCount}>{this.props.user.followers_count} followers</div>
               </div>
-              {this.props.token && (this.props.user.is_followed ?
+              {this.props.token && (this.props.user.id !== this.props.currentUser.id) && (this.props.user.is_followed ?
                 <Button onClick={this.unfollow} className={styles.followedBtn} icon='done' label='followed' raised primary /> :
                 <Button onClick={this.follow} className={styles.followBtn} icon='add' label='follow' raised primary />
               )}
@@ -81,14 +84,7 @@ class Profile extends Component {
                 {this.state.streams.map(streamId => (<Stream key={streamId} id={streamId} />))}
               </Tab>
               <Tab label={<i className={styles.favoriteIcon}>favorite</i>}>
-                <Tabs theme={favSubTabsTheme} index={this.state.favSubTab} onChange={this.handleFavSubTabChange}>
-                  <Tab label='Rooms'>
-                    rooms
-                  </Tab>
-                  <Tab label='Songs'>
-                    songs
-                  </Tab>
-                </Tabs>
+                <UserLikes userId={this.props.user.id} />
               </Tab>
             </Tabs>
 
