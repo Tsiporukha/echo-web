@@ -7,6 +7,7 @@ import CurrentQueue from './Queue';
 
 import {play, pause, getNextSong, getPrevSong, setCurrentSong, getQueueSongs} from '../actions/PlayerActions';
 import {duration} from '../lib/duration';
+import {maybeGetDefaultArtwork} from '../lib/stream';
 
 import styles from '../../assets/styles/player.css';
 
@@ -47,6 +48,8 @@ class Player extends Component {
 
   toggleQueueVisibility = () => this.setState({queueVisibility: !this.state.queueVisibility});
 
+  maybeTitlePlaceholder = str => str || '--//--';
+
 
   state = {
     queueVisibility: true,
@@ -58,15 +61,15 @@ class Player extends Component {
 
   render() {
     return (
-      !!this.props.currentSong.data_url && <div className={styles.root}>
+      <div className={styles.root}>
         <div className={styles.bottomPlayer}>
           <div className={styles.artwork}>
-            <img src={this.props.currentSong.artwork_url} className={styles.artwork} alt='artwork' />
+            <img src={maybeGetDefaultArtwork(this.props.currentSong.artwork_url)} className={styles.artwork} alt='artwork' />
           </div>
 
           <div className={styles.songInfo}>
-            <h5>{this.props.currentSong.title}</h5>
-            <h6>by {this.props.currentSong.artist}</h6>
+            <h5>{this.maybeTitlePlaceholder(this.props.currentSong.title)}</h5>
+            <h6>by {this.maybeTitlePlaceholder(this.props.currentSong.artist)}</h6>
           </div>
 
           <i className={styles.prevIcon} onClick={this.playPrev}>skip_previous</i>
@@ -90,6 +93,8 @@ class Player extends Component {
           <i className={this.state.queueVisibility ? styles.currentQueueIconActive : styles.currentQueueIcon}
             onClick={this.toggleQueueVisibility}>queue_music</i>
 
+          {this.state.queueVisibility && <CurrentQueue />}
+
           <ReactPlayer
             ref={player => this.player = player}
             className={styles.reactPlayer}
@@ -104,7 +109,6 @@ class Player extends Component {
           />
         </div>
 
-        {this.state.queueVisibility && <CurrentQueue />}
 
       </div>
     )
