@@ -6,7 +6,7 @@ import {Button} from 'react-toolbox/lib/button';
 
 import LoginDialog from '../components/LoginDialog';
 
-import {clearSession} from '../actions/SessionActions';
+import {updateCurrentUserData, clearSession} from '../actions/SessionActions';
 
 import styles from '../../assets/styles/maybeCurrentUser.css';
 
@@ -17,7 +17,8 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  clearSession: () => dispatch(clearSession())
+  clearSession: () => dispatch(clearSession()),
+  updateCurrentUserData: token => dispatch(updateCurrentUserData(token)),
 });
 
 class MaybeCurrentUser extends Component {
@@ -34,6 +35,8 @@ class MaybeCurrentUser extends Component {
 
   state = {dialogVisibility: false};
 
+  componentWillMount = () => this.props.token && this.props.updateCurrentUserData(this.props.token);
+
   render(){
     return (
       <span className={styles.root}>
@@ -41,6 +44,7 @@ class MaybeCurrentUser extends Component {
           <span className={styles.userArea}>
             <Link to={`/profile/${this.props.user.id}`}>
               <img src={this.props.user.avatar_url} alt='avatar' className={styles.avatar} />
+              <span className={styles.username}>{this.props.user.name || this.props.user.username || ''}</span>
             </Link>
           </span>
           :

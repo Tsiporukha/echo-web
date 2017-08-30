@@ -30,4 +30,5 @@ const handleLogin = dispatch => sessionData =>
 export const emailLogin = (email, password) => dispatch => emlLogin(email, password).then(handleLogin(dispatch));
 export const networkLogin = (token, network) => dispatch => ntwrkLogin(token, network).then(handleLogin(dispatch));
 
-export const updateCurrentUserData = token => dispatch => getCurrentUserData(token).then(userData => dispatch(setUserData(userData)));
+export const updateCurrentUserData = token => dispatch => getCurrentUserData(token).then(userData => dispatch(setUserData(userData)))
+  .catch(_ => dispatch(clearSession()));

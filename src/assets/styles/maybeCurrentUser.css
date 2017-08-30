@@ -8,6 +8,20 @@
   border-radius: 4px;
 }
 
+.username{
+  color: white;
+  font-weight: 500;
+  padding-left: 10px;
+  color: white;
+  font-weight: 500;
+  padding-left: 10px;
+  max-width: 120px;
+  display: inline-flex;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Sign in Button */
 .icon{line-height: initial;}
 .button{
