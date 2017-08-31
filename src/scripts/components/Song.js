@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 import LoginDialog from './LoginDialog';
 
 import {duration} from '../lib/duration';
+import {getPlayAction, getLikeAction} from '../lib/song';
 
 import styles from '../../assets/styles/song.css';
 
-const getPlayAction = (isCurrentSong, playCurrentSong, setCurrentSong, song) => isCurrentSong ? playCurrentSong : setCurrentSong;
-const getLikeAction = (song, token, toggleLike, showLogin) => () => token ? toggleLike(song, token) : showLogin();
 
 const SongRender = (props, loginVisibility, toggleLoginVisibility) => (
   <div className={styles.root}>
@@ -26,7 +25,7 @@ const SongRender = (props, loginVisibility, toggleLoginVisibility) => (
             className={styles.playIcon}>play_arrow</i>}
       </span>
     </div>
-    <div className={styles.info}>
+    <div className={`${styles.info} ${props.inQueue ? '' : styles.withLikeArea}`}>
       <div className={styles.title}>{props.song.title}</div>
       <div className={styles.artist}>{props.song.artist}</div>
       <div className={styles.duration}>{duration(props.song.duration)}</div>

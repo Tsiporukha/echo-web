@@ -1,9 +1,9 @@
-.removeIcon, .addIcon, .playIcon, .pauseIcon, .likeIcon, .likedIcon{
+.removeIcon, .addIcon, .playIcon, .pauseIcon, .likeIcon, .likedIcon, .lengthIcon, .durationIcon{
   composes: material-icons from './fonts.css';
   cursor: pointer;
 }
 .removeIcon, .addIcon{
-  padding: 6px;
+  padding: 6px 12px 6px 0;
   border-radius: 50%;
 }
 .playIcon, .pauseIcon{
@@ -25,11 +25,21 @@
   color: #fc717b;
 }
 
+.lengthIcon{
+  font-size: 20px;
+}
+.durationIcon{
+  font-size: 15px;
+  margin: 3px 1px;
+}
+
 
 .root{
   background-color: transparent;
   display: flex;
   margin: 10px 0;
+  color: #343434;
+  font-size: 14px;
   &:hover, &:active{
     background-color: #e5e5e5;
     .icons{visibility: visible;}
@@ -39,10 +49,12 @@
 .likeArea{
   display: flex;
   text-align: center;
+  width: 85px;
   span{
     color: #9a9a9a;
     font-size: 13px;
     margin: auto;
+    padding-left: 6px;
   }
 }
 
@@ -57,8 +69,11 @@
 }
 
 .info{
-  width: calc(100% - 90px - 40px - (44px + 14px));
+  width: calc(100% - 90px - 40px);
   padding-left: 18px;
+  .withLikeArea{
+    height: calc(100% - 90px - 40px - 85px);
+  }
 
   .title, .artist{
     text-overflow: ellipsis;
@@ -89,4 +104,68 @@
   height: 40px;
   left: 24px;
   bottom: 55px;
+}
+
+.recentlyLiked{
+  composes: root;
+  .icons{
+    visibility: visible;
+  }
+  .addIcon{
+    color: #8d8d8d;
+  }
+
+
+  .time{
+    margin: 1px 0;
+    color: #9a9a9a;
+    display: flex;
+
+    .length, .duration{
+      display: inline-flex;
+      margin-right: 6px;
+      span{
+        font-size: 14px;
+        margin: auto;
+      }
+    }
+  }
+
+  .streamArtwork{
+    width: 76px;
+    min-width: 76px;
+    height: 76px;
+    img{
+      height: 100%;
+      width: 100%;
+    }
+
+    .playPause{
+      left: 17px;
+      bottom: 59px;
+    }
+  }
+
+  .streamTitle{
+    color: #343434;
+    text-decoration: underline;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .tags{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    .tag{
+      cursor: pointer;
+      font-size: 13px;
+      display: inline-block;
+      background: #e8e8e8;
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin: 6px 8px 0 0;
+    }
+  }
 }
