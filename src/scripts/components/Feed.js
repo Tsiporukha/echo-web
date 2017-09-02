@@ -10,8 +10,10 @@ import {onBottomReaching} from '../lib/scroll';
 import styles from '../../assets/styles/feed.css';
 import {results as resultsClassName} from '../../assets/styles/search.css';
 
-import tags from '../../assets/tags.json';
-const primaryTags = Object.keys(tags).slice(12);
+import tags from '../../assets/newTags.json';
+import primaryTagsColors from '../../assets/primaryTagsColors.json';
+const primaryTags = Object.keys(tags);
+
 
 export default class Feed extends Component {
 
@@ -19,9 +21,9 @@ export default class Feed extends Component {
   handleTabChange = activeSubFeed => this.setState({filters: this.props.initialFilters, activeSubFeed});
 
   incrementOffsetFilter = (n = this.state.filters.limit) => this.setState({filters:{...this.state.filters, offset: this.state.filters.offset + n}});
-  setSearchingVisibility = searching => this.setState({searching});
+  setFetching = fetching => this.setState({fetching});
   loadMoreStreams = action => (token = this.props.token) =>
-    doWithProgressLine(() => this.props.fetchAndReceiveStreams(action)({...this.state.filters, tags: this.state.tags}, token), this.setSearchingVisibility)
+    doWithProgressLine(() => this.props.fetchAndReceiveStreams(action)({...this.state.filters, tags: this.state.tags}, token), this.setFetching)
       .then(this.incrementOffsetFilter);
 
   loadMoreLatestStreams = this.loadMoreStreams(this.props.fetchAndReceiveLatestStreamsAction);
@@ -55,7 +57,7 @@ export default class Feed extends Component {
     filters: this.props.initialFilters,
     fetchedAll: false,
     activeSubFeed: 0,
-    searching: false,
+    fetching: false,
     tags: [],
   }
 
@@ -71,7 +73,9 @@ export default class Feed extends Component {
       <div>
         {this.props.initialFilters.term === undefined && <div className={styles.tags}>
           {primaryTags.map(ptag =>
-            <span key={ptag} className={this.inTags(ptag) ? styles.selectedTag : styles.tag} onClick={this.handleTagClick(ptag)}>{ptag}</span>
+            <span key={ptag} className={this.inTags(ptag) ? styles.selectedTag : styles.tag}
+              style={this.inTags(ptag) ? {backgroundColor: primaryTagsColors[ptag]} : {}}
+              onClick={this.handleTagClick(ptag)}>{ptag}</span>
           )}
         </div>}
         <Tabs theme={styles} index={this.state.activeSubFeed} onChange={this.handleTabChange}>
@@ -92,7 +96,7 @@ export default class Feed extends Component {
           </Tab>
         </Tabs>
 
-        <IndeterminateProgressLine visible={this.state.searching} />
+        <IndeterminateProgressLine visible={this.state.fetching} />
       </div>
     );
   }
