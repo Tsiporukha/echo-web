@@ -26,8 +26,8 @@ export const getQueueSongs = store =>
   store.queue.items.reduce((songs, s) => songs.concat(isSong(s) ? store.songs[s.id] : getStreamSongs(store.songs, store.playlists, store.streams[s.id])), []);
 
 
-const getNextSongId = (queueSongs, currentSong) => queueSongs[getNextSongIndex(getSongIndex(queueSongs, currentSong), queueSongs.length)].id;
-const getPrevSongId = (queueSongs, currentSong) => queueSongs[getPrevSongIndex(getSongIndex(queueSongs, currentSong), queueSongs.length)].id;
+const getNextSongId = (queueSongs, currentSong) => currentSong.id && queueSongs[getNextSongIndex(getSongIndex(queueSongs, currentSong), queueSongs.length)].id;
+const getPrevSongId = (queueSongs, currentSong) => currentSong.id && queueSongs[getPrevSongIndex(getSongIndex(queueSongs, currentSong), queueSongs.length)].id;
 
 export const getNextSong = store => store.songs[getNextSongId(getQueueSongs(store), store.player.currentSong)];
 export const getPrevSong = store => store.songs[getPrevSongId(getQueueSongs(store), store.player.currentSong)];
