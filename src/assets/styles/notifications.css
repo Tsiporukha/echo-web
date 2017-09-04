@@ -1,0 +1,141 @@
+.root{
+  display: inline-block;
+  margin: auto 8px;
+  outline: none;
+  &:focus{}
+}
+
+.rootIcon{
+  composes: material-icons from './fonts.css';
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+  padding: 6px;
+  border-radius: 50%;
+}
+.activeRootIcon{
+  composes: rootIcon;
+  background-color: #3d4a6a;
+}
+
+.count{
+  color: white;
+  font-size: 12px;
+  background-color: #0391ea;
+  position: relative;
+  left: -9px;
+  top: 5px;
+  padding: 1px 4px 0px;
+  border-radius: 50%;
+}
+
+.notifications{
+  position: absolute;
+  box-shadow: 0 5px 6px darkgray;
+  left: 0;
+  top: 58px;
+  background-color: white;
+  width: 86%;
+  height: 350px;
+  overflow: auto;
+}
+
+.notificationsHeader{
+  margin: 6px 19px;
+  span{
+    font-weight: 300;
+  }
+  a{
+    position: absolute;
+    right: 20px;
+    color: #61acec;
+    cursor: pointer;
+    &:hover{text-decoration: underline;}
+  }
+}
+
+.notification{
+  display: flex;
+  font-size: 13px;
+  padding: 6px;
+
+  &:hover{
+    background-color: #f2f2f2;
+  }
+
+  .info{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: calc(100% - (32px + 28px) - 8px);
+    display: inline-block;
+  }
+  .avatar{
+    width: 32px;
+    height: 32px;
+    margin: auto 13px;
+    border-radius: 4px;
+  }
+  .username{
+    color: #61acec;
+    font-weight: 500;
+  }
+  .message{
+    font-weight: 300;
+  }
+  .time{
+    color: #949494;
+    margin-top: 1px;
+  }
+  .unreaded{
+    background-color: #0091ea;
+    width: 8px;
+    height: 8px;
+    margin: auto;
+    border-radius: 50%;
+  }
+}
+
+.echoMessage{
+  composes: notification;
+  .echoLogo{
+    .avatar{
+      width: 27px;
+      height: 27px;
+      margin-top: 4px;
+    }
+  }
+  .info{
+    white-space: normal;
+    overflow: auto;
+    text-overflow: auto;
+    .message{
+      padding-top: 4px;
+    }
+  }
+}
+
+
+.menu{
+  &.topRight{
+    right: -86px;
+    top: 48px;
+  }
+  &.active{
+    background-color: white;
+    overflow: auto;
+    box-shadow: 0 5px 6px darkgray;
+  }
+  .menuInner{
+    padding: 0;
+  }
+}
+
+.menuItem{
+  padding: 0;
+  margin: 0;
+  line-height: normal;
+  display: block;
+  width: 400px;
+  height: initial;
+}
