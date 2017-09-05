@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Route, Link} from 'react-router-dom';
 
 import Search from '../containers/Search';
+import Notifications from '../containers/Notifications';
 import MaybeCurrentUser from '../containers/MaybeCurrentUser';
 
 import styles from '../../assets/styles/navbar.css';
@@ -17,10 +18,11 @@ const Navbar = () => (
           </Link>
         </div>
         <div className={styles.search}>
-          <Search />
+          <Route component={Search} />
         </div>
       </div>
       <div className={styles.rightReg}>
+        <Notifications />
         <MaybeCurrentUser />
       </div>
     </div>
