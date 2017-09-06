@@ -4,6 +4,7 @@ import {getAbsoluteUrl, withoutUndefinedParams} from './api';
 
 
 export const get = (filters, token) => luch.get(getAbsoluteUrl('/streams'), withoutUndefinedParams({...filters, token})).then(getJson);
+export const getStream = (id, token) => luch.get(getAbsoluteUrl(`/streams/${id}`), withoutUndefinedParams({token})).then(getJson);
 //export const getPopular = (filters, token) => luch.get(getAbsoluteUrl('/streams/popular'), withoutUndefinedParams({...filters, token})).then(getJson);
 //export const getLongest = (filters, token) => luch.get(getAbsoluteUrl('/streams/longest'), withoutUndefinedParams({...filters, token})).then(getJson);
 //export const getLatest = (filters, token) => luch.get(getAbsoluteUrl('/streams/latest'), withoutUndefinedParams({...filters, token})).then(getJson);
