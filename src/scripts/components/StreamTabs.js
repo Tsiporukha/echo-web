@@ -27,11 +27,11 @@ export default class StreamDetails extends Component {
             </div>
           </Tab>
           <Tab label={`COMMENTS(${this.props.stream.comments_count})`}>
+            <CommentPublication stream={this.props.stream} />
             {this.props.stream.comments.length < this.props.stream.comments_count &&
               <Button label='Load more comments'
-                onClick={this.props.loadComments(this.props.stream, commentsLoadLimit, this.props.stream.comments.length)} />}
+                onClick={this.props.fetchComments(this.props.stream, commentsLoadLimit, this.props.stream.comments.length)} />}
             {[...this.props.stream.comments].map(commentId => <Comment id={commentId} key={commentId} />)}
-            <CommentPublication stream={this.props.stream} />
           </Tab>
         </Tabs>
       </section>

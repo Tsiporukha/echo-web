@@ -10,9 +10,9 @@ import {Stream, User, Playlist, Song, Comment} from '../constants/creatorsArgs';
 
 import {createAUDActions} from './actionsCreators';
 
-import {createIdKeyHash, appendPublishedCommentRef, appendCommentsRefs, reduceToObject} from '../lib/stream';
-import {addComment as publishComment, getComments} from '../lib/ebApi/streams';
-import {follow, unfollow} from '../lib/ebApi/users';
+import {createIdKeyHash, appendPublishedCommentRef, appendCommentsRefs, reduceToObject, reduceToNormalized} from '../lib/stream';
+import {addComment as publishComment, getComments, getStream} from '../lib/ebApi/streams';
+import {follow, unfollow, getLikedSongs, getLikedStreams} from '../lib/ebApi/users';
 import {toggleLike as apiToggleSongLike} from '../lib/ebApi/songs';
 
 
@@ -33,7 +33,7 @@ const receiveCommentsAndUpdateStream = (stream, comments) => appendCommentsRefsF
 export const addComment = (stream, body, token) => dispatch => publishComment(stream.id, body, token)
   .then(comment => receiveCommentsAndUpdateStream(stream, [comment])(appendPublishedCommentRef)(dispatch));
 
-export const loadComments = (stream, limit, offset) => dispatch => getComments(stream.id, limit, offset)
+export const fetchComments = (stream, limit, offset) => dispatch => getComments(stream.id, limit, offset)
   .then(data => receiveCommentsAndUpdateStream(stream, data.comments.slice().reverse())(appendCommentsRefs)(dispatch));
 
 
@@ -52,9 +52,24 @@ export const toggleSongLike = (song, token) => dispatch =>
   apiToggleSongLike(song.id, token).then(resp => resp.status === 200 ? updateSongOnToggleLike(song)(dispatch) : false);
 
 
-export const addNormalizedStreamsData = (({users, streams, playlists, songs, comments}) => dispatch =>
+export const addNormalizedStreamsData = ({users, streams, playlists, songs, comments}) => dispatch =>
   Promise.resolve(dispatch(addUsers(users)))
-    .then(dispatch(addStreams(streams)))
-    .then(dispatch(addPlaylists(playlists)))
     .then(dispatch(addSongs(songs)))
-    .then(dispatch(addComments(comments))));
+    .then(dispatch(addComments(comments)))
+    .then(dispatch(addPlaylists(playlists)))
+    .then(dispatch(addStreams(streams)));
+
+export const receiveStreams = streams => addNormalizedStreamsData(reduceToNormalized(streams));
+
+export const fetchStream = (id, token) => dispatch => getStream(id, token).then(stream => receiveStreams([stream])(dispatch));
+
+export const fetchAndReceiveLikedStreamsIds = (userId, limit, offset, token) => dispatch => getLikedStreams(userId, limit, offset, token)
+  .then(({streams}) => Promise.resolve(dispatch(receiveStreams(streams)))
+    .then(_ => streams.map(stream => stream.id)));
+
+
+export const receiveSongs = songs => dispatch => dispatch(addSongs(reduceToObject(songs)));
+
+export const fetchAndReceiveLikedSongsIds = (userId, limit, offset, token) => dispatch => getLikedSongs(userId, limit, offset, token)
+  .then(({songs}) => Promise.resolve(dispatch(receiveSongs(songs)))
+    .then(_ => songs.map(song => song.id)));
