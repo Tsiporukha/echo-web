@@ -5,12 +5,13 @@ import {Tab, Tabs} from 'react-toolbox';
 
 import Song from './Song';
 import Stream from './Stream';
+import IndeterminateProgressLine, {doWithProgressLine} from '../components/IndeterminateProgressLine';
 
-import {addSongs, addUsers, addNormalizedStreamsData} from '../actions/EntitiesAUDActions';
+
+import {fetchAndReceiveLikedStreamsIds, fetchAndReceiveLikedSongsIds, addUsers} from '../actions/EntitiesAUDActions';
 
 import {reduceToObject, reduceToNormalized as reduceStreamsToNormalized} from '../lib/stream';
 import {getUser} from '../lib/ebApi/users';
-import {getLikedSongs, getLikedStreams} from '../lib/ebApi/users';
 
 
 import favSubTabsTheme from '../../assets/styles/feed.css';
@@ -21,37 +22,33 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   addUser: user => dispatch(addUsers({[user.id]: user})),
-  addNormalizedStreamsData: normalizedData => dispatch(addNormalizedStreamsData(normalizedData)),
-
-  fetchAndReceiveSongs: (limit, offset, token) => getLikedSongs(ownProps.userId, limit, offset, token)
-    .then(({songs}) => Promise.resolve(dispatch(addSongs(reduceToObject(songs)))).then(_ => songs.map(song => song.id))),
+  fetchAndReceiveStreamsIds: (userId, limit, offset, token) => dispatch(fetchAndReceiveLikedStreamsIds(userId, limit, offset, token)),
+  fetchAndReceiveSongsIds: (userId, limit, offset, token) => dispatch(fetchAndReceiveLikedSongsIds(userId, limit, offset, token)),
 });
 
 class PopularSongs extends Component {
 
   handleTabChange = tab => this.setState({tab});
 
-  fetchAndReceiveStreams = (limit, offset, token) => getLikedStreams(this.props.userId, limit, offset, token)
-    .then(({streams}) => Promise.resolve(this.props.addNormalizedStreamsData(reduceStreamsToNormalized(streams)))
-      .then(_ => this.setState({streams: streams.map(s => s.id)}) )
-      .then(_ => getUser(this.props.userId, token).then(user => this.props.addUser(user)))
-      .then(_ => streams.map(stream => stream.id))
-    );
 
-  fetchAndReceiveSongsIds = (token = this.props.token) =>
-    this.props.fetchAndReceiveSongs(this.state.limit, this.state.offset, token).then(songs => this.setState({songs}));
+  fetchAndReceiveStreamsIds = (userId = this.props.userId, token = this.props.token) =>
+    this.props.fetchAndReceiveStreamsIds(userId, this.state.limit, this.state.offset, token).then(streams => this.setState({streams}));
 
-  fetchAndReceiveStreamsIds = (token = this.props.token) =>
-    this.fetchAndReceiveStreams(this.state.limit, this.state.offset, token).then(streams => this.setState({streams}));
+  fetchAndReceiveSongsIds = (userId = this.props.userId, token = this.props.token) =>
+    this.props.fetchAndReceiveSongsIds(userId, this.state.limit, this.state.offset, token).then(songs => this.setState({songs}));
 
-  fetchAndReceiveLikes = (token = this.props.token) => Promise.all([this.fetchAndReceiveStreamsIds(token), this.fetchAndReceiveSongsIds(token)]);
+
+  setFetching = fetching => this.setState({fetching});
+  fetchAndReceiveItems = (userId = this.props.userId, token = this.props.token) => doWithProgressLine(
+    () => Promise.all([this.fetchAndReceiveStreamsIds(userId, token), this.fetchAndReceiveSongsIds(userId, token)]), this.setFetching
+  );
 
   maybeReloadOnPropsChange = (nextProps, props = this.props) =>
     ((nextProps.token !== props.token) || (props.userId !== nextProps.userId)) ?
-      this.fetchAndReceiveLikes(nextProps.token) : false;
+      this.fetchAndReceiveItems(nextProps.userId, nextProps.token) : false;
 
 
-  componentWillMount = () => this.fetchAndReceiveLikes();
+  componentWillMount = () => this.fetchAndReceiveItems();
 
   componentWillReceiveProps = nextProps => this.maybeReloadOnPropsChange(nextProps, this.props)
 
@@ -63,18 +60,26 @@ class PopularSongs extends Component {
 
     limit: 14,
     offset: 0,
+
+    fetching: false,
   };
 
   render() {
     return(
-      <Tabs theme={favSubTabsTheme} index={this.state.tab} onChange={this.handleTabChange}>
-        <Tab label='Rooms'>
-          {this.state.streams.map(streamId => <Stream id={streamId} key={streamId} />)}
-        </Tab>
-        <Tab label='Songs'>
-          {this.state.songs.map(songId => <Song id={songId} key={songId} />)}
-        </Tab>
-      </Tabs>
+      <div>
+        <Tabs theme={favSubTabsTheme} index={this.state.tab} onChange={this.handleTabChange}>
+          <Tab label='Rooms'>
+            {this.state.streams.map(streamId => <Stream id={streamId} key={streamId} />)}
+          </Tab>
+          <Tab label='Songs'>
+            {this.state.songs.map(songId => <Song id={songId} key={songId} />)}
+          </Tab>
+
+
+        </Tabs>
+
+        <IndeterminateProgressLine visible={this.state.fetching} />
+      </div>
     )
   }
 }
