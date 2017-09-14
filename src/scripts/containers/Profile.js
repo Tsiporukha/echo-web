@@ -5,6 +5,9 @@ import {Button, Tab, Tabs} from 'react-toolbox';
 
 import Stream from './Stream';
 import UserLikes from './UserLikes';
+import User from './User';
+import SimilarUsers from './SimilarUsers';
+import IndeterminateProgressLine, {doWithProgressLine} from '../components/IndeterminateProgressLine';
 
 import {addUsers, addNormalizedStreamsData, followUser, unfollowUser} from '../actions/EntitiesAUDActions';
 
@@ -17,7 +20,7 @@ import tabsTheme from '../../assets/styles/tabsTheme.css';
 
 
 const mapStateToProps = (state, ownProps) => ({
-  user: state.users[ownProps.match.params.id],
+  present: !!state.users[ownProps.match.params.id],
   token: state.session.token,
   currentUser: state.session.user,
 });
@@ -25,8 +28,6 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   addUser: user => dispatch(addUsers({[user.id]: user})),
   addNormalizedStreamsData: normalizedData => dispatch(addNormalizedStreamsData(normalizedData)),
-  follow: (user, token) => dispatch(followUser(user, token)),
-  unfollow: (user, token) => dispatch(unfollowUser(user, token)),
 });
 
 const initialState = {
@@ -41,7 +42,10 @@ class Profile extends Component {
 
   handleTabChange = tab => this.setState({tab});
 
-  initialLoad = (token = this.props.token) => getStreams({user_id: this.props.match.params.id, offset: 0, limit: 5}, token)
+  setFetching = fetching => this.setState({fetching});
+  initialLoad = (token = this.props.token) => doWithProgressLine(() => this.initLoad(token), this.setFetching);
+
+  initLoad = token => getStreams({user_id: this.props.match.params.id, offset: 0, limit: 5}, token)
     .then(({streams}) => Promise.resolve(this.props.addNormalizedStreamsData(reduceStreamsToNormalized(streams)))
       .then(_ => this.setState({streams: streams.map(s => s.id)}) ))
     .then(_ => getUser(this.props.match.params.id, token).then(user => this.props.addUser(user)));
@@ -50,11 +54,11 @@ class Profile extends Component {
   reinitOnUserChange = (nextProps, props) => nextProps.match.params.id !== props.match.params.id ?
     Promise.resolve(this.setState(initialState)).then(this.initialLoad) : false;
 
-  follow = () => this.props.follow(this.props.user, this.props.token);
-  unfollow = () => this.props.unfollow(this.props.user, this.props.token);
 
-
-  state = {...initialState};
+  state = {
+    ...initialState,
+    fetching: false,
+  };
 
   componentWillMount = () => this.initialLoad(this.props.token);
 
@@ -62,34 +66,27 @@ class Profile extends Component {
 
   render() {
     return(
-      !!this.props.user &&
       <div className={styles.profile}>
-        <div className={styles.content}>
+        <div className={styles.leftReg}>
           <div className={styles.userData}>
-            <div className={styles.userInfo}>
-              <img src={this.props.user.avatar_url} alt='avatar' className={styles.avatar} />
-              <div className={styles.info}>
-                <div className={styles.name}>{this.props.user.name}</div>
-                <div className={styles.followersCount}>{this.props.user.followers_count} followers</div>
-              </div>
-              {this.props.token && (this.props.user.id !== this.props.currentUser.id) && (this.props.user.is_followed ?
-                <Button onClick={this.unfollow} className={styles.followedBtn} icon='done' label='followed' raised primary /> :
-                <Button onClick={this.follow} className={styles.followBtn} icon='add' label='follow' raised primary />
-              )}
-            </div>
-
+            {this.props.present && <User id={this.props.match.params.id} />}
 
             <Tabs theme={tabsTheme} index={this.state.tab} onChange={this.handleTabChange}>
               <Tab label={<i className={styles.feedIcon}>language</i>}>
                 {this.state.streams.map(streamId => (<Stream key={streamId} id={streamId} />))}
               </Tab>
               <Tab label={<i className={styles.favoriteIcon}>favorite</i>}>
-                <UserLikes userId={this.props.user.id} />
+                <UserLikes userId={this.props.match.params.id} />
               </Tab>
             </Tabs>
-
           </div>
         </div>
+
+        <div className={styles.rightReg}>
+          <SimilarUsers userId={this.props.match.params.id} />
+        </div>
+
+        <IndeterminateProgressLine visible={this.state.fetching} />
       </div>
     )
   }
