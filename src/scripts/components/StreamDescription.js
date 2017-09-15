@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import Button from 'react-toolbox/lib/button';
-import Tooltip from 'react-toolbox/lib/tooltip';
+import {IconMenu, MenuItem, MenuDivider, Button, Tooltip} from 'react-toolbox';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 import LoginDialog from './LoginDialog';
 
@@ -12,11 +12,39 @@ import {maybeGetDefaultArtwork} from '../lib/stream';
 
 import styles from '../../assets/styles/streamDescription.css';
 
+
 const TooltipButton = Tooltip(Button);
+const TooltipIconMenu = Tooltip(IconMenu);
+
+const ShareButton = () => (
+  <span className={styles.iconDescription}>
+    <i className={styles.shareIcon}>share</i><span>Share</span>
+  </span>
+)
+
+
+const CopyToClipboardMenuItem = streamId => (
+  <CopyToClipboard text={`${document.domain}/feed/${streamId}`}
+    onCopy={() => this.setState({copied: true})}>
+    <i className='material-icons'>link</i>
+  </CopyToClipboard>
+)
+
+
+const shareOnFacebook = stream => () => FB.ui({
+  method: 'share',
+  href: `${document.domain}/feed/${stream.id}`,     // The same than link in feed method
+  title: stream.title,  // The same than name in feed method
+  picture: stream.artwork_url,
+  caption: document.domain,
+  description: stream.description,
+}, response => false);
+
 
 const getLikeButtonOnClick = (token, dispatchLikeAction, stream, showLogin) => token ?
   dispatchLikeAction(stream.your_likes ? unlikeStream : likeStream)(stream, token) : showLogin;
 const getLikeButtonTitle = liked => liked ? 'Liked' : 'Like';
+
 
 const StreamDescriptionRender = (props, loginVisibility, toggleLoginVisibility) => (
   <div className={styles.root}>
@@ -69,7 +97,10 @@ const StreamDescriptionRender = (props, loginVisibility, toggleLoginVisibility) 
     </div>
 
     {!!props.stream.all_tags.length && <div className={styles.tags}>
-      <span><span className={styles.t}>Tags:</span>{props.stream.all_tags.map(tag => (<span key={tag} className={styles.tag}>#{tag}</span>))}</span>
+      <span>
+        <span className={styles.t}>Tags:</span>
+        {props.stream.all_tags.map(tag => (<span onClick={props.searchTag(tag)} key={tag} className={styles.tag}>#{tag}</span>))}
+      </span>
     </div>}
 
     <div className={styles.footer}>
@@ -90,11 +121,15 @@ const StreamDescriptionRender = (props, loginVisibility, toggleLoginVisibility) 
             <i className={styles.likeIcon}>favorite</i><span>{getLikeButtonTitle(props.stream.your_likes)}</span>
           </span>
         </TooltipButton>
-        <TooltipButton theme={styles} raised tooltip='Share' tooltipDelay={500}>
-          <span className={styles.iconDescription}>
-            <i className={styles.shareIcon}>share</i><span>Share</span>
-          </span>
-        </TooltipButton>
+        <TooltipIconMenu icon={<ShareButton />} menuRipple theme={styles} tooltip='Share' tooltipDelay={500} >
+          <MenuItem caption='Share via:' disabled theme={styles} />
+          <CopyToClipboard text={`${document.domain}/feed/${props.stream.id}`}>
+            <MenuItem icon='link' caption='Link' theme={styles} />
+          </CopyToClipboard>
+
+
+          <MenuItem onClick={shareOnFacebook(props.stream)} icon={<i className={styles.facebookIcon} />} caption='Facebook' theme={styles} />
+        </TooltipIconMenu>
       </div>
     </div>
 
@@ -103,7 +138,7 @@ const StreamDescriptionRender = (props, loginVisibility, toggleLoginVisibility) 
 )
 
 
-export default class StreamDescription extends Component {
+class StreamDescription extends Component {
 
   toggleLoginVisibility = () => this.setState({loginVisibility: !this.state.loginVisibility});
 
@@ -116,3 +151,6 @@ export default class StreamDescription extends Component {
     return StreamDescriptionRender(this.props, this.state.loginVisibility, this.toggleLoginVisibility)
   }
 }
+
+
+export default StreamDescription;

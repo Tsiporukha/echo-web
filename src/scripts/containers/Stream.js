@@ -2,49 +2,36 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import StreamDescription from '../components/StreamDescription';
-import StreamTabs from '../components/StreamTabs';
+import SeparatedStream from '../components/SeparatedStream';
 import {addClonedStreamToTopAndPlay, addClonedStream} from '../actions/QueueActions';
 import {pause, play} from '../actions/PlayerActions';
-import {loadComments} from '../actions/EntitiesAUDActions';
+import {fetchStream, fetchComments} from '../actions/EntitiesAUDActions';
+import {updateSearchTerm} from '../actions/SearchActions';
 
+import {maybeGetStreamAndNestedEntities} from '../lib/stream';
 
-import {getStreamAndNestedEntities} from '../lib/stream';
-
-import styles from '../../assets/styles/stream.css';
 
 const mapStateToProps = (state, ownProps) => ({
-  ...getStreamAndNestedEntities(state, ownProps.id || ownProps.match.params.id),
+  ...maybeGetStreamAndNestedEntities(state, ownProps.id || ownProps.match.params.id),
   token: state.session.token,
 });
 
 const mapDispatchToProps = dispatch => ({
   addToQueueTopAndPlay: (stream, playlist, songs) => () => dispatch(addClonedStreamToTopAndPlay(stream, playlist, songs)),
   addToQueue: (stream, playlist, songs) => () => dispatch(addClonedStream(stream, playlist, songs)),
-  pause: () => dispatch(pause()),
   play: () => dispatch(play()),
+  pause: () => dispatch(pause()),
   dispatchLikeAction: likeAction => (stream, token) => () => dispatch(likeAction(stream, token)),
-  loadComments: (streamId, limit, offset) => () => dispatch(loadComments(streamId, limit, offset)),
+  searchTag: tag => () => Promise.resolve(dispatch(updateSearchTerm(tag))).then(_ => document.getElementById('searchInput').focus()),
+
+  fetchStream: (streamId, token) => dispatch(fetchStream(streamId, token)),
+  fetchComments: (streamId, limit, offset) => () => dispatch(fetchComments(streamId, limit, offset)),
 });
 
 
-const FeedStream = props => (
-  <div className={styles.root}>
-    <StreamDescription {...props} />
-  </div>
-);
-
-const SeparatedStream = props => (
-  <div className={styles.separated}>
-    <div className={styles.fullStreamContainer}>
-      <div className={styles.fullStream}>
-        <StreamDescription {...props} />
-        <StreamTabs {...props} />
-      </div>
-    </div>
-  </div>
-)
-
-
-const Stream = props => props.match ? <SeparatedStream {...props} /> : <FeedStream {...props} />
+const Stream = props => props.match ? <SeparatedStream {...props} /> : <StreamDescription {...props} />;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stream);
+
+
+export const getStreamProps = component => connect(mapStateToProps, mapDispatchToProps)(component);

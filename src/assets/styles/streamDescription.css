@@ -52,6 +52,11 @@
   &:hover, &:active {background-color: rgba(0, 0, 0, 0.8);}
 }
 
+.facebookIcon{
+  composes: fa from './fontAwesome.css';
+  composes: fa-facebook-square from './fontAwesome.css';
+  font-size: 18px;
+}
 
 
 .root{
@@ -121,6 +126,7 @@
   .t{margin-right: 8px;}
 }
 .tag{
+  cursor: pointer;
   display: inline-block;
   margin: 4px 6px;
   background: #e8e8e8;
@@ -183,3 +189,35 @@
   }
 }
 /* end Buttons theme */
+
+/* IconMenu theme */
+.icon{
+  composes: button;
+}
+.iconMenu{
+  .icon{
+    height: initial;
+    width: initial;
+    line-height: initial;
+    min-height: initial;
+    color: inherit!important;
+    span{
+      line-height: normal!important;
+    }
+  }
+
+  .menu{
+    z-index: 400;
+  }
+}
+
+.menuItem{
+  composes: menuItem from './queue.css';
+  .caption{
+    font-size: 14px;
+  }
+  .icon{
+    font-size: 16px;
+  }
+}
+/* end IconMenu theme */

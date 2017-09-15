@@ -8,7 +8,7 @@ import {Latest, Popular, Longest} from '../constants/creatorsArgs';
 
 import {createSubFeedActions} from './actionsCreators';
 
-import {addNormalizedStreamsData, updateStreams} from './EntitiesAUDActions';
+import {addNormalizedStreamsData, updateStreams, receiveStreams} from './EntitiesAUDActions';
 
 import {getLatest, getPopular, getLongest, like, unlike} from '../lib/ebApi/streams';
 import {reduceToNormalized as reduceStreamsToNormalized} from '../lib/stream';
@@ -22,7 +22,7 @@ export const setOrAddItems = (setItemsCondition, setItemsAction, addItemsAction,
 // streams
 export const fetchAndReceiveStreams =
   (fetchAction, setItemsAction, addItemsAction) => (filters, token, setItemsCondition = filters.offset === 0) => dispatch =>
-    fetchAction(filters, token).then(data => Promise.resolve(addNormalizedStreamsData(reduceStreamsToNormalized(data.streams))(dispatch))
+    fetchAction(filters, token).then(data => Promise.resolve(receiveStreams(data.streams)(dispatch))
       .then(_ => setOrAddItems(setItemsCondition, setItemsAction, addItemsAction, data.streams.map(s => s.id))(dispatch))
     );
 
