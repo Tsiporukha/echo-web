@@ -14,7 +14,7 @@ import {playlistDuration, duration} from '../lib/duration';
 
 import styles from '../../assets/styles/streamPublication.css';
 
-import tags from '../../assets/tags.json';
+import tags from '../../assets/newTags.json';
 
 
 const mapStateToProps = (state, ownProps) => ({
@@ -39,8 +39,9 @@ class StreamPublication extends Component {
   setUploadedArtworkUrl = uploadedArtworkUrl => this.setState({uploadedArtworkUrl});
   rmUploadedArtworkUrl = () => this.setUploadedArtworkUrl('');
 
+  getSecondaryTags = primaryTags => primaryTags.reduce((secondaryTags, ptag) => secondaryTags.concat(tags[ptag]), []);
   getSourceForTagsAutocomplete = (primaryTags = Object.keys(tags), addedPrimaryTags = this.state.tags.filter(tag => primaryTags.includes(tag))) =>
-    addedPrimaryTags.length ? addedPrimaryTags.reduce((ftags, ptag) => ftags.concat(tags[ptag]), []) : primaryTags;
+    addedPrimaryTags.length ? getSecondaryTags(addedPrimaryTags) : primaryTags;
   getTagsSuggestion = () => this.getSourceForTagsAutocomplete().filter(tag => !this.state.tags.includes(tag));
 
   handleTagsChange = tags => this.setState({tags});
@@ -52,6 +53,7 @@ class StreamPublication extends Component {
     .then(this.props.onCancel);
   maybePublish = () => this.isAllFielsFilled() ? this.publish() : this.setState({triedPublish: true});
   maybeError = (filled, errMssg) => (this.state.triedPublish && !filled) ? errMssg : false;
+
 
   state = {
     title: '',
@@ -130,7 +132,7 @@ class StreamPublication extends Component {
                   direction={'down'}
                   error={this.maybeError(this.state.tags.length, 'Tags are required')}
                 />
-                {this.getTagsSuggestion().slice(0,10).map(tag =>
+                {this.getTagsSuggestion().slice(0,20).map(tag =>
                   <span key={tag} onClick={this.addTag(tag)} className={styles.atag}>{tag}</span>
                 )}
               </div>

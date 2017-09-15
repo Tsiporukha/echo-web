@@ -67,6 +67,7 @@
   composes: rightReg from './navbar.css';
   display: block;
   min-height: calc(100vh - 50px);
+  height: auto;
   background-color: #f7f7f7;
   padding: 12px;
 }

@@ -15,8 +15,8 @@ export const normalize = stream => ({
   comments: stream.comments.map(replaceCommentUserWithRefId),
 });
 
-const addToNormalized = (nrmlzdData, {users, stream, playlist, songs, comments}) => (
-  {streams: {...nrmlzdData.streams, ...createIdKeyHash(stream)},
+const addToNormalized = (nrmlzdData, {users, stream, playlist, songs, comments}) => ({
+  streams: {...nrmlzdData.streams, ...createIdKeyHash(stream)},
   playlists: {...nrmlzdData.playlists, ...createIdKeyHash(playlist)},
   users: {...nrmlzdData.users, ...reduceToObject(users)},
   songs: {...nrmlzdData.songs, ...reduceToObject(songs)},
@@ -39,6 +39,8 @@ export const getStreamAndNestedEntities = (state, id) => ({
   inQueue: inQueue(state, id),
   isPlaying: inQueue(state, id) && state.player.playing
 });
+
+export const maybeGetStreamAndNestedEntities = (state, id) => state.streams[id] ? getStreamAndNestedEntities(state, id) : {};
 
 export const maybeGetDefaultArtwork = str => str || require('../../assets/images/no_artwork.png');
 

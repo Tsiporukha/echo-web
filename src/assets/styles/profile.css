@@ -8,8 +8,11 @@
   padding-top: 28px;
 }
 
-.content{
+.leftReg{
   composes: col-md-8 from './bootstrap.css';
+}
+.rightReg{
+  composes: col-md-4 from './bootstrap.css';
 }
 
 .userData{
@@ -18,6 +21,7 @@
 
 .userInfo{
   display: flex;
+  padding: 6px 0;
 }
 .avatar{
   height: 32px;
@@ -50,4 +54,12 @@
 }
 
 .streams{
+}
+
+.similarUsers{
+  .title{
+    margin: 0 0 14px;
+    color: #6b6b6b;
+    font-size: 13px;
+  }
 }
