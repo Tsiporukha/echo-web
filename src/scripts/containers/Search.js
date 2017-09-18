@@ -28,17 +28,23 @@ class Search extends Component {
     return false
   };
 
-  isLocationChanged = (props, prevProps) => !(props.history.location == prevProps.history.location);
-  isTermChanged = (props, nextProps) => !(props.term === nextProps.term);
-  setInput = str => this.refs.input.value = str;
+  isPropChanged = (newProp, oldProp) => newProp !== oldProp;
 
+  onMaybeLocationChange = (nextProps, props = this.props) =>
+    this.isPropChanged(nextProps.location.pathname, props.location.pathname) ? this.hideResults() : false;
+
+  setInput = str => this.refs.input.value = str;
+  onMaybeTermChange = (nextProps, props = this.props) => this.isPropChanged(nextProps.term, props.term) ? this.setInput(nextProps.term) : false;
+
+  showResults = () => this.setState({resultsVisibility: true});
+  hideResults = () => this.setState({resultsVisibility: false});
   onInputKeyUp = e => this.keyCodeActions(e.keyCode, e.target);
-  onInputFocus = () => this.setState({resultsVisibility: true});
-  hideResults = () => Promise.resolve(this.setState({resultsVisibility: false})).then(this.setInput(''));
-  clear = () => this.hideResults().then(this.props.updateSearchTerm(''));
+  clear = () => Promise.resolve(this.hideResults()).then(this.setInput('')).then(this.props.updateSearchTerm(''));
 
 
   state = {resultsVisibility: false};
+
+  componentWillReceiveProps = nextProps => this.onMaybeTermChange(nextProps, this.props) || this.onMaybeLocationChange(nextProps, this.props);
 
   render(){
     return (
@@ -46,7 +52,7 @@ class Search extends Component {
 
         <div className={styles.searchBox}>
           <input type='text' ref='input' className={styles.input} placeholder='Search Genre, Mood'
-            onFocus={this.onInputFocus}
+            onFocus={this.showResults}
             onKeyUp={this.onInputKeyUp}
           />
 
@@ -69,4 +75,4 @@ class Search extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Search));
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
