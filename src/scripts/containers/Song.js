@@ -27,3 +27,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Song);
+
+
+export const getSongProps = component => connect(mapStateToProps, mapDispatchToProps)(component);
