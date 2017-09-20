@@ -12,6 +12,9 @@
 .soundcloudIcon{
   composes: soundcloudIcon from './tabsTheme.css';
 }
+.vimeoIcon{
+  composes: vimeoIcon from './tabsTheme.css';
+}
 
 .root{
 
@@ -26,6 +29,23 @@
     top: 142px;
     left: 35%;
     text-align: center;
+  }
+}
+
+.rightReg{
+  composes: col-md-4 from './bootstrap.css';
+  composes: hidden-sm from './bootstrap.css';
+}
+
+.recentlyLiked{
+  position: absolute;
+  padding-left: 14px;
+  width: calc(100% - 15px);
+  .itemsTitle{
+    padding: 8px 0 0;
+  }
+  .songs{
+    border-top: 1px solid #d0d0d0;
   }
 }
 
@@ -80,4 +100,24 @@
 .tab{
   outline: none;
   padding: 17px 0;
+}
+
+.welcomeNote{
+  margin: 15px 0;
+  padding: 20px;
+  background-color: white;
+  h2{
+    font-weight: 500;
+    font-size: 22px;
+    margin: 0 0 16px;
+  }
+
+  div{
+    padding: 16px 0;
+    margin: 0;
+    color: #343434;
+    h4{
+      margin: 0;
+    }
+  }
 }
