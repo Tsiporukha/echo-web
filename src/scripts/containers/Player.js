@@ -13,8 +13,8 @@ import styles from '../../assets/styles/player.css';
 
 
 const mapStateToProps = state => ({
+  queue: state.queue.items,
   currentSong: state.player.currentSong,
-  id: state.player.currentSong.id,
   playing: state.player.playing,
   nextSong: state.queue.items.length ? getNextSong(state) : false,
   prevSong: state.queue.items.length ? getPrevSong(state) : false
@@ -50,17 +50,21 @@ class Player extends Component {
 
   maybeTitlePlaceholder = str => str || '--//--';
 
+  reinitializeSongState = (nextProps, props) => nextProps.currentSong.id !== props.currentSong.id ? this.setState({...initialSongState}) : false;
+  showPlayerOnAddItems = nextProps => nextProps.queue.length && this.setState({playerVisibility: true});
 
   state = {
     queueVisibility: true,
+    playerVisibility: false,
     volume: 0.8,
     ...initialSongState
   };
 
-  componentWillReceiveProps = nextProps => nextProps.currentSong.id !== this.props.id ? this.setState({...initialSongState}) : false;
+  componentWillReceiveProps = nextProps => this.reinitializeSongState(nextProps, this.props) || this.showPlayerOnAddItems(nextProps);
 
   render() {
     return (
+      this.state.playerVisibility &&
       <div className={styles.root}>
         <div className={styles.bottomPlayer}>
           <div className={styles.artwork}>
@@ -93,7 +97,7 @@ class Player extends Component {
           <i className={this.state.queueVisibility ? styles.currentQueueIconActive : styles.currentQueueIcon}
             onClick={this.toggleQueueVisibility}>queue_music</i>
 
-          {this.state.queueVisibility && <CurrentQueue />}
+          <div style={{visibility: this.state.queueVisibility ? 'visible' : 'hidden', margin: 0}}><CurrentQueue /></div>
 
           <ReactPlayer
             ref={player => this.player = player}
