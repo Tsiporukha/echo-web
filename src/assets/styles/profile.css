@@ -13,6 +13,8 @@
 }
 .rightReg{
   composes: col-md-4 from './bootstrap.css';
+  composes: hidden-sm from './bootstrap.css';
+  composes: hidden-xs from './bootstrap.css';
 }
 
 .userData{

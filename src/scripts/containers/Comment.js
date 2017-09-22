@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 import moment from 'moment';
 
@@ -16,10 +17,14 @@ const mapDispatchToProps = dispatch => ({
 
 const Comment = props => (
   <div className={styles.root}>
-    <img src={props.user.avatar_url} alt='avatar' className={styles.avatar} />
+    <Link to={`/profile/${props.user.id}`}>
+      <img src={props.user.avatar_url} alt='avatar' className={styles.avatar} />
+    </Link>
     <div className={styles.info}>
       <div>
-        <span className={styles.name}>{props.user.name}</span>
+        <Link to={`/profile/${props.user.id}`}>
+          <span className={styles.name}>{props.user.name}</span>
+        </Link>
         <span className={styles.time}>{moment(props.comment.created_at).fromNow()}</span>
       </div>
       <div className={styles.commentBody}>{props.comment.body}</div>

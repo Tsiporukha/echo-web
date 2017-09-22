@@ -22,7 +22,6 @@
 
 .leftReg{
   composes: col-md-8 from './bootstrap.css';
-  composes: col-xs-12 from './bootstrap.css';
 
   .searchResultsPlaceholder{
     position: absolute;
@@ -35,6 +34,7 @@
 .rightReg{
   composes: col-md-4 from './bootstrap.css';
   composes: hidden-sm from './bootstrap.css';
+  composes: hidden-xs from './bootstrap.css';
 }
 
 .recentlyLiked{
