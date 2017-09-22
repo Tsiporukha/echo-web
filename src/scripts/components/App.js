@@ -8,21 +8,36 @@ import Stream from '../containers/Stream';
 import Profile from '../containers/Profile';
 import Player from '../containers/Player';
 
+import {removeSeparator} from '../lib/route';
+
 import styles from '../../assets/styles/app.css';
+
+
+class AppBody extends Component {
+
+  componentWillMount = () => removeSeparator(this.props.location.hash, this.props.history, '#!');
+
+  render(){
+    return(
+      <div>
+        <FacebookSDK />
+
+        <Navbar />
+        <div>
+          <Route exact path='/' component={FeedSources} />
+          <Route exact path='/feed/:id' component={Stream} />
+          <Route exact path='/profile/:id' component={Profile} />
+        </div>
+        <Player />
+      </div>
+    )
+  }
+}
+
 
 const App = () => (
   <BrowserRouter>
-    <div>
-      <FacebookSDK />
-
-      <Navbar />
-      <div>
-        <Route exact path='/' component={FeedSources} />
-        <Route exact path='/feed/:id' component={Stream} />
-        <Route exact path='/profile/:id' component={Profile} />
-      </div>
-      <Player />
-    </div>
+    <Route component={AppBody} />
   </BrowserRouter>
 );
 
