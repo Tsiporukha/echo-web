@@ -12,7 +12,8 @@ const configureStore = () => {
     applyMiddleware(thunkMiddleware))); // a normal Redux store
 
   store.subscribe(throttle(() => saveState({
-    
+    session: store.getState().session,
+    search: {history: store.getState().search.history},
   }), 1000));
 
   return store;
