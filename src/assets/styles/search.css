@@ -1,5 +1,6 @@
 .clearIcon, .backIcon{
   composes: material-icons from './fonts.css';
+  cursor: pointer;
 }
 .backIcon{
   color: white;
@@ -71,4 +72,20 @@
   width: 100%;
   height: calc(100% - 50px);
   overflow: auto;
+}
+
+.history{
+  position: fixed;
+  height: calc(100vh - 50px);
+  width: calc(100% - 30px);
+  background-color: #ebebeb;
+  .item{
+    padding: 12px 6px;
+    a{
+      cursor: pointer;
+      color: #343434;
+      &:hover, &:focus{text-decoration: underline;}
+    }
+  }
+
 }

@@ -8,7 +8,11 @@
   composes: fa-soundcloud from './fontAwesome.css';
   font-size: 22px;
 }
-
+.vimeoIcon{
+  composes: fa from './fontAwesome.css';
+  composes: fa-vimeo from './fontAwesome.css';
+  font-size: 22px;
+}
 
 .tab{
   padding: 17px 0px;
@@ -23,6 +27,7 @@
     color: #23365a;
     .youtubeIcon{color: #dd001c;}
     .soundcloudIcon{color: #f50;}
+    .vimeoIcon{color: #1ab7ea;}
   }
 }
 
@@ -32,6 +37,11 @@
 
 .pointer{
   background-color: #0091ea;
-  top: 48px;
-  width: 66px;
+}
+
+.feed{
+  .pointer{
+    top: 48px!important;
+    width: 66px!important;
+  }
 }

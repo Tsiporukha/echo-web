@@ -1,13 +1,14 @@
 import {
-  SET_SEARCH_TERM,
+  SET_SEARCH_TERM, ADD_TO_SEARCH_HISTORY,
   SET_LATEST_SEARCH, ADD_TO_LATEST_SEARCH, REMOVE_FROM_LATEST_SEARCH,
   SET_POPULAR_SEARCH, ADD_TO_POPULAR_SEARCH, REMOVE_FROM_POPULAR_SEARCH,
   SET_LONGEST_SEARCH, ADD_TO_LONGEST_SEARCH, REMOVE_FROM_LONGEST_SEARCH,
   SET_YOUTUBE, ADD_TO_YOUTUBE, REMOVE_FROM_YOUTUBE,
-  SET_SOUNDCLOUD, ADD_TO_SOUNDCLOUD, REMOVE_FROM_SOUNDCLOUD
+  SET_SOUNDCLOUD, ADD_TO_SOUNDCLOUD, REMOVE_FROM_SOUNDCLOUD,
+  SET_VIMEO, ADD_TO_VIMEO, REMOVE_FROM_VIMEO,
 } from '../constants/ActionTypes';
 
-import {LatestSearch, PopularSearch, LongestSearch, Youtube, Soundcloud} from '../constants/creatorsArgs';
+import {LatestSearch, PopularSearch, LongestSearch, Youtube, Soundcloud, Vimeo} from '../constants/creatorsArgs';
 
 import {createSubFeedActions} from './actionsCreators';
 import {addSongs} from './EntitiesAUDActions';
@@ -17,6 +18,7 @@ import {getLatest, getPopular, getLongest} from '../lib/ebApi/streams';
 import {createIdKeyHash} from '../lib/stream';
 import {searchOnYoutube} from '../lib/youtube';
 import {search as searchOnSoundcloud} from '../lib/soundcloud';
+import {search as searchOnVimeo} from '../lib/vimeo';
 
 import v4 from 'uuid/v4';
 
@@ -43,7 +45,15 @@ const clearSearchResults = () => dispatch => {
   return dispatch(setYoutube([]));
 }
 
-export const updateSearchTerm = term => dispatch => Promise.resolve(clearSearchResults()(dispatch)).then(_ => dispatch(setSearchTerm(term)));
+
+const addToSearchHistory = term => ({
+  type: ADD_TO_SEARCH_HISTORY,
+  payload: term
+});
+
+export const updateSearchTerm = term => dispatch => Promise.resolve(clearSearchResults()(dispatch)).then(_ => dispatch(setSearchTerm(term)))
+  .then(_ => dispatch(addToSearchHistory(term)));
+
 
 //Echo
 export const {setLatestSearch, addToLatestSearch, removeFromLatestSearch} =
@@ -68,3 +78,9 @@ export const fetchAndReceiveYoutubeSongs = fetchAndReceiveSongs(searchOnYoutube,
 export const {setSoundcloud, addToSoundcloud, removeFromSoundcloud} =
   createSubFeedActions(Soundcloud)(SET_SOUNDCLOUD, ADD_TO_SOUNDCLOUD, REMOVE_FROM_SOUNDCLOUD);
 export const fetchAndReceiveSoundcloudSongs = fetchAndReceiveSongs(searchOnSoundcloud, setSoundcloud, addToSoundcloud);
+
+
+//Vimeo
+export const {setVimeo, addToVimeo, removeFromVimeo} =
+  createSubFeedActions(Vimeo)(SET_VIMEO, ADD_TO_VIMEO, REMOVE_FROM_VIMEO);
+export const fetchAndReceiveVimeoSongs = fetchAndReceiveSongs(searchOnVimeo, setVimeo, addToVimeo);
