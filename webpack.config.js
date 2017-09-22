@@ -5,12 +5,12 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const nmPath = './node_modules';
 
 const joinToDirname = pth => path.join(__dirname, pth);
 const jointToWebAppDir = pth => path.join('./src/', pth);
 
 const getFullConfig = envConfig => Object.assign({}, commonConfig, envConfig);
+
 
 const commonConfig = {
   cache: true,
@@ -57,6 +57,7 @@ const webAppConfig = {
 
   entry: {
     bundle: joinToDirname(jointToWebAppDir('/index.js')),
+    loader: joinToDirname(jointToWebAppDir('/loader.js')),
   },
   output: {
     path: joinToDirname('/build/web'),
@@ -71,6 +72,7 @@ const webAppConfig = {
   ],
 
 }
+
 
 const builds = {web: getFullConfig(webAppConfig)};
 
