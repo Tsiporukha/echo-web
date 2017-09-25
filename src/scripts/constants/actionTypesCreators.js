@@ -9,7 +9,7 @@ const removeFrom = name => `REMOVE_FROM_${name}`;
 export const createAUDConsts = name => ({
   [addEntities(name)]: addEntities(name),
   [updateEntities(name)]: updateEntities(name),
-  [updateEntities(name)]: updateEntities(name)
+  [deleteEntities(name)]: deleteEntities(name)
 });
 
 export const createSubFeedConsts = name => ({
