@@ -2,7 +2,8 @@ import {createAUDConsts, createSubFeedConsts} from './actionTypesCreators';
 import {
   STREAM, USER, PLAYLIST, SONG, COMMENT,
   LATEST, POPULAR, LONGEST,
-  LATEST_SEARCH, POPULAR_SEARCH, LONGEST_SEARCH, YOUTUBE, SOUNDCLOUD, VIMEO
+  LATEST_SEARCH, POPULAR_SEARCH, LONGEST_SEARCH, YOUTUBE, SOUNDCLOUD, VIMEO,
+  QUEUE,
 } from './creatorsArgs';
 
 export const {ADD_USERS, UPDATE_USERS, DELETE_USERS} = createAUDConsts(USER);
@@ -24,9 +25,8 @@ export const {SET_YOUTUBE, ADD_TO_YOUTUBE, REMOVE_FROM_YOUTUBE} = createSubFeedC
 export const {SET_SOUNDCLOUD, ADD_TO_SOUNDCLOUD, REMOVE_FROM_SOUNDCLOUD} = createSubFeedConsts(SOUNDCLOUD);
 export const {SET_VIMEO, ADD_TO_VIMEO, REMOVE_FROM_VIMEO} = createSubFeedConsts(VIMEO);
 
-export const ADD_TO_QUEUE = 'ADD_TO_QUEUE';
+export const {SET_QUEUE, ADD_TO_QUEUE, REMOVE_FROM_QUEUE} = createSubFeedConsts(QUEUE);
 export const ADD_TO_QUEUE_TOP = 'ADD_TO_QUEUE_TOP';
-export const REMOVE_FROM_QUEUE = 'REMOVE_FROM_QUEUE';
 
 export const PLAY = 'PLAY';
 export const PAUSE = 'PAUSE';

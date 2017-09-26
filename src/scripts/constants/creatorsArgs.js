@@ -23,3 +23,6 @@ export const {LongestSearch, LONGEST_SEARCH} = createArgs('LongestSearch');
 export const {Youtube, YOUTUBE} = createArgs('Youtube');
 export const {Soundcloud, SOUNDCLOUD} = createArgs('Soundcloud');
 export const {Vimeo, VIMEO} = createArgs('Vimeo');
+
+
+export const {Queue, QUEUE} = createArgs('Queue');

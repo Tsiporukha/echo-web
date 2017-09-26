@@ -1,6 +1,10 @@
 import {
-  ADD_TO_QUEUE, ADD_TO_QUEUE_TOP, REMOVE_FROM_QUEUE
+  ADD_TO_QUEUE, ADD_TO_QUEUE_TOP, REMOVE_FROM_QUEUE, SET_QUEUE
 } from '../constants/ActionTypes';
+
+import {Queue} from '../constants/creatorsArgs';
+
+import {createSubFeedActions} from './actionsCreators';
 
 import {addSongs, addStreams, addPlaylists, updatePlaylists} from './EntitiesAUDActions';
 import {setCurrentSong} from './PlayerActions';
@@ -10,19 +14,11 @@ import {create as createStream} from '../lib/ebApi/streams';
 import v4 from 'uuid/v4';
 
 
-export const add = references => ({
-  type: ADD_TO_QUEUE,
-  payload: references
-});
+export const {setQueue: set, addToQueue: add, removeFromQueue: remove} = createSubFeedActions(Queue)(SET_QUEUE, ADD_TO_QUEUE, REMOVE_FROM_QUEUE);
 
 export const addToTop = references => ({
   type: ADD_TO_QUEUE_TOP,
   payload: references
-});
-
-export const remove = ids => ({
-  type: REMOVE_FROM_QUEUE,
-  payload: ids
 });
 
 export const removeStreamSong = (playlist, songId) =>
