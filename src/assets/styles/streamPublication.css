@@ -61,7 +61,7 @@
 
 .bodyLeftReg{
   composes: leftRegContent;
-  width: 100%;
+//  width: 100%;
 }
 .bodyRightReg{
   composes: rightReg from './navbar.css';
