@@ -4,12 +4,17 @@
   "description": "Echo web cli",
   "main": "src/index.js",
   "scripts": {
-    "dev-server": "build=web ./node_modules/.bin/webpack-dev-server ./src/",
-    "nodemon": "nodemon server.js"
+    "client-dev-server": "build=webClient webpack-dev-server ./src/client",
+    "node-dev-server": "nodemon --exec babel-node src/server/server.js",
+    "dev-servers": "npm run client-dev-server -- --port 9001 & npm run node-dev-server",
+    "build": "webpack -p",
+    "production": "npm run build && cd build/web && NODE_ENV=production PORT=9000 ../../node_modules/.bin/nodemon server.js",
+    "deploy-lambda": "cd build/web && ../../node_modules/.bin/serverless deploy"
   },
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.5",
+    "aws-serverless-express": "^3.0.2",
+    "express": "^4.16.1",
     "history": "^4.6.3",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
@@ -33,6 +38,7 @@
     "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.24.1",
     "babel-eslint": "^8.0.0",
     "babel-loader": "^7.1.1",
@@ -59,6 +65,8 @@
     "postcss-nested": "^2.0.4",
     "react-hot-loader": "^3.0.0-beta.6",
     "redux-devtools-extension": "^2.13.2",
+    "serverless": "^1.23.0",
+    "serverless-plugin-write-env-vars": "^1.0.1",
     "style-loader": "^0.18.2",
     "webpack": "^3.3.0",
     "webpack-dev-server": "^2.5.1"

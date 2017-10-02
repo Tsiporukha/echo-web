@@ -4,3 +4,4 @@ node_modules
 .tags
 .idea
 src/scripts/constants/skeys.js
+src/server/.env.yml

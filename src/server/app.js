@@ -3,10 +3,12 @@
 import express from 'express';
 import path from 'path';
 
-import {getStream} from './scripts/lib/ebApi/streams';
+import {getStream} from '../scripts/lib/ebApi/streams';
 
+const isProduction = process.env.NODE_ENV === 'production';
+const clientDevServerUrl = 'http://localhost:9001'
 
-const assetsUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:9000' : '';
+const assetsUrl = isProduction ? '' : clientDevServerUrl;
 
 
 const createStreamMetaTags = (stream = {}, playlist = stream.playlist || {}) => (`
@@ -54,9 +56,13 @@ const getStreamIfMatch = splittedUrl => splittedUrl[1] === 'feed' ? getStream(Nu
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, '../build/web')));
+
+const staticFilesPath = isProduction ? './' : path.join(__dirname, '../');
+app.use(express.static(staticFilesPath));
+
 
 app.use((req, res) => {
+  res.set('Content-Type', 'text/html');
   return getStreamIfMatch(req.url.split('/')).then(maybeStream => res.end(renderHTML(createStreamMetaTags(maybeStream))))
 });
 
