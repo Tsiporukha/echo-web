@@ -68,6 +68,8 @@ const webClientConfig = {
   plugins: [
     new CopyWebpackPlugin([
       {from: joinToDirname(jointToWebAppDir('/client/index.html'))},
+      {from: joinToDirname(jointToWebAppDir('/client/robots.txt'))},
+      {from: joinToDirname(jointToWebAppDir('/client/favicon.ico'))},
     ]),
     new ExtractTextPlugin({filename: 'styles.css', allChunks: true}),
     new webpack.optimize.ModuleConcatenationPlugin(),
