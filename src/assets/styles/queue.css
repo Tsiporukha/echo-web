@@ -1,4 +1,4 @@
-.clearIcon, .saveIcon {
+.clearIcon, .saveIcon, .dragHandler {
   composes: material-icons from './fonts.css';
 }
 .clearIcon{
@@ -94,4 +94,15 @@
 
 .menuDivider{
   margin: 2px 0;
+}
+
+
+.sortableItem{
+ display: flex;
+ z-index: 2;
+ .item{width: calc(100% - 36px);}
+}
+.dragHandler{
+ margin: auto 12px auto 0;
+ color: #7b7b7b;
 }
