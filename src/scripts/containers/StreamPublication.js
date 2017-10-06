@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import {Button, Input, Autocomplete} from 'react-toolbox';
+import {arrayMove} from 'react-sortable-hoc';
 
 import UploadArtwork from '../components/UploadArtwork';
 import QueueSong from '../containers/QueueSong';
+import SortableQueueItems from '../components/SortableQueueItems';
 
 import {getQueueSongs} from '../actions/PlayerActions';
 import {publish} from '../actions/QueueActions';
@@ -41,7 +43,7 @@ class StreamPublication extends Component {
 
   getSecondaryTags = primaryTags => primaryTags.reduce((secondaryTags, ptag) => secondaryTags.concat(tags[ptag]), []);
   getSourceForTagsAutocomplete = (primaryTags = Object.keys(tags), addedPrimaryTags = this.state.tags.filter(tag => primaryTags.includes(tag))) =>
-    addedPrimaryTags.length ? getSecondaryTags(addedPrimaryTags) : primaryTags;
+    addedPrimaryTags.length ? this.getSecondaryTags(addedPrimaryTags) : primaryTags;
   getTagsSuggestion = () => this.getSourceForTagsAutocomplete().filter(tag => !this.state.tags.includes(tag));
 
   handleTagsChange = tags => this.setState({tags});
@@ -49,10 +51,12 @@ class StreamPublication extends Component {
   removeTag = tag => () => this.setState({tags: this.state.tags.filter(t => t !== tag)});
 
   isAllFielsFilled = () => this.state.title && this.state.description && this.state.tags.length && this.state.artwork_url;
-  publish = () => this.props.publish(this.state.title, this.state.description, this.state.tags, this.state.artwork_url, this.props.songs, this.props.token)
+  publish = () => this.props.publish(this.state.title, this.state.description, this.state.tags, this.state.artwork_url, this.state.songs, this.props.token)
     .then(this.props.onCancel);
   maybePublish = () => this.isAllFielsFilled() ? this.publish() : this.setState({triedPublish: true});
   maybeError = (filled, errMssg) => (this.state.triedPublish && !filled) ? errMssg : false;
+
+  onSortEnd = ({oldIndex, newIndex}) => this.setState({songs: arrayMove(this.state.songs, oldIndex, newIndex)});
 
 
   state = {
@@ -62,7 +66,9 @@ class StreamPublication extends Component {
     tags: [],
 
     uploadedArtworkUrl: '',
-    triedPublish: false
+    triedPublish: false,
+
+    songs: this.props.songs.map(song => ({...song, type: 'song'})),
   };
 
   render() {
@@ -147,7 +153,7 @@ class StreamPublication extends Component {
             </div>
 
             <div>
-              {this.props.songs.map(song => <QueueSong id={song.id} key={song.id} />)}
+              <SortableQueueItems items={this.state.songs} onSortEnd={this.onSortEnd} useDragHandle />
             </div>
           </div>
 

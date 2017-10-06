@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import {IconMenu, MenuItem, MenuDivider} from 'react-toolbox/lib/menu';
+import {arrayMove} from 'react-sortable-hoc';
 
 import LoginDialog from '../components/LoginDialog';
 import QueueSong from './QueueSong';
 import QueueStream from './QueueStream';
 import StreamPublication from './StreamPublication';
+import SortableQueueItems from '../components/SortableQueueItems';
 
-import {remove} from '../actions/QueueActions';
+import {remove, set} from '../actions/QueueActions';
 import {clear as clearPlayer, getQueueSongs} from '../actions/PlayerActions';
 
 import styles from '../../assets/styles/queue.css';
@@ -23,16 +25,21 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   clear: items => () => {
     dispatch(clearPlayer());
     return dispatch(remove(items))
-  }
+  },
+
+  set: references => dispatch(set(references)),
 });
 
-const itemTypes = {song: QueueSong, stream: QueueStream};
-const createJSXItem = (ItemComponent, itemId) => <ItemComponent key={itemId} id={itemId} />
-const createItem = item => createJSXItem(itemTypes[item.type], item.id);
+// const itemTypes = {song: QueueSong, stream: QueueStream};
+// const createJSXItem = (ItemComponent, itemId) => <ItemComponent key={itemId} id={itemId} />
+// const createItem = item => createJSXItem(itemTypes[item.type], item.id);
 
 class Queue extends Component {
 
   toggleStreamPublication = () => this.setState({streamPublication: !this.state.streamPublication});
+
+  onSortEnd = ({oldIndex, newIndex}) => this.props.set(arrayMove(this.props.items, oldIndex, newIndex));
+
 
   state = {streamPublication: false};
 
@@ -65,7 +72,7 @@ class Queue extends Component {
         </div>
 
         <div className={styles.items}>
-          {this.props.items.map(createItem)}
+          <SortableQueueItems items={this.props.items} onSortEnd={this.onSortEnd} useDragHandle />
         </div>
       </div>
     )

@@ -3,7 +3,7 @@
   cursor: pointer;
 }
 .removeIcon, .addIcon{
-  padding: 6px 12px 6px 0;
+//  padding: 6px 12px 6px 0;
   border-radius: 50%;
 }
 .playIcon, .pauseIcon{
@@ -40,6 +40,7 @@
   margin: 10px 0;
   color: #343434;
   font-size: 14px;
+  width: 100%;
   &:hover, &:active{
     background-color: #e5e5e5;
     .icons{visibility: visible;}
@@ -69,10 +70,10 @@
 }
 
 .info{
-  width: calc(100% - 90px - 40px);
+  width: calc(100% - 90px - 36px);
   padding-left: 18px;
-  .withLikeArea{
-    height: calc(100% - 90px - 40px - 85px);
+  &.withLikeArea{
+    width: calc(100% - 90px - 36px - 85px);
   }
 
   .title, .artist{
@@ -93,8 +94,7 @@
 }
 
 .icons{
-  width: 40px;
-  margin: auto;
+  margin: auto 0;
   visibility: hidden;
 }
 
