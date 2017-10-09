@@ -51,7 +51,7 @@ class Search extends Component {
       <div className={styles.root}>
 
         <div className={styles.searchBox}>
-          <input type='text' ref='input' className={styles.input} placeholder='Search Genre, Mood'
+          <input type='text' ref='input' id='searchInput' className={styles.input} placeholder='Search Genre, Mood'
             onFocus={this.showResults}
             onKeyUp={this.onInputKeyUp}
           />
@@ -76,3 +76,5 @@ class Search extends Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);
+
+export const getSearchInput = () => document.getElementById('searchInput');

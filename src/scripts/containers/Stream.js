@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import StreamDescription from '../components/StreamDescription';
 import SeparatedStream from '../components/SeparatedStream';
+import {getSearchInput} from './Search';
 import {addClonedStreamToTopAndPlay, addClonedStream} from '../actions/QueueActions';
 import {pause, play} from '../actions/PlayerActions';
 import {fetchStream, fetchComments} from '../actions/EntitiesAUDActions';
@@ -22,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
   play: () => dispatch(play()),
   pause: () => dispatch(pause()),
   dispatchLikeAction: likeAction => (stream, token) => () => dispatch(likeAction(stream, token)),
-  searchTag: tag => () => Promise.resolve(dispatch(updateSearchTerm(tag))).then(_ => document.getElementById('searchInput').focus()),
+  searchTag: tag => () => Promise.resolve(dispatch(updateSearchTerm(tag))).then(_ => getSearchInput().focus()),
 
   fetchStream: (streamId, token) => dispatch(fetchStream(streamId, token)),
   fetchComments: (streamId, limit, offset) => () => dispatch(fetchComments(streamId, limit, offset)),
