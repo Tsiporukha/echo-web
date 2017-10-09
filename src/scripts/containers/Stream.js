@@ -15,6 +15,7 @@ import {maybeGetStreamAndNestedEntities} from '../lib/stream';
 const mapStateToProps = (state, ownProps) => ({
   ...maybeGetStreamAndNestedEntities(state, ownProps.id || ownProps.match.params.id),
   token: state.session.token,
+  currentUserId: !!state.session.user && state.session.user.id,
 });
 
 const mapDispatchToProps = dispatch => ({

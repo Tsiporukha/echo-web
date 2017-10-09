@@ -68,6 +68,7 @@
 }
 
 .header{
+  display: flex;
   b{font-weight: 500;}
   a{
     color: #0e8ffc;
@@ -78,6 +79,15 @@
     width: 20px;
     margin: 0 4px;
     border-radius: 4px;
+  }
+  .editArea{
+    margin-left: auto;
+    span{
+      cursor: pointer;
+      &:hover, &:active{
+        text-decoration: underline;
+      }
+    }
   }
 }
 

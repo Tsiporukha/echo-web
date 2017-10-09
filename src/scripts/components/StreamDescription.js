@@ -46,7 +46,7 @@ const getLikeButtonOnClick = (token, dispatchLikeAction, stream, showLogin) => t
 const getLikeButtonTitle = liked => liked ? 'Liked' : 'Like';
 
 
-const StreamDescriptionRender = (props, loginVisibility, toggleLoginVisibility) => (
+const StreamDescriptionRender = props => (
   <div className={styles.root}>
     <div className={styles.header}>
       <span><b>Updated</b> {moment(props.stream.updated_at).fromNow()} by </span>
@@ -54,6 +54,10 @@ const StreamDescriptionRender = (props, loginVisibility, toggleLoginVisibility) 
         <img src={props.user.avatar_url} alt='user avatar' className={styles.avatar} />
         <span>{props.user.name}</span>
       </Link>
+      {props.editable && <div className={styles.editArea}>
+        <span onClick={props.toggleStreamEditing}>edit</span>
+        {props.streamEditing && false}
+      </div>}
     </div>
 
     <div className={styles.body}>
@@ -116,7 +120,7 @@ const StreamDescriptionRender = (props, loginVisibility, toggleLoginVisibility) 
           </span>
         </TooltipButton>
         <TooltipButton theme={styles} raised tooltip='Save to My Likes' tooltipDelay={500}
-          onClick={getLikeButtonOnClick(props.token, props.dispatchLikeAction, props.stream, toggleLoginVisibility)}>
+          onClick={getLikeButtonOnClick(props.token, props.dispatchLikeAction, props.stream, props.toggleLoginVisibility)}>
           <span className={styles.iconDescription}>
             <i className={styles.likeIcon}>favorite</i><span>{getLikeButtonTitle(props.stream.your_likes)}</span>
           </span>
@@ -133,7 +137,7 @@ const StreamDescriptionRender = (props, loginVisibility, toggleLoginVisibility) 
       </div>
     </div>
 
-    {!props.token && <LoginDialog active={loginVisibility} onEscKeyDown={toggleLoginVisibility} />}
+    {!props.token && <LoginDialog active={props.loginVisibility} onEscKeyDown={props.toggleLoginVisibility} />}
   </div>
 )
 
@@ -141,14 +145,22 @@ const StreamDescriptionRender = (props, loginVisibility, toggleLoginVisibility) 
 class StreamDescription extends Component {
 
   toggleLoginVisibility = () => this.setState({loginVisibility: !this.state.loginVisibility});
+  toggleStreamEditing = () => this.setState({streamEditing: !this.state.streamEditing});
 
 
   state = {
     loginVisibility: false,
+    streamEditing: false,
   }
 
   render(){
-    return StreamDescriptionRender(this.props, this.state.loginVisibility, this.toggleLoginVisibility)
+    return (
+      <StreamDescriptionRender {...this.props}
+        loginVisibility={this.state.loginVisibility} toggleLoginVisibility={this.toggleLoginVisibility}
+        streamEditing={this.state.streamEditing} toggleStreamEditing={this.toggleStreamEditing}
+        editable={this.props.stream.allowed_users_ids.includes(this.props.currentUserId)}
+      />
+    )
   }
 }
 
