@@ -74,7 +74,3 @@ export const addClonedStreamToTopAndPlay = (stream, playlist, songs) => dispatch
   dispatchStream(addToTop)(strm, pllst, sngs)(dispatch);
   return dispatch(setCurrentSong(sngs[0]));
 }
-
-
-export const publish = (playlist_title, playlist_description, tags, default_artwork_url, songs, token) => dispatch =>
-  createStream(playlist_title, playlist_description, tags, default_artwork_url, songs, token);

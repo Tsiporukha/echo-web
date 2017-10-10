@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import StreamEditing from '../components/StreamEditing';
 
 import {getQueueSongs} from '../actions/PlayerActions';
-import {publish} from '../actions/QueueActions';
+import {create} from '../lib/ebApi/streams';
 
 
 const mapStateToProps = (state, ownProps) => ({
@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   save: (playlist_title, playlist_description, tags, default_artwork_url, songs, token) =>
-    dispatch(publish(playlist_title, playlist_description, tags, default_artwork_url, songs, token)),
+    create(playlist_title, playlist_description, tags, default_artwork_url, songs, token),
 });
 
 
