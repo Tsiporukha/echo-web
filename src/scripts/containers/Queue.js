@@ -7,7 +7,7 @@ import {arrayMove} from 'react-sortable-hoc';
 import LoginDialog from '../components/LoginDialog';
 import QueueSong from './QueueSong';
 import QueueStream from './QueueStream';
-import StreamPublication from './StreamPublication';
+import StreamCreation from './StreamCreation';
 import SortableQueueItems from '../components/SortableQueueItems';
 
 import {remove, set} from '../actions/QueueActions';
@@ -60,7 +60,7 @@ class Queue extends Component {
             </IconMenu>
             {this.state.streamPublication && (
               this.props.authed ?
-                <StreamPublication onCancel={this.toggleStreamPublication} />
+                <StreamCreation onCancel={this.toggleStreamPublication} />
                 :
                 <LoginDialog active={this.state.streamPublication} onEscKeyDown={this.toggleStreamPublication} />
             )}

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 
 import {Button, Input, Autocomplete} from 'react-toolbox';
 import {arrayMove} from 'react-sortable-hoc';
@@ -7,9 +6,6 @@ import {arrayMove} from 'react-sortable-hoc';
 import UploadArtwork from '../components/UploadArtwork';
 import QueueSong from '../containers/QueueSong';
 import SortableQueueItems from '../components/SortableQueueItems';
-
-import {getQueueSongs} from '../actions/PlayerActions';
-import {publish} from '../actions/QueueActions';
 
 import {uploadArtwork} from '../lib/ebApi/streams';
 import {playlistDuration, duration} from '../lib/duration';
@@ -19,18 +15,7 @@ import styles from '../../assets/styles/streamPublication.css';
 import tags from '../../assets/newTags.json';
 
 
-const mapStateToProps = (state, ownProps) => ({
-  songs: getQueueSongs(state),
-  token: state.session.token
-});
-
-const mapDispatchToProps = dispatch => ({
-  publish: (playlist_title, playlist_description, tags, default_artwork_url, songs, token) =>
-    dispatch(publish(playlist_title, playlist_description, tags, default_artwork_url, songs, token)),
-});
-
-
-class StreamPublication extends Component {
+export default class StreamEditing extends Component {
 
   setTitle = title => this.setState({title});
   setDescription = description => this.setState({description});
@@ -51,10 +36,10 @@ class StreamPublication extends Component {
   removeTag = tag => () => this.setState({tags: this.state.tags.filter(t => t !== tag)});
 
   isAllFielsFilled = () => this.state.title && this.state.description && this.state.tags.length && this.state.artwork_url;
-  publish = () => this.props.publish(this.state.title, this.state.description, this.state.tags, this.state.artwork_url, this.state.songs, this.props.token)
+  save = () => this.props.save(this.state.title, this.state.description, this.state.tags, this.state.artwork_url, this.state.songs, this.props.token)
     .then(this.props.onCancel);
-  maybePublish = () => this.isAllFielsFilled() ? this.publish() : this.setState({triedPublish: true});
-  maybeError = (filled, errMssg) => (this.state.triedPublish && !filled) ? errMssg : false;
+  maybeSave = () => this.isAllFielsFilled() ? this.save() : this.setState({triedSave: true});
+  maybeError = (filled, errMssg) => (this.state.triedSave && !filled) ? errMssg : false;
 
   onSortEnd = ({oldIndex, newIndex}) => this.setState({songs: arrayMove(this.state.songs, oldIndex, newIndex)});
 
@@ -64,9 +49,9 @@ class StreamPublication extends Component {
     description: '',
     artwork_url: this.props.songs[0].artwork_url,
     tags: [],
-
     uploadedArtworkUrl: '',
-    triedPublish: false,
+
+    triedSave: false,
 
     songs: this.props.songs.map(song => ({...song, type: 'song'})),
   };
@@ -82,7 +67,7 @@ class StreamPublication extends Component {
           </div>
           <div className={styles.rightReg}>
             <div className={styles.buttons}>
-              <Button theme={styles} icon='save' label='Save' raised onClick={this.maybePublish} />
+              <Button theme={styles} icon='save' label='Save' raised onClick={this.maybeSave} />
               <Button theme={styles} label='Cancel' flat onClick={this.props.onCancel} />
             </div>
           </div>
@@ -162,5 +147,3 @@ class StreamPublication extends Component {
     )
   }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(StreamPublication);
