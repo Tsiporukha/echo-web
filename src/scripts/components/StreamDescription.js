@@ -4,6 +4,7 @@ import {IconMenu, MenuItem, MenuDivider, Button, Tooltip} from 'react-toolbox';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 import LoginDialog from './LoginDialog';
+import StreamEditing from './StreamEditing';
 
 import moment from 'moment';
 
@@ -56,7 +57,9 @@ const StreamDescriptionRender = props => (
       </Link>
       {props.editable && <div className={styles.editArea}>
         <span onClick={props.toggleStreamEditing}>edit</span>
-        {props.streamEditing && false}
+        {props.streamEditing && <StreamEditing onCancel={props.toggleStreamEditing} save={props.update(props.stream.id)}
+          stream={props.stream} playlist={props.playlist} songs={props.songs}
+          token={props.token} />}
       </div>}
     </div>
 

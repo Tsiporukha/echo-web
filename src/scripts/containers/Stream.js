@@ -6,10 +6,11 @@ import SeparatedStream from '../components/SeparatedStream';
 import {getSearchInput} from './Search';
 import {addClonedStreamToTopAndPlay, addClonedStream} from '../actions/QueueActions';
 import {pause, play} from '../actions/PlayerActions';
-import {fetchStream, fetchComments} from '../actions/EntitiesAUDActions';
+import {fetchStream, fetchComments, receiveStreams} from '../actions/EntitiesAUDActions';
 import {updateSearchTerm} from '../actions/SearchActions';
 
 import {maybeGetStreamAndNestedEntities} from '../lib/stream';
+import {update} from '../lib/ebApi/streams';
 
 
 const mapStateToProps = (state, ownProps) => ({
@@ -28,6 +29,9 @@ const mapDispatchToProps = dispatch => ({
 
   fetchStream: (streamId, token) => dispatch(fetchStream(streamId, token)),
   fetchComments: (streamId, limit, offset) => () => dispatch(fetchComments(streamId, limit, offset)),
+
+  update: streamId => (playlist_title, playlist_description, tags, default_artwork_url, songs, token) =>
+    update(streamId, playlist_title, playlist_description, tags, default_artwork_url, songs, token).then(stream => dispatch(receiveStreams([stream]))),
 });
 
 

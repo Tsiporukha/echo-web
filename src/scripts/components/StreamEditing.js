@@ -15,6 +15,14 @@ import styles from '../../assets/styles/streamPublication.css';
 import tags from '../../assets/newTags.json';
 
 
+const getNewStreamData = artwork_url => ({
+  title: '',
+  description: '',
+  artwork_url,
+  tags: [],
+});
+
+
 export default class StreamEditing extends Component {
 
   setTitle = title => this.setState({title});
@@ -43,17 +51,18 @@ export default class StreamEditing extends Component {
 
   onSortEnd = ({oldIndex, newIndex}) => this.setState({songs: arrayMove(this.state.songs, oldIndex, newIndex)});
 
+  maybeGetStreamData = () => this.props.stream ?
+    {...this.props.playlist, tags: this.props.stream.all_tags, artwork_url: this.props.stream.artwork_url} :
+    getNewStreamData(this.props.songs[0].artwork_url);
+
 
   state = {
-    title: '',
-    description: '',
-    artwork_url: this.props.songs[0].artwork_url,
-    tags: [],
+    ...this.maybeGetStreamData(),
+
     uploadedArtworkUrl: '',
+    songs: this.props.songs.map(song => ({...song, type: 'song'})),
 
     triedSave: false,
-
-    songs: this.props.songs.map(song => ({...song, type: 'song'})),
   };
 
   render() {
