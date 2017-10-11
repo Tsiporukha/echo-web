@@ -25,12 +25,22 @@ export const uploadArtwork = (image, token, key = `data/atrworks/${v4()}${image.
     .then(_ => ({artwork_url: `https://s3.amazonaws.com/echoapp-userdata-production/${key}`}));
 
 
+const stringifyStreamBody = (playlist_title, playlist_description, tags, default_artwork_url, songs, token) =>
+  JSON.stringify({playlist_title, playlist_description, tags: tags.join(), default_artwork_url, songs, token});
+
 export const create = (playlist_title, playlist_description, tags, default_artwork_url, songs, token) =>
   luch(getAbsoluteUrl('/streams'), {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({playlist_title, playlist_description, tags: tags.join(), default_artwork_url, songs, token})
+      body: stringifyStreamBody(playlist_title, playlist_description, tags, default_artwork_url, songs, token),
     });
+
+export const update = (streamId, playlist_title, playlist_description, tags, default_artwork_url, songs, token) =>
+  luch(getAbsoluteUrl(`/streams/${streamId}`), {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: stringifyStreamBody(playlist_title, playlist_description, tags, default_artwork_url, songs, token),
+  }).then(getJson);
 
 
 export const like = (id, token) => luch.post(getAbsoluteUrl(`/streams/${id}/add_like`), {token});
