@@ -2836,7 +2836,7 @@ forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
 
-form-data@^2.1.2, form-data@^2.3.1:
+form-data@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.3.1.tgz#6fb94fbd71885306d73d15cc497fe4cc4ecd44bf"
   dependencies:
@@ -4026,12 +4026,13 @@ lsmod@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lsmod/-/lsmod-1.0.0.tgz#9a00f76dca36eb23fa05350afe1b585d4299e64b"
 
-luch@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/luch/-/luch-0.1.4.tgz#77a6faace37b71db74e5e13c3b3b7c3b9b98e8a5"
+luch@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/luch/-/luch-0.2.0.tgz#045a7375f5455e98736b39322ac133f8ad1c806e"
   dependencies:
-    form-data "^2.1.2"
+    form-data "^2.3.1"
     isomorphic-fetch "^2.2.1"
+    qsp "^0.2.0"
 
 macaddress@^0.2.8:
   version "0.2.8"
@@ -5351,6 +5352,10 @@ qs@6.5.1, qs@^6.5.1:
 qs@~6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
+
+qsp@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/qsp/-/qsp-0.2.0.tgz#ee9faff94766d480f0aaeb2ae39dc96df686d0e4"
 
 query-string@^4.1.0:
   version "4.3.4"

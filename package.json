@@ -18,7 +18,7 @@
     "history": "^4.6.3",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
-    "luch": "^0.1.4",
+    "luch": "^0.2.0",
     "moment": "^2.18.1",
     "nodemon": "^1.12.1",
     "postcss-cssnext": "^3.0.2",
