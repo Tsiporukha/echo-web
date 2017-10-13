@@ -37,7 +37,7 @@
 }
 .shareIcon{
   font-size: 20px;
-  top: 4px;
+  top: 2px;
   margin-right: 4px;
 }
 
@@ -211,6 +211,10 @@
     line-height: initial;
     min-height: initial;
     color: inherit!important;
+    &:hover, &:active{
+      border-radius: 0;
+      background-color: #f2f2f2;
+    }
     span{
       line-height: normal!important;
     }
@@ -229,5 +233,10 @@
   .icon{
     font-size: 16px;
   }
+}
+
+.shareLabel{
+  position: relative;
+  top: -2px;
 }
 /* end IconMenu theme */

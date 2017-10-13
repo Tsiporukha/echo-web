@@ -19,7 +19,7 @@ const TooltipIconMenu = Tooltip(IconMenu);
 
 const ShareButton = () => (
   <span className={styles.iconDescription}>
-    <i className={styles.shareIcon}>share</i><span>Share</span>
+    <i className={styles.shareIcon}>share</i><span className={styles.shareLabel}>Share</span>
   </span>
 )
 
@@ -128,7 +128,7 @@ const StreamDescriptionRender = props => (
             <i className={styles.likeIcon}>favorite</i><span>{getLikeButtonTitle(props.stream.your_likes)}</span>
           </span>
         </TooltipButton>
-        <TooltipIconMenu icon={<ShareButton />} menuRipple theme={styles} tooltip='Share' tooltipDelay={500} >
+        <TooltipIconMenu icon={<ShareButton />} iconRipple={false} theme={styles} tooltip='Share' tooltipDelay={500} >
           <MenuItem caption='Share via:' disabled theme={styles} />
           <CopyToClipboard text={`${document.domain}/feed/${props.stream.id}`}>
             <MenuItem icon='link' caption='Link' theme={styles} />
