@@ -47,7 +47,7 @@
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
-    "copy-webpack-plugin": "^4.0.1",
+    "copy-webpack-plugin": "^4.2.0",
     "css-loader": "^0.28.4",
     "eslint": "^4.2.0",
     "eslint-config-standard-react": "^5.0.0",
@@ -56,7 +56,7 @@
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-react": "^7.1.0",
     "eslint-plugin-standard": "^3.0.1",
-    "extract-text-webpack-plugin": "^3.0.0",
+    "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.4",
     "postcss-each": "^0.10.0",
     "postcss-import": "^11.0.0",
@@ -68,8 +68,8 @@
     "serverless": "^1.24.0",
     "serverless-plugin-write-env-vars": "^1.0.1",
     "style-loader": "^0.19.0",
-    "webpack": "^3.3.0",
-    "webpack-dev-server": "^2.5.1"
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3"
   },
   "resolutions": {
     "uuid": "3.0.1",
