@@ -4031,9 +4031,9 @@ lsmod@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lsmod/-/lsmod-1.0.0.tgz#9a00f76dca36eb23fa05350afe1b585d4299e64b"
 
-luch@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/luch/-/luch-0.2.0.tgz#045a7375f5455e98736b39322ac133f8ad1c806e"
+luch@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/luch/-/luch-0.2.1.tgz#c12aed269bfbc28b298855fa6078b9d156c3432a"
   dependencies:
     form-data "^2.3.1"
     isomorphic-fetch "^2.2.1"
@@ -4189,9 +4189,13 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
   dependencies:
     minimist "0.0.8"
 
-moment@^2.13.0, moment@^2.18.1:
+moment@^2.13.0:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
+
+moment@^2.19.1:
+  version "2.19.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.1.tgz#56da1a2d1cbf01d38b7e1afc31c10bcfa1929167"
 
 ms@2.0.0:
   version "2.0.0"
