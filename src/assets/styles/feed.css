@@ -61,7 +61,8 @@
 }
 
 .tags{
-  composes: tags from './streamDescription.css';
+  margin: 10px 0 25px;
+  .t{margin-right: 8px;}
 }
 .tag{
   composes: tag from './streamDescription.css';

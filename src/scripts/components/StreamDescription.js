@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {IconMenu, MenuItem, MenuDivider, Button, Tooltip} from 'react-toolbox';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import {IconMenu, Button, Tooltip} from 'react-toolbox';
 
 import LoginDialog from './LoginDialog';
 import StreamEditing from './StreamEditing';
+import ShareIconMenu from './ShareIconMenu';
 
 import moment from 'moment';
 
@@ -15,31 +15,6 @@ import styles from '../../assets/styles/streamDescription.css';
 
 
 const TooltipButton = Tooltip(Button);
-const TooltipIconMenu = Tooltip(IconMenu);
-
-const ShareButton = () => (
-  <span className={styles.iconDescription}>
-    <i className={styles.shareIcon}>share</i><span className={styles.shareLabel}>Share</span>
-  </span>
-)
-
-
-const CopyToClipboardMenuItem = streamId => (
-  <CopyToClipboard text={`${document.domain}/feed/${streamId}`}
-    onCopy={() => this.setState({copied: true})}>
-    <i className='material-icons'>link</i>
-  </CopyToClipboard>
-)
-
-
-const shareOnFacebook = stream => () => FB.ui({
-  method: 'share',
-  href: `${document.domain}/feed/${stream.id}`,     // The same than link in feed method
-  title: stream.title,  // The same than name in feed method
-  picture: stream.artwork_url,
-  caption: document.domain,
-  description: stream.description,
-}, response => false);
 
 
 const getLikeButtonOnClick = (token, dispatchLikeAction, stream, showLogin) => token ?
@@ -128,15 +103,8 @@ const StreamDescriptionRender = props => (
             <i className={styles.likeIcon}>favorite</i><span>{getLikeButtonTitle(props.stream.your_likes)}</span>
           </span>
         </TooltipButton>
-        <TooltipIconMenu icon={<ShareButton />} iconRipple={false} theme={styles} tooltip='Share' tooltipDelay={500} >
-          <MenuItem caption='Share via:' disabled theme={styles} />
-          <CopyToClipboard text={`${document.domain}/feed/${props.stream.id}`}>
-            <MenuItem icon='link' caption='Link' theme={styles} />
-          </CopyToClipboard>
-
-
-          <MenuItem onClick={shareOnFacebook(props.stream)} icon={<i className={styles.facebookIcon} />} caption='Facebook' theme={styles} />
-        </TooltipIconMenu>
+        <ShareIconMenu path={`/feed/${props.stream.id}`} picture={props.stream.artwork_url}
+          title={props.playlist.title} description={props.playlist.description} />
       </div>
     </div>
 

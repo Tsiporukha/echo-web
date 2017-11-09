@@ -1,7 +1,7 @@
-.lengthIcon, .durationIcon, .likeIcon, .likedIcon, .playlistAddIcon, .shareIcon, .playIcon, .pauseIcon, .commentsIcon{
+.lengthIcon, .durationIcon, .likeIcon, .likedIcon, .playlistAddIcon, .playIcon, .pauseIcon, .commentsIcon{
   composes: material-icons from './fonts.css';
 }
-.lengthIcon, .durationIcon, .likeIcon, .likedIcon, .playlistAddIcon, .shareIcon{
+.lengthIcon, .durationIcon, .likeIcon, .likedIcon, .playlistAddIcon{
   position: relative;
 }
 
@@ -35,11 +35,6 @@
   top: 5px;
   margin-right: 2px;
 }
-.shareIcon{
-  font-size: 20px;
-  top: 2px;
-  margin-right: 4px;
-}
 
 .playIcon, .pauseIcon{
   font-size: 46px;
@@ -50,12 +45,6 @@
   background-color: rgba(0, 0, 0, 0.5);
 
   &:hover, &:active {background-color: rgba(0, 0, 0, 0.8);}
-}
-
-.facebookIcon{
-  composes: fa from './fontAwesome.css';
-  composes: fa-facebook-square from './fontAwesome.css';
-  font-size: 18px;
 }
 
 
@@ -132,16 +121,11 @@
 
 
 .tags{
-  margin: 10px 0 25px;
+  composes: tags from './genre.css';
   .t{margin-right: 8px;}
 }
 .tag{
-  cursor: pointer;
-  display: inline-block;
-  margin: 4px 6px;
-  background: #e8e8e8;
-  padding: 4px 14px;
-  border-radius: 12px;
+  composes: tag from './genre.css'
 }
 
 .footer{
@@ -199,44 +183,3 @@
   }
 }
 /* end Buttons theme */
-
-/* IconMenu theme */
-.icon{
-  composes: button;
-}
-.iconMenu{
-  .icon{
-    height: initial;
-    width: initial;
-    line-height: initial;
-    min-height: initial;
-    color: inherit!important;
-    &:hover, &:active{
-      border-radius: 0;
-      background-color: #f2f2f2;
-    }
-    span{
-      line-height: normal!important;
-    }
-  }
-
-  .menu{
-    z-index: 400;
-  }
-}
-
-.menuItem{
-  composes: menuItem from './queue.css';
-  .caption{
-    font-size: 14px;
-  }
-  .icon{
-    font-size: 16px;
-  }
-}
-
-.shareLabel{
-  position: relative;
-  top: -2px;
-}
-/* end IconMenu theme */
