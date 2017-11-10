@@ -1,0 +1,12 @@
+{
+  "Atmospheric": {
+    "description": "Electronic music is music that employs electronic musical instruments, digital instruments and circuitry-based music technology. An electronic musician is a musician who composes or performs",
+    "artwork_url": "https://s3.amazonaws.com/echoapp/el.png",
+    "background_url": "https://s3.amazonaws.com/echoapp/elbck.png"
+  },
+  "Breaks": {
+    "description": "Electronic music is music that employs electronic musical instruments, digital instruments and circuitry-based music technology. An electronic musician is a musician who composes or performs",
+    "artwork_url": "https://s3.amazonaws.com/echoapp/el.png",
+    "background_url": "https://s3.amazonaws.com/echoapp/elbck.png"
+  }
+}
