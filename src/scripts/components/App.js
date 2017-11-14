@@ -4,6 +4,7 @@ import {BrowserRouter, Link, Route} from 'react-router-dom';
 import FacebookSDK from './FacebookSDK';
 import Navbar from './Navbar';
 import FeedSources from './FeedSources';
+import Genre from './Genre';
 import Stream from '../containers/Stream';
 import Profile from '../containers/Profile';
 import Player from '../containers/Player';
@@ -27,6 +28,7 @@ class AppBody extends Component {
           <Route exact path='/' component={FeedSources} />
           <Route exact path='/feed/:id' component={Stream} />
           <Route exact path='/profile/:id' component={Profile} />
+          <Route exact path='/genres/:title' component={Genre} />
         </div>
         <Player />
       </div>

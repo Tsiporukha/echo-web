@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Tab, Tabs} from 'react-toolbox/lib/tabs';
 
+import Genres from './Genres';
 import Feed from '../containers/Feed';
 import FeedSearch from '../containers/FeedSearch';
 import PopularSongs from '../containers/PopularSongs';
@@ -24,6 +25,7 @@ const getFeedSourcesTabs = (search, activeTabIndex, handleTabChange) => (search 
   </Tabs>
   :
   <Tabs theme={tabsTheme} index={activeTabIndex} onChange={handleTabChange}>
+    <Tab label='Genres'> <Genres /> </Tab>
     <Tab label={<i className={styles.feedIcon}>language</i>}> <Feed /> </Tab>
     <Tab label={<i className={styles.whatshotIcon}>whatshot</i>}> <PopularSongs /> </Tab>
   </Tabs>
