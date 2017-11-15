@@ -90,7 +90,7 @@ class Notifications extends Component {
     notifications: [],
   }
 
-  componentWillMount = () => this.getNotifications(this.props.token);
+  componentDidMount = () => this.getNotifications(this.props.token);
 
   componentWillReceiveProps = nextProps => this.getNotifications(nextProps.token);
 

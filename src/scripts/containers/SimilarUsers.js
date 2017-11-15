@@ -39,7 +39,7 @@ class SimilarUsers extends Component {
 
   state = {...initialState};
 
-  componentWillMount = () => this.initialLoad(this.props.userId, this.props.token);
+  componentDidMount = () => this.initialLoad(this.props.userId, this.props.token);
 
   componentWillReceiveProps = nextProps => this.reinitOnUserChange(nextProps, this.props);
 

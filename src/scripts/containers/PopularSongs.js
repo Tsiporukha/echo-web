@@ -29,7 +29,7 @@ class PopularSongs extends Component {
       this.fetchAndReceiveSongsIds(nextProps.term, nextProps.token) : false;
 
 
-  componentWillMount = () => this.fetchAndReceiveSongsIds();
+  componentDidMount = () => this.fetchAndReceiveSongsIds();
 
   componentWillReceiveProps = nextProps => this.maybeReloadOnPropsChange(nextProps, this.props)
 

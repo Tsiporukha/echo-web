@@ -61,9 +61,9 @@ export default class Feed extends Component {
     tags: [],
   }
 
-  componentWillMount = () => this.loadActiveSubFeedStreams();
+  componentDidMount = () => Promise.resolve(this.loadActiveSubFeedStreams())
+    .then(this.dispatchScrollListener('addEventListener'));
 
-  componentDidMount = () => this.dispatchScrollListener('addEventListener');
   componentWillUnmount = () => this.dispatchScrollListener('removeEventListener');
 
   componentWillReceiveProps = nextProps => this.maybeReloadOnPropsChange(nextProps, this.props)

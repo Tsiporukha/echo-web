@@ -27,9 +27,9 @@ export default class SearchSource extends Component {
 
   state = {filters: initialFilters};
 
-  componentWillMount = () => this.loadFirstSongs(this.props.searchTerm);
-
-  componentDidMount = () => this.dispatchScrollListener('addEventListener');
+  componentDidMount = () => Promise.resolve(this.loadFirstSongs(this.props.searchTerm))
+    .then(this.dispatchScrollListener('addEventListener'));
+    
   componentWillUnmount = () => this.dispatchScrollListener('removeEventListener');
 
   componentWillReceiveProps = nextProps => nextProps.searchTerm !== this.props.searchTerm ? this.loadFirstSongs(nextProps.searchTerm) : false;

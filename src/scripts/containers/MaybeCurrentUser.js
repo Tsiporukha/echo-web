@@ -35,7 +35,7 @@ class MaybeCurrentUser extends Component {
 
   state = {dialogVisibility: false};
 
-  componentWillMount = () => this.props.token && this.props.updateCurrentUserData(this.props.token);
+  componentDidMount = () => this.props.token && this.props.updateCurrentUserData(this.props.token);
 
   render(){
     return (

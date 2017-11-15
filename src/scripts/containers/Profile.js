@@ -60,7 +60,7 @@ class Profile extends Component {
     fetching: false,
   };
 
-  componentWillMount = () => this.initialLoad(this.props.token);
+  componentDidMount = () => this.initialLoad(this.props.token);
 
   componentWillReceiveProps = nextProps => this.reinitOnUserChange(nextProps, this.props) || this.reloadOnTokenChange(nextProps, this.props);
 

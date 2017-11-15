@@ -48,7 +48,7 @@ class PopularSongs extends Component {
       this.fetchAndReceiveItems(nextProps.userId, nextProps.token) : false;
 
 
-  componentWillMount = () => this.fetchAndReceiveItems();
+  componentDidMount = () => this.fetchAndReceiveItems();
 
   componentWillReceiveProps = nextProps => this.maybeReloadOnPropsChange(nextProps, this.props)
 
