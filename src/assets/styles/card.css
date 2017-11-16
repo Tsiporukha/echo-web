@@ -1,0 +1,40 @@
+.border{
+  border: solid 1px #dbdbdb;
+}
+
+.root{
+  composes: border;
+  margin-top: 15px;
+  padding: 22px;
+  background-color: white;
+  display: flex;
+}
+
+.artwork{
+  height: 120px;
+  width: 120px;
+}
+
+.data{
+  width: 100%;
+  padding-left: 22px;
+}
+
+.titleBlock{
+  display: flex;
+}
+.title{
+  margin-right: 8px;
+  font-size: 15px;
+  text-decoration: underline;
+  margin: auto 8px auto 0;
+}
+
+.description{
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.iconArea{
+  color: #767676;
+}

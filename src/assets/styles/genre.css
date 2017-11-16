@@ -1,4 +1,5 @@
 .genre{
+  position: absolute;
 }
 
 .genreHeader{
@@ -9,64 +10,57 @@
   background-size: cover
 }
 
+.genreContent{
+  composes: col-md-offset-1 from './bootstrap.css';
+  composes: col-md-10 from './bootstrap.css';
+  padding: 0;
+}
 
-.genreData{
-  margin-top: 15px;
-  padding: 18px 18px 8px 18px;
-  background-color: white;
-  border: solid 1px #dbdbdb;
-  display: flex;
-  .artwork{
-    height: 120px;
-    width: 120px;
-  }
+.genreCard{
+  composes: root from './card.css';
+//  border-bottom: 0;
+}
 
-  .text{
-    width: 100%;
-    padding-left: 30px;
-    .title{
-      display: flex;
-      margin-bottom: 4px;
-      .title{
-        font-size: 15px;
-        text-decoration: underline;
-      }
-      .request{
-        font-weight: 500;
-        font-size: 13px;
-        margin-left: auto;
-        color: #9a9a9a;
-        cursor: not-allowed;
-      }
-    }
-    .description{
-      margin-bottom: 4px;
-      font-size: 13px;
-    }
-    .iconArea{
-      color: #767676;
-    }
-  }
+.requestSpan{
+  font-weight: 500;
+  font-size: 13px;
+  margin-left: auto;
+  color: #9a9a9a;
+  cursor: not-allowed;
 }
 
 
 .left{
   composes: col-md-8 from './bootstrap.css';
   composes: col-xs-12 from './bootstrap.css';
-  background-color: white;
+}
+
+.fullHeight{
+  position: fixed;
+  min-height: 100vh;
+  position: absolute;
+  min-height: calc(100vh - 50px);
+  padding-bottom: 50px;
+  width: 100%;
+  height: 100%;
+  background: white;
+  left: 0;
 }
 
 .leftContent{
-  composes: col-md-offset-1 from './bootstrap.css';
-  .tags{
-    font-size: 13px;
-  }
+  composes: genreContent;
 }
 
 .tags{
+//  composes: border from './card.css';
+//  border-top: 0px;
+  font-size: 13px;
+  background-color: white;
+//  margin: 0;
   margin: 10px 0 10px;
   .t{margin: 0 24px 0 6px;}
 }
+
 .tag{
   cursor: pointer;
   display: inline-block;
@@ -83,11 +77,4 @@
   font-size: 13px;
   color: #767676;
   padding: 15px;
-}
-
-@media (min-width: 992px) {
-  .genreData{
-    composes: col-xs-offset-1 from './bootstrap.css';
-    composes: col-xs-10 from './bootstrap.css';
-  }
 }
