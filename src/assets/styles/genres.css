@@ -1,0 +1,16 @@
+.miniWelcomeNote{
+  composes: border from './card.css';
+
+  background-color: white;
+  padding: 12px 22px;
+
+  .welcome{
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .noteBody{
+    display: flex;
+    button{background-color: #e0e0e0!important;}
+  }
+}
