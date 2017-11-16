@@ -25,7 +25,7 @@ const getFeedSourcesTabs = (search, activeTabIndex, handleTabChange) => (search 
   </Tabs>
   :
   <Tabs theme={tabsTheme} index={activeTabIndex} onChange={handleTabChange}>
-    <Tab label='Genres'> <Genres /> </Tab>
+    <Tab label={<i className={styles.genresIcon}>forum</i>}> <Genres /> </Tab>
     <Tab label={<i className={styles.feedIcon}>language</i>}> <Feed /> </Tab>
     <Tab label={<i className={styles.whatshotIcon}>whatshot</i>}> <PopularSongs /> </Tab>
   </Tabs>
@@ -33,10 +33,10 @@ const getFeedSourcesTabs = (search, activeTabIndex, handleTabChange) => (search 
 
 
 const maybeSearchResultsPlaceholder = search => search ?
-  (<div className={styles.searchResultsPlaceholder}>
+  <div className={styles.searchResultsPlaceholder}>
     <i className={styles.searchIcon}>search</i> <br />
     <span>Your search results appear here.</span>
-  </div>)
+  </div>
   : false;
 
 

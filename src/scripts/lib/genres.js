@@ -1,8 +1,16 @@
+// tags :: Object
 import tags from '../../assets/newTags.json';
-import genres from '../../assets/genres.json';
+// genresObject :: Object
+import genresObject from '../../assets/genres.json';
 
-export const genresNames = Object.keys(genres);
+// genresNames :: [String]
+export const genresNames = Object.keys(genresObject);
 
-export const getGenre = title => ({...genres[title], title});
+// getGenre :: String -> Object
+export const getGenre = title => ({...genresObject[title], title});
 
+// genres :: [Object]
+export const genres = genresNames.map(getGenre);
+
+// getSecondaryTags :: String -> [String]
 export const getSecondaryTags = primaryTag => tags[primaryTag];

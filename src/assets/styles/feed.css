@@ -1,4 +1,4 @@
-.feedIcon, .whatshotIcon, .searchIcon{
+.feedIcon, .whatshotIcon, .searchIcon, .genresIcon{
   composes: material-icons from './fonts.css';
   font-size: 22px;
 }

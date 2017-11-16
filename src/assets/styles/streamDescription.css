@@ -121,7 +121,7 @@
 
 
 .tags{
-  composes: tags from './genre.css';
+  margin: 10px 0 10px;
   .t{margin-right: 8px;}
 }
 .tag{
