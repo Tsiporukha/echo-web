@@ -12,5 +12,5 @@ export const getGenre = title => ({...genresObject[title], title});
 // genres :: [Object]
 export const genres = genresNames.map(getGenre);
 
-// getSecondaryTags :: String -> [String]
-export const getSecondaryTags = primaryTag => tags[primaryTag];
+// getGenreTags :: String -> [String]
+export const getGenreTags = genre => tags[genre];

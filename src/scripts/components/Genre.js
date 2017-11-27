@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import ShareIconMenu from './ShareIconMenu';
 import {GenreCard} from './Genres';
 
-import {getGenre, getSecondaryTags, genres} from '../lib/genres';
+import {getGenre, getGenreTags, genres} from '../lib/genres';
 
 import styles from '../../assets/styles/genre.css';
 import cardStyles from '../../assets/styles/card.css';
@@ -18,7 +18,7 @@ const RoomPreview = props => <div>
 class Genre extends Component {
 
   genre = getGenre(this.props.match.params.title);
-  tags = getSecondaryTags(this.props.match.params.title);
+  tags = getGenreTags(this.props.match.params.title);
 
   state = {
     rooms: [],
