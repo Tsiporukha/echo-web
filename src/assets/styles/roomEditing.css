@@ -1,0 +1,143 @@
+.editIcon{
+  composes: material-icons from './fonts.css';
+  cursor: pointer;
+}
+
+
+.errMssg{
+  color: red;
+  font-size: 13px;
+}
+
+.root{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  overflow: auto;
+
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-start;
+}
+
+.header, .body{
+  flex: 1 100%;
+  display: flex;
+}
+
+.header{
+  height: 50px;
+  background-color: #23365a;
+  color: white;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  .buttons{
+    display: flex;
+  }
+}
+
+.body{
+  flex-flow: row wrap;
+
+  .left{
+    display: flex;
+    align-self: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 67%;
+
+    .coverArea{
+      background-color: gray;
+      background: linear-gradient(white, gray);
+      flex: 1 100%;
+
+      .bgArtworkUpdateArea{
+        margin: 14px 20px 0;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .card{
+        margin: 0 10%;
+        background-color: white;
+        display: flex;
+
+        .artworkHolder{
+          height: 120px;
+          width: 120px;
+          background-color: gray;
+          justify-content: center;
+          align-items: center;
+          display: flex;
+        }
+
+        .inputs{
+          width: calc(100% - 120px);
+          padding: 0 28px;
+
+          .title{
+            width: 45%;
+          }
+
+          .description{
+            width: 85%;
+          }
+        }
+
+      }
+    }
+
+    .afterCover{
+      flex: 1 100%;
+      margin: 36px 12px;
+
+      .genreArea{
+        margin-bottom: 36px;
+      }
+    }
+  }
+
+  .right{
+    width: 33%;
+    padding: 15px;
+    flex-grow: 1;
+    min-height: calc(100vh - 50px);
+    background-color: #f7f7f7;
+  }
+}
+
+
+
+@media all and (max-width: 768px) {
+  .body{
+    .left, .right{
+      flex: 1 100%;
+    }
+
+    .left{
+      .coverArea{
+        .card{
+          margin: 0 16px;
+        }
+      }
+    }
+  }
+}
+
+
+/* Input theme */
+.label{
+  top: 22px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.input{
+  padding: 16px 0;
+}
+/* end Input theme */
