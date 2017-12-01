@@ -8,6 +8,7 @@ import LoginDialog from '../components/LoginDialog';
 import QueueSong from './QueueSong';
 import QueueStream from './QueueStream';
 import StreamCreation from './StreamCreation';
+import RoomCreation from './RoomCreation';
 import SortableQueueItems from '../components/SortableQueueItems';
 
 import {remove, set} from '../actions/QueueActions';
@@ -37,11 +38,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 class Queue extends Component {
 
   toggleStreamPublication = () => this.setState({streamPublication: !this.state.streamPublication});
+  toggleRoomPublication = () => this.setState({roomPublication: !this.state.roomPublication});
 
   onSortEnd = ({oldIndex, newIndex}) => this.props.set(arrayMove(this.props.items, oldIndex, newIndex));
 
 
-  state = {streamPublication: false};
+  state = {
+    streamPublication: false,
+    roomPublication: false,
+  };
 
   render(){
     return(
@@ -56,11 +61,19 @@ class Queue extends Component {
               <MenuItem icon='save' caption='Save To:' disabled theme={styles} />
               <MenuDivider theme={styles} />
               <MenuItem icon='create_new_folder' caption='Existing Room' theme={styles} />
-              <MenuItem icon='playlist_add' caption='New Room' theme={styles} onClick={this.toggleStreamPublication} />
+              <MenuItem icon='playlist_add' caption='New Room' theme={styles} onClick={this.toggleRoomPublication} />
+              <MenuItem icon='playlist_add' caption='New Stream' theme={styles} onClick={this.toggleStreamPublication} />
             </IconMenu>
             {this.state.streamPublication && (
               this.props.authed ?
                 <StreamCreation onCancel={this.toggleStreamPublication} />
+                :
+                <LoginDialog active={this.state.streamPublication} onEscKeyDown={this.toggleStreamPublication} />
+            )}
+
+            {this.state.roomPublication && (
+              this.props.authed ?
+                <RoomCreation onCancel={this.toggleRoomPublication} />
                 :
                 <LoginDialog active={this.state.streamPublication} onEscKeyDown={this.toggleStreamPublication} />
             )}

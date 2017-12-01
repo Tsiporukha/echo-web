@@ -71,7 +71,7 @@ export default class StreamEditing extends Component {
         <div className={styles.header}>
           <div className={styles.leftReg}>
             <div className={styles.title}>
-              <span>Save To New Room</span>
+              <span>Save Stream</span>
             </div>
           </div>
           <div className={styles.rightReg}>
