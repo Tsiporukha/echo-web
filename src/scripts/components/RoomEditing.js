@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 import {Button, Input, Autocomplete, Dropdown} from 'react-toolbox';
 import {arrayMove} from 'react-sortable-hoc';
 
-import UploadArtwork from '../components/UploadArtwork';
+import UploadArtwork from './UploadArtwork';
+import TagsAutocomplete from './TagsAutocomplete';
 import QueueSong from '../containers/QueueSong';
 import SortableQueueItems from '../components/SortableQueueItems';
 
@@ -72,12 +73,8 @@ export default class RoomEditing extends Component {
 
 
 /// Tags
-  getTags = () => getGenreTags(this.state.genre)
-  getTagsSuggestion = () => this.getTags().filter(tag => !this.state.tags.includes(tag));
-
-  handleTagsChange = tags => this.setState({tags});
-  addTag = tag => () => this.setState({tags: [tag, ...this.state.tags]});
-  removeTag = tag => () => this.setState({tags: this.state.tags.filter(t => t !== tag)});
+  getTags = () => getGenreTags(this.state.genre);
+  setTags = tags => this.setState({tags});
 /// end Tags
 
 
@@ -164,26 +161,13 @@ export default class RoomEditing extends Component {
               <div className={streamEditingStyles.tagsArea}>
                 <div className={streamEditingStyles.actionTitle}>Add Tags:</div>
 
-                {this.state.tags.slice(0).reverse().map(tag =>
-                  <span key={tag} className={streamEditingStyles.tag}>
-                    {tag}<i onClick={this.removeTag(tag)} className={streamEditingStyles.closeIcon}>close</i>
-                  </span>
-                )}
-                <Autocomplete
-                  allowCreate
-                  multiple
-                  source={[...this.getTags(), ...this.state.tags]}
-                  onChange={this.handleTagsChange}
-                  value={this.state.tags}
+                <TagsAutocomplete
+                  allTags={this.getTags()}
+                  addedTags={this.state.tags}
+                  setTags={this.setTags}
                   theme={streamEditingStyles}
-                  direction={'down'}
-                  error={this.maybeError(this.state.tags.length, 'Tags are required')}
+                  errorHandler={this.maybeError(this.state.tags.length, 'Tags are required')}
                 />
-                <div>
-                  {this.getTagsSuggestion().slice(0,20).map(tag =>
-                    <span key={tag} onClick={this.addTag(tag)} className={streamEditingStyles.atag}>{tag}</span>
-                  )}
-                </div>
               </div>
 
             </div>

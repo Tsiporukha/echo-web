@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 import {Button, Input, Autocomplete} from 'react-toolbox';
 import {arrayMove} from 'react-sortable-hoc';
 
-import UploadArtwork from '../components/UploadArtwork';
+import UploadArtwork from './UploadArtwork';
+import TagsAutocomplete from './TagsAutocomplete';
 import QueueSong from '../containers/QueueSong';
 import SortableQueueItems from '../components/SortableQueueItems';
 
@@ -12,7 +13,7 @@ import {playlistDuration, duration} from '../lib/duration';
 
 import styles from '../../assets/styles/streamPublication.css';
 
-import tags from '../../assets/newTags.json';
+import {primaryTags, getSecondaryTagsOf, getPrimaryTagsFrom} from '../lib/genres';
 
 
 const getNewStreamData = artwork_url => ({
@@ -34,10 +35,10 @@ export default class StreamEditing extends Component {
   setUploadedArtworkUrl = uploadedArtworkUrl => this.setState({uploadedArtworkUrl});
   rmUploadedArtworkUrl = () => this.setUploadedArtworkUrl('');
 
-  getSecondaryTags = primaryTags => primaryTags.reduce((secondaryTags, ptag) => secondaryTags.concat(tags[ptag]), []);
-  getSourceForTagsAutocomplete = (primaryTags = Object.keys(tags), addedPrimaryTags = this.state.tags.filter(tag => primaryTags.includes(tag))) =>
-    addedPrimaryTags.length ? this.getSecondaryTags(addedPrimaryTags) : primaryTags;
-  getTagsSuggestion = () => this.getSourceForTagsAutocomplete().filter(tag => !this.state.tags.includes(tag));
+
+  getTags = (addedPrimaryTags = getPrimaryTagsFrom(this.state.tags)) =>
+    addedPrimaryTags.length  ? getSecondaryTagsOf(addedPrimaryTags) : primaryTags;
+  setTags = tags => this.setState({tags});
 
   handleTagsChange = tags => this.setState({tags});
   addTag = tag => () => this.setState({tags: [tag, ...this.state.tags]});
@@ -117,24 +118,13 @@ export default class StreamEditing extends Component {
 
               <div className={styles.actionTitle}>Choose Tags:</div>
               <div className={styles.tagsArea}>
-                {this.state.tags.slice(0).reverse().map(tag =>
-                  <span key={tag} className={styles.tag}>
-                    {tag}<i onClick={this.removeTag(tag)} className={styles.closeIcon}>close</i>
-                  </span>
-                )}
-                <Autocomplete
-                  allowCreate
-                  multiple
-                  source={[...this.getSourceForTagsAutocomplete(),  ...this.state.tags]}
-                  onChange={this.handleTagsChange}
-                  value={this.state.tags}
+                <TagsAutocomplete
+                  allTags={this.getTags()}
+                  addedTags={this.state.tags}
+                  setTags={this.setTags}
                   theme={styles}
-                  direction={'down'}
-                  error={this.maybeError(this.state.tags.length, 'Tags are required')}
+                  errorHandler={this.maybeError(this.state.tags.length, 'Tags are required')}
                 />
-                {this.getTagsSuggestion().slice(0,20).map(tag =>
-                  <span key={tag} onClick={this.addTag(tag)} className={styles.atag}>{tag}</span>
-                )}
               </div>
 
 
