@@ -10,15 +10,17 @@ import styles from '../../assets/styles/genre.css';
 import cardStyles from '../../assets/styles/card.css';
 
 
-const RoomPreview = props => <div>
+const RoomPreview = props => (<div>
   room preview
-</div>
+</div>)
 
 
 class Genre extends Component {
 
   genre = getGenre(this.props.match.params.title);
   tags = getGenreTags(this.props.match.params.title);
+
+
 
   state = {
     rooms: [],
@@ -28,8 +30,8 @@ class Genre extends Component {
     return(
       <div className={styles.genre}>
 
-        <div className={styles.genreHeader} style={{backgroundImage: `url(${this.genre.background_url})`}}>
-          <div className={styles.genreContent}>
+        <div className={styles.left}>
+          <div className={styles.genreHeader} style={{backgroundImage: `url(${this.genre.background_url})`}}>
             <div className={styles.genreCard}>
               <img className={cardStyles.artwork} src={this.genre.artwork_url} alt='' />
               <div className={cardStyles.data}>
@@ -47,15 +49,7 @@ class Genre extends Component {
               </div>
             </div>
           </div>
-        </div>
 
-        <div className={styles.right}>
-          SIMILAR ROOMS
-        </div>
-
-
-        <div className={styles.left}>
-          <div className={styles.fullHeight} />
           <div className={styles.leftContent}>
             <div className={styles.tags}>
               <span className={styles.t}>Tags:</span>
@@ -64,7 +58,13 @@ class Genre extends Component {
 
             {genres.map(genre => <GenreCard key={genre.title} genre={genre} />)}
           </div>
+
         </div>
+
+        <div className={styles.right}>
+          SIMILAR ROOMS
+        </div>
+
 
 
       </div>

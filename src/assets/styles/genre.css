@@ -3,20 +3,15 @@
 }
 
 .genreHeader{
-  composes: col-md-8 from './bootstrap.css';
-  composes: col-xs-12 from './bootstrap.css';
   display: inline-block;
+  padding: 0 15px;
   background-repeat: no-repeat;
   background-size: cover
 }
 
-.genreContent{
+.genreCard{
   composes: col-md-offset-1 from './bootstrap.css';
   composes: col-md-10 from './bootstrap.css';
-  padding: 0;
-}
-
-.genreCard{
   composes: root from './card.css';
 //  border-bottom: 0;
 }
@@ -33,6 +28,8 @@
 .left{
   composes: col-md-8 from './bootstrap.css';
   composes: col-xs-12 from './bootstrap.css';
+  padding: 0;
+  background-color: white;
 }
 
 .fullHeight{
@@ -48,7 +45,8 @@
 }
 
 .leftContent{
-  composes: genreContent;
+  composes: col-md-offset-1 from './bootstrap.css';
+  composes: col-md-10 from './bootstrap.css';
 }
 
 .tags{
