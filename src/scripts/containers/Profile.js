@@ -52,7 +52,7 @@ class Profile extends Component {
 
   reloadOnTokenChange = (nextProps, props) => nextProps.token !== props.token ? this.initialLoad(nextProps.token) : false;
   reinitOnUserChange = (nextProps, props) => nextProps.match.params.id !== props.match.params.id ?
-    Promise.resolve(this.setState(initialState)).then(this.initialLoad) : false;
+    this.setState(initialState, this.initialLoad) : false;
 
 
   state = {

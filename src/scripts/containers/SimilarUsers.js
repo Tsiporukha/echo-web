@@ -34,7 +34,7 @@ class SimilarUsers extends Component {
     .then(({results}) => Promise.resolve(this.props.addUsers(results)).then(_ => this.setState({users: results.map(usr => usr.id)})));
 
   reinitOnUserChange = (nextProps, props) => nextProps.userId !== props.userId ?
-    Promise.resolve(this.setState(initialState)).then(_ => this.initialLoad(nextProps.userId, nextProps.token)) : false;
+    this.setState(initialState, _ => this.initialLoad(nextProps.userId, nextProps.token)) : false;
 
 
   state = {...initialState};

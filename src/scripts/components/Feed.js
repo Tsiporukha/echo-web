@@ -32,7 +32,7 @@ export default class Feed extends Component {
   loadSubFeedStreams = subFeedIndex => token => [this.loadMorePopularStreams, this.loadMoreLatestStreams, this.loadMoreLongestStreams][subFeedIndex](token);
   loadActiveSubFeedStreams = () => this.loadSubFeedStreams(this.state.activeSubFeed)(this.props.token);
 
-  onSearchTermChange = (filters, token) => Promise.resolve(this.setState({filters})).then(_ => this.loadSubFeedStreams(this.state.activeSubFeed)(token));
+  onSearchTermChange = (filters, token) => this.setState({filters}, _ => this.loadSubFeedStreams(this.state.activeSubFeed)(token));
 
   dispatchScrollListener = (() => {
     const element = document.getElementsByClassName(resultsClassName)[0] || window;
