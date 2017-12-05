@@ -3,6 +3,7 @@ import {Button} from 'react-toolbox/lib/button';
 import {Tab, Tabs} from 'react-toolbox/lib/tabs';
 
 import IndeterminateProgressLine, {doWithProgressLine} from './IndeterminateProgressLine';
+import TagsSelect from './TagsSelect';
 import Stream from '../containers/Stream';
 
 import {onBottomReaching} from '../lib/scroll';
@@ -10,9 +11,7 @@ import {onBottomReaching} from '../lib/scroll';
 import styles from '../../assets/styles/feed.css';
 import {results as resultsClassName} from '../../assets/styles/search.css';
 
-import tags from '../../assets/newTags.json';
-import primaryTagsColors from '../../assets/primaryTagsColors.json';
-const primaryTags = Object.keys(tags);
+import {primaryTags} from '../lib/genres';
 
 
 export default class Feed extends Component {
@@ -46,11 +45,8 @@ export default class Feed extends Component {
     ((nextProps.initialFilters.term !== props.initialFilters.term) || (nextProps.token !== props.token)) ?
       this.onSearchTermChange(nextProps.initialFilters, nextProps.token) : false;
 
-  addTag = tag => this.setState({tags: this.state.tags.concat(tag)});
-  removeTag = tag => this.setState({tags: this.state.tags.filter(tg => tg !== tag)});
-  inTags = tag => this.state.tags.includes(tag);
-  handleTagClick = tag => () => Promise.resolve((this.inTags(tag) ? this.removeTag : this.addTag)(tag))
-    .then(this.reinitializeFilters).then(this.loadActiveSubFeedStreams);
+  setTags = tags => this.setState({tags});
+  handleTagClick = tag => Promise.resolve(this.reinitializeFilters()).then(this.loadActiveSubFeedStreams);
 
 
   state = {
@@ -72,11 +68,14 @@ export default class Feed extends Component {
     return (
       <div>
         {this.props.initialFilters.term === undefined && <div className={styles.tags}>
-          {primaryTags.map(ptag =>
-            <span key={ptag} className={this.inTags(ptag) ? styles.selectedTag : styles.tag}
-              style={this.inTags(ptag) ? {backgroundColor: primaryTagsColors[ptag]} : {}}
-              onClick={this.handleTagClick(ptag)}>{ptag}</span>
-          )}
+          <TagsSelect
+            allTags={primaryTags}
+            selectedTags={this.state.tags}
+            setTags={this.setTags}
+            handleTagClick={this.handleTagClick}
+            flashPrimary
+            theme={styles}
+          />
         </div>}
         <Tabs theme={styles} index={this.state.activeSubFeed} onChange={this.handleTabChange}>
           <Tab label='Most Popular' onActive={this.loadMorePopularStreams}>
