@@ -1,0 +1,6 @@
+@define-mixin mdPaddingOffsetCol $n: 1 {
+  @media all and (min-width: 992px) {
+    padding: 0 calc(((100%/12)*$n) + 15px);
+    @content;
+  }
+}

@@ -4,7 +4,7 @@ import {BrowserRouter, Link, Route} from 'react-router-dom';
 import FacebookSDK from './FacebookSDK';
 import Navbar from './Navbar';
 import FeedSources from './FeedSources';
-import Genre from './Genre';
+import Genre from '../containers/Genre';
 import Stream from '../containers/Stream';
 import Profile from '../containers/Profile';
 import Player from '../containers/Player';

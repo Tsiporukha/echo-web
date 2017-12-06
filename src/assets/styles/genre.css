@@ -1,19 +1,15 @@
+@import './mixins.css';
+
 .genre{
   position: absolute;
+  padding-bottom: 50px;
 }
 
 .genreHeader{
   display: inline-block;
-  padding: 0 15px;
-  background-repeat: no-repeat;
-  background-size: cover
-}
-
-.genreCard{
-  composes: col-md-offset-1 from './bootstrap.css';
-  composes: col-md-10 from './bootstrap.css';
-  composes: root from './card.css';
-//  border-bottom: 0;
+  padding: 0 4%;
+  background-size: contain;
+  @add-mixin mdPaddingOffsetCol 1;
 }
 
 .requestSpan{
@@ -29,6 +25,7 @@
   composes: col-md-8 from './bootstrap.css';
   composes: col-xs-12 from './bootstrap.css';
   padding: 0;
+  min-height: calc(100vh - 50px);
   background-color: white;
 }
 
@@ -50,12 +47,9 @@
 }
 
 .tags{
-//  composes: border from './card.css';
-//  border-top: 0px;
   font-size: 13px;
   background-color: white;
-//  margin: 0;
-  margin: 10px 0 10px;
+  margin: 16px 0;
   .t{margin: 0 24px 0 6px;}
 }
 
