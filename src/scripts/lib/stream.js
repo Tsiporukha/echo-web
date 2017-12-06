@@ -9,7 +9,7 @@ const getCommentUser = comment => comment.user;
 
 export const normalize = stream => ({
   users: stream.comments.map(getCommentUser).concat(stream.user),
-  stream: {...stream, playlist: stream.playlist.id, user: stream.user.id, comments: stream.comments.slice().reverse().map(cmmnt => cmmnt.id)},
+  stream: {...stream, playlist: stream.playlist.id, user: stream.user.id, comments: stream.comments.map(cmmnt => cmmnt.id).reverse()},
   playlist: {...stream.playlist, songs: stream.playlist.songs.map(song => song.id)},
   songs: stream.playlist.songs,
   comments: stream.comments.map(replaceCommentUserWithRefId),

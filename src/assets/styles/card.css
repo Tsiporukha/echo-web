@@ -13,6 +13,7 @@
 .artwork{
   height: 120px;
   width: 120px;
+  min-width: 120px;
 }
 
 .data{
@@ -31,8 +32,9 @@
 }
 
 .description{
-  margin-bottom: 8px;
+  margin: 4px 0;
   font-size: 13px;
+  font-style: italic;
 }
 
 .iconArea{

@@ -88,7 +88,7 @@ export default class RoomEditing extends Component {
     this.state.description, this.state.genre, this.state.tags, this.state.songs, this.props.token)
       .then(this.props.onCancel);
 
-  maybeSave = () => console.log(this.isAllFielsFilled()) ||( this.isAllFielsFilled() ? this.save() : this.setState({triedSave: true}));
+  maybeSave = () => this.isAllFielsFilled() ? this.save() : this.setState({triedSave: true});
   maybeError = (filled, errMssg) => (this.state.triedSave && !filled) ? errMssg : false;
 /// end Validation and Saving
 
