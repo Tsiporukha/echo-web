@@ -7,6 +7,7 @@ const createArgs = (arg, uppercaseArg = toSnakeUpperCase(arg)) => ({
 
 //entities
 export const {User, USER} = createArgs('User');
+export const {Room, ROOM} = createArgs('Room');
 export const {Stream, STREAM} = createArgs('Stream');
 export const {Playlist, PLAYLIST} = createArgs('Playlist');
 export const {Song, SONG} = createArgs('Song');

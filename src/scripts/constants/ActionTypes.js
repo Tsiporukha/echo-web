@@ -1,12 +1,13 @@
 import {createAUDConsts, createSubFeedConsts} from './actionTypesCreators';
 import {
-  STREAM, USER, PLAYLIST, SONG, COMMENT,
+  USER, ROOM, STREAM, PLAYLIST, SONG, COMMENT,
   LATEST, POPULAR, LONGEST,
   LATEST_SEARCH, POPULAR_SEARCH, LONGEST_SEARCH, YOUTUBE, SOUNDCLOUD, VIMEO,
   QUEUE,
 } from './creatorsArgs';
 
 export const {ADD_USERS, UPDATE_USERS, DELETE_USERS} = createAUDConsts(USER);
+export const {ADD_ROOMS, UPDATE_ROOMS, DELETE_ROOMS} = createAUDConsts(ROOM);
 export const {ADD_STREAMS, UPDATE_STREAMS, DELETE_STREAMS} = createAUDConsts(STREAM);
 export const {ADD_PLAYLISTS, UPDATE_PLAYLISTS, DELETE_PLAYLISTS} = createAUDConsts(PLAYLIST);
 export const {ADD_SONGS, UPDATE_SONGS, DELETE_SONGS} = createAUDConsts(SONG);

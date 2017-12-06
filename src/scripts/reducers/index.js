@@ -1,4 +1,4 @@
-import {USER, STREAM, PLAYLIST, SONG, COMMENT} from '../constants/creatorsArgs';
+import {USER, ROOM, STREAM, PLAYLIST, SONG, COMMENT} from '../constants/creatorsArgs';
 
 import {combineReducers} from 'redux';
 
@@ -11,6 +11,7 @@ import session from './session';
 
 export default combineReducers({
   users: createNamedAUDReducer(USER),
+  rooms: createNamedAUDReducer(ROOM),
   streams: createNamedAUDReducer(STREAM),
   playlists: createNamedAUDReducer(PLAYLIST),
   songs: createNamedAUDReducer(SONG),
