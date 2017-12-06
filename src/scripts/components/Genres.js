@@ -1,29 +1,13 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+
 import {Button} from 'react-toolbox/lib/button';
 
-import ShareIconMenu from './ShareIconMenu';
+import GenreCard from './GenreCard';
 
 import {genres} from '../lib/genres';
 
 import styles from '../../assets/styles/genres.css';
-import cardStyles from '../../assets/styles/card.css';
 
-export const GenreCard = ({genre}) => (
-  <div className={cardStyles.root}>
-    <img className={cardStyles.artwork} src={genre.artwork_url} alt='genre artwork' />
-    <div className={cardStyles.data}>
-      <div className={cardStyles.titleBlock}>
-        <div className={cardStyles.title}>
-          <Link to={`/genres/${genre.title}`}> {genre.title} </Link>
-        </div>
-        <ShareIconMenu path={`/genres/${genre.title}`} picture={genre.artwork_url}
-          title={genre.title} description={genre.description} />
-      </div>
-      <div className={cardStyles.description}> {genre.description} </div>
-    </div>
-  </div>
-)
 
 const MiniWelcomeNote = () => (
   <div className={styles.miniWelcomeNote}>
