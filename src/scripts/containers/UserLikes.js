@@ -10,7 +10,8 @@ import IndeterminateProgressLine, {doWithProgressLine} from '../components/Indet
 
 import {fetchAndReceiveLikedStreamsIds, fetchAndReceiveLikedSongsIds, addUsers} from '../actions/EntitiesAUDActions';
 
-import {reduceToObject, reduceToNormalized as reduceStreamsToNormalized} from '../lib/stream';
+import {reduceToObject} from '../lib/base';
+import {reduceToNormalized as reduceStreamsToNormalized} from '../lib/stream';
 import {getUser} from '../lib/ebApi/users';
 
 

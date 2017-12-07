@@ -7,7 +7,7 @@ import {Button} from 'react-toolbox';
 
 import {addUsers, followUser, unfollowUser} from '../actions/EntitiesAUDActions';
 
-import {reduceToObject} from '../lib/stream';
+import {reduceToObject} from '../lib/base';
 import {getSimilar} from '../lib/ebApi/users';
 
 import styles from '../../assets/styles/profile.css';

@@ -1,8 +1,5 @@
 import {playlistDuration, duration} from './duration';
-
-export const createIdKeyHash = item => ({[item.id]: item});
-
-export const reduceToObject = items => items.reduce((itms, itm) => ({...itms, ...createIdKeyHash(itm)}), {});
+import {createIdKeyHash, reduceToObject} from './base';
 
 const replaceCommentUserWithRefId = comment => ({...comment, user: comment.user.id});
 const getCommentUser = comment => comment.user;

@@ -1,4 +1,4 @@
-import {createIdKeyHash, reduceToObject} from './stream';
+import {createIdKeyHash, reduceToObject} from './base';
 import {playlistDuration, duration} from './duration';
 
 

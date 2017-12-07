@@ -11,9 +11,9 @@ import {User, Room, Stream, Playlist, Song, Comment} from '../constants/creators
 
 import {createAUDActions} from './actionsCreators';
 
+import {createIdKeyHash, reduceToObject} from '../lib/base';
 import {reduceToNormalized as reduceToNormalizedRooms} from '../lib/room';
-import {createIdKeyHash, appendPublishedCommentRef, appendCommentsRefs, reduceToObject,
-  reduceToNormalized as reduceToNormalizedStreams} from '../lib/stream';
+import {appendPublishedCommentRef, appendCommentsRefs, reduceToNormalized as reduceToNormalizedStreams} from '../lib/stream';
 import {addComment as publishComment, getComments, getStream} from '../lib/ebApi/streams';
 import {follow, unfollow, getLikedSongs, getLikedStreams} from '../lib/ebApi/users';
 import {toggleLike as apiToggleSongLike} from '../lib/ebApi/songs';

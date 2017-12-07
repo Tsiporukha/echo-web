@@ -5,7 +5,7 @@ import Song from './Song';
 
 import {addSongs} from '../actions/EntitiesAUDActions';
 
-import {reduceToObject} from '../lib/stream';
+import {reduceToObject} from '../lib/base';
 import {getPopular} from '../lib/ebApi/songs';
 
 

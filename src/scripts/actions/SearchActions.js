@@ -15,22 +15,17 @@ import {addSongs} from './EntitiesAUDActions';
 import {fetchAndReceiveStreams, setOrAddItems} from './SubFeedsActions';
 
 import {getLatest, getPopular, getLongest} from '../lib/ebApi/streams';
-import {createIdKeyHash} from '../lib/stream';
+import {createIdKeyHash, addIdsAndReduceToObject} from '../lib/base';
 import {searchOnYoutube} from '../lib/youtube';
 import {search as searchOnSoundcloud} from '../lib/soundcloud';
 import {search as searchOnVimeo} from '../lib/vimeo';
 
-import v4 from 'uuid/v4';
-
-
-const addId = song => ({...song, id: v4()});
-const reduceToObj = songs => songs.reduce((sngs, sng) => ({...sngs, ...createIdKeyHash(addId(sng))}), {});
 
 const fetchAndReceiveSongs = (fetchAction, setItemsAction, addItemsAction) => (filters, setItemsCondition = filters.offset === 0) => dispatch =>
-  fetchAction(filters).then(reduceToObj)
-  .then(songsObj => Promise.resolve(dispatch(addSongs(songsObj)))
-    .then(_ => setOrAddItems(setItemsCondition, setItemsAction, addItemsAction, Object.keys(songsObj))(dispatch))
-  );
+  fetchAction(filters).then(addIdsAndReduceToObject)
+    .then(songsObj => Promise.resolve(dispatch(addSongs(songsObj)))
+      .then(_ => setOrAddItems(setItemsCondition, setItemsAction, addItemsAction, Object.keys(songsObj))(dispatch))
+    );
 
 
 const setSearchTerm = term => ({

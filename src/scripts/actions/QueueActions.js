@@ -10,6 +10,7 @@ import {addSongs, addStreams, addPlaylists, updatePlaylists} from './EntitiesAUD
 import {setCurrentSong} from './PlayerActions';
 
 import {create as createStream} from '../lib/ebApi/streams';
+import {addId as clone, reduceToObject} from '../lib/base';
 
 import v4 from 'uuid/v4';
 
@@ -25,14 +26,10 @@ export const removeStreamSong = (playlist, songId) =>
   updatePlaylists({[playlist.id]: {...playlist, songs: playlist.songs.filter(sid => sid !== songId)}});
 
 
-// entities
-export const clone = item => ({...item, id: v4()});
-export const reduceToObj = items => items.reduce((itms, item) => ({...itms, [item.id]: item}), {});
-
 
 // songs
 const dispatchSongs = action => songs => dispatch => {
-  dispatch(addSongs(reduceToObj(songs)));
+  dispatch(addSongs(reduceToObject(songs)));
   return dispatch(action(songs.map(song => ({id: song.id, type: 'song'}))));
 }
 
@@ -59,9 +56,9 @@ const cloneStream = (stream, playlist, songs) => {
 const streamObjToArr = strmObj => [strmObj.stream, strmObj.playlist, strmObj.songs];
 
 const dispatchStream = action => (stream, playlist, songs) => dispatch => {
-  dispatch(addSongs(reduceToObj(songs)));
-  dispatch(addPlaylists(reduceToObj([playlist])));
-  dispatch(addStreams(reduceToObj([stream])));
+  dispatch(addSongs(reduceToObject(songs)));
+  dispatch(addPlaylists(reduceToObject([playlist])));
+  dispatch(addStreams(reduceToObject([stream])));
   return dispatch(action([{id: stream.id, type: 'stream'}]));
 }
 

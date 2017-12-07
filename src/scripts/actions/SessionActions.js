@@ -1,7 +1,7 @@
 import {SET_TOKEN, SET_USER_DATA, SET_SESSION, CLEAR_SESSION} from "../constants/ActionTypes";
 
 import {addUsers} from './EntitiesAUDActions';
-import {createIdKeyHash} from '../lib/stream';
+import {createIdKeyHash} from '../lib/base';
 
 import {emailLogin as emlLogin, networkLogin as ntwrkLogin, getCurrentUserData} from '../lib/ebApi/session';
 
