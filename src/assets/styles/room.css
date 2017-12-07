@@ -1,0 +1,59 @@
+@import './mixins.css';
+
+.root{
+  composes: genre from './genre.css';
+  width: 100%;
+}
+
+.left{
+  composes: left from './genre.css';
+}
+
+.roomHeader{
+  composes: genreHeader from './genre.css';
+  width: 100%;
+}
+
+.leftContent{
+  composes: leftContent from './genre.css';
+}
+
+.right{
+  composes: right from './genre.css';
+}
+
+.tags{
+  margin: 18px 0 0;
+}
+.tag{
+  composes: tag from './genre.css'
+}
+
+
+/* Tabs theme */
+.tab{
+  padding: 17px 15px;
+  outline: none;
+  @add-mixin mdPaddingOffsetCol 1;
+}
+
+.label{
+  padding: 12px 22px;
+  color: #343434;
+  font-weight: 400;
+  opacity: .54;
+
+  &.active{
+    opacity: 1;
+  }
+}
+
+.navigation{
+  @add-mixin mdPaddingOffsetCol 1;
+  background-color: #e0e0e0;
+}
+
+.pointer{
+  background-color: #0091ea;
+}
+/* end Tabs theme */

@@ -2,7 +2,6 @@
 
 .genre{
   position: absolute;
-  padding-bottom: 50px;
 }
 
 .genreHeader{
@@ -24,7 +23,7 @@
 .left{
   composes: col-md-8 from './bootstrap.css';
   composes: col-xs-12 from './bootstrap.css';
-  padding: 0;
+  padding: 0 0 58px 0;
   min-height: calc(100vh - 50px);
   background-color: white;
 }
