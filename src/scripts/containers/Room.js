@@ -6,8 +6,9 @@ import {Tab, Tabs, Button} from 'react-toolbox';
 import RoomCard from '../components/RoomCard';
 import ShareIconMenu from '../components/ShareIconMenu';
 import Song from './Song';
+import IndeterminateProgressLine, {doWithProgressLine} from '../components/IndeterminateProgressLine';
 
-import {normalizeAndAddRooms} from '../actions/EntitiesAUDActions';
+import {fetchRoom} from '../actions/EntitiesAUDActions';
 
 import {maybeGetWithNestedEntities} from '../lib/room';
 
@@ -20,6 +21,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  fetchRoom: (id, token) => dispatch(fetchRoom(id, token)),
 });
 
 
@@ -27,12 +29,16 @@ class Room extends Component {
 
   handleTabChange = index => this.setState({index});
 
+  setFetching = fetching => this.setState({fetching});
+  fetchRoom = () => doWithProgressLine(() => this.props.fetchRoom(this.props.match.params.id, this.props.token), this.setFetching);
+
 
   state = {
     index: 0,
+    fetching: false,
   }
 
-  //  componentWillMount = () => this.props.fetchRoom(this.props.match.params.id, this.props.token);
+  componentWillMount = this.fetchRoom;
 
   render(){
     return (
@@ -67,6 +73,8 @@ class Room extends Component {
         <div className={styles.right}>
           SIMILAR ROOMS
         </div>
+        
+        <IndeterminateProgressLine visible={this.state.fetching} />
       </div>
     )
   }

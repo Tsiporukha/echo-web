@@ -15,6 +15,7 @@ import {createIdKeyHash, reduceToObject} from '../lib/base';
 import {reduceToNormalized as reduceToNormalizedRooms} from '../lib/room';
 import {appendPublishedCommentRef, appendCommentsRefs, reduceToNormalized as reduceToNormalizedStreams} from '../lib/stream';
 import {addComment as publishComment, getComments, getStream} from '../lib/ebApi/streams';
+import {get as getRoom} from '../lib/ebApi/rooms';
 import {follow, unfollow, getLikedSongs, getLikedStreams} from '../lib/ebApi/users';
 import {toggleLike as apiToggleSongLike} from '../lib/ebApi/songs';
 
@@ -87,10 +88,11 @@ export const fetchAndReceiveLikedStreamsIds = (userId, limit, offset, token) => 
 
 
 /// Rooms
-export const normalizeAndAddRooms = rooms => dispatch => Promise.resolve(reduceToNormalizedRooms(rooms))
+export const receiveRooms = rooms => dispatch => Promise.resolve(reduceToNormalizedRooms(rooms))
   .then(({songs, playlists, rooms}) => Promise.resolve(dispatch(addSongs(songs)))
     .then(dispatch(addPlaylists(playlists)))
     .then(dispatch(addRooms(rooms)))
   );
 
+export const fetchRoom = (id, token) => dispatch => getRoom(id, token).then(room => receiveRooms([room])(dispatch));
 /// end Rooms

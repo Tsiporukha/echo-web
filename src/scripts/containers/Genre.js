@@ -8,7 +8,7 @@ import RoomCard from './RoomCard';
 import ShareIconMenu from '../components/ShareIconMenu';
 import TagsSelect from '../components/TagsSelect';
 
-import {normalizeAndAddRooms} from '../actions/EntitiesAUDActions';
+import {receiveRooms} from '../actions/EntitiesAUDActions';
 
 import {withGenre as fetchRooms} from '../lib/ebApi/rooms';
 import {getGenre, getGenreTags, genres} from '../lib/genres';
@@ -26,7 +26,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchAndReceiveRooms: (filters, token) => fetchRooms(filters, token)
-    .then(({rooms, totalAvailable, count}) => Promise.resolve(dispatch(normalizeAndAddRooms(rooms)))
+    .then(({rooms, totalAvailable, count}) => Promise.resolve(dispatch(receiveRooms(rooms)))
       .then(_ => ({rooms: rooms.map(room => room.id), fetchedAll: count < filters.limit}))
     ),
 });
