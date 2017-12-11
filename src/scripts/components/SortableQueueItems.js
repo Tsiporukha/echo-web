@@ -10,15 +10,15 @@ import QueueStream from '../containers/QueueStream';
 import styles from '../../assets/styles/queue.css';
 
 
-const itemTypes = {song: QueueSong, stream: QueueStream};
+const itemTypes = {song: QueueSong, stream: QueueStream, room: QueueStream};
 
 
 const DragHandle = SortableHandle(() => <i className={styles.dragHandler}>drag_handle</i>);
 
-const SortableItem = SortableElement(({id, ItemComponent}) => (
+const SortableItem = SortableElement(({id, ItemComponent, type}) => (
   <div className={styles.sortableItem}>
     <DragHandle />
-    <div className={styles.item}> <ItemComponent id={id} /> </div>
+    <div className={styles.item}> <ItemComponent id={id} type={type} /> </div>
   </div>
 ));
 
@@ -31,7 +31,8 @@ const SortableItem = SortableElement(({id, ItemComponent}) => (
 
 const QueueItems = props => (
   <div>
-    {props.items.map((item, index) => <SortableItem ItemComponent={itemTypes[item.type]} key={item.id} id={item.id} index={index} />)}
+    {props.items.map((item, index) =>
+      <SortableItem ItemComponent={itemTypes[item.type]} type={item.type} key={item.id} id={item.id} index={index} />)}
   </div>
 );
 

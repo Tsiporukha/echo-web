@@ -6,7 +6,7 @@ import {Queue} from '../constants/creatorsArgs';
 
 import {createSubFeedActions} from './actionsCreators';
 
-import {addSongs, addStreams, addPlaylists, updatePlaylists} from './EntitiesAUDActions';
+import {addRooms, addStreams, addPlaylists, addSongs, updatePlaylists} from './EntitiesAUDActions';
 import {setCurrentSong} from './PlayerActions';
 
 import {create as createStream} from '../lib/ebApi/streams';
@@ -22,12 +22,9 @@ export const addToTop = references => ({
   payload: references
 });
 
-export const removeStreamSong = (playlist, songId) =>
-  updatePlaylists({[playlist.id]: {...playlist, songs: playlist.songs.filter(sid => sid !== songId)}});
 
 
-
-// songs
+/// Songs
 const dispatchSongs = action => songs => dispatch => {
   dispatch(addSongs(reduceToObject(songs)));
   return dispatch(action(songs.map(song => ({id: song.id, type: 'song'}))));
@@ -44,30 +41,54 @@ export const addClonedSongsToTopAndPlay = songs => dispatch => {
   return dispatch(setCurrentSong(sngs[0]));
 };
 export const addClonedSongToTopAndPlay = song => addClonedSongsToTopAndPlay([song]);
+/// end Songs
 
 
 
-// streams
-const cloneStream = (stream, playlist, songs) => {
-  const sngs = songs.map(clone), pllst = {...clone(playlist), songs: sngs.map(song => song.id)}, strm = {...clone(stream), playlist: pllst.id};
-  return {stream: strm, playlist: pllst, songs: sngs};
-}
-
-const streamObjToArr = strmObj => [strmObj.stream, strmObj.playlist, strmObj.songs];
+export const removePlaylistSong = (playlist, songId) =>
+  updatePlaylists({[playlist.id]: {...playlist, songs: playlist.songs.filter(sid => sid !== songId)}});
 
 const dispatchStream = action => (stream, playlist, songs) => dispatch => {
   dispatch(addSongs(reduceToObject(songs)));
   dispatch(addPlaylists(reduceToObject([playlist])));
   dispatch(addStreams(reduceToObject([stream])));
   return dispatch(action([{id: stream.id, type: 'stream'}]));
-}
+};
+
+const dispatchRoom = action => (room, playlist, songs) => dispatch => {
+  dispatch(addSongs(reduceToObject(songs)));
+  dispatch(addPlaylists(reduceToObject([playlist])));
+  dispatch(addRooms(reduceToObject([room])));
+  return dispatch(action([{id: room.id, type: 'room'}]));
+};
 
 
-const dispatchClonedStream = action => (stream, playlist, songs) => dispatchStream(action)(...streamObjToArr(cloneStream(stream, playlist, songs)));
-export const addClonedStream = dispatchClonedStream(add);
+/// PlaylistHolder
+// data PlaylistHolder a Playlist [Song] = Stream a Playlist [Song] | Room a Playlist [Song]
 
-export const addClonedStreamToTopAndPlay = (stream, playlist, songs) => dispatch => {
-  const {stream: strm, playlist: pllst, songs: sngs} = cloneStream(stream, playlist, songs);
-  dispatchStream(addToTop)(strm, pllst, sngs)(dispatch);
+// clonePlHolder :: (a, Playlist, [Song]) -> {holder: a, playlist: Playlist, songs: [Song]}
+const clonePlHolder = (holder, playlist, songs) => {
+  const sngs = songs.map(clone),
+    pllst = {...clone(playlist),songs: sngs.map(song => song.id)},
+    hldr = {...clone(holder), playlist: pllst.id, parentId: holder.id};
+  return {holder: hldr, playlist: pllst, songs: sngs};
+};
+
+// playlistHolderObjToArr :: {holder: a, playlist: Playlist, songs: [Song]} -> [a, Playlist, [Song]]
+const playlistHolderObjToArr = phObj => [phObj.holder, phObj.playlist, phObj.songs];
+
+const dispatchClonedPlaylistHolder = action => phType => (holder, playlist, songs) =>
+  dispatchPlaylistHolder[phType](action)(...playlistHolderObjToArr(clonePlHolder(holder, playlist, songs)));
+export const addClonedPlaylistHolder = dispatchClonedPlaylistHolder(add);
+
+export const addClonedPlaylistHolderToTopAndPlay = phType => (holder, playlist, songs) => dispatch => {
+  const {holder: hldr, playlist: pllst, songs: sngs} = clonePlHolder(holder, playlist, songs);
+  dispatchPlaylistHolder[phType](addToTop)(hldr, pllst, sngs)(dispatch);
   return dispatch(setCurrentSong(sngs[0]));
-}
+};
+
+const dispatchPlaylistHolder = {
+  stream: dispatchStream,
+  room: dispatchRoom,
+};
+/// end PlaylistHolder

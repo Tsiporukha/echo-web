@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import StreamDescription from '../components/StreamDescription';
 import SeparatedStream from '../components/SeparatedStream';
 import {getSearchInput} from './Search';
-import {addClonedStreamToTopAndPlay, addClonedStream} from '../actions/QueueActions';
+import {addClonedPlaylistHolderToTopAndPlay, addClonedPlaylistHolder} from '../actions/QueueActions';
 import {pause, play} from '../actions/PlayerActions';
 import {fetchStream, fetchComments, receiveStreams} from '../actions/EntitiesAUDActions';
 import {updateSearchTerm} from '../actions/SearchActions';
@@ -20,8 +20,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addToQueueTopAndPlay: (stream, playlist, songs) => () => dispatch(addClonedStreamToTopAndPlay(stream, playlist, songs)),
-  addToQueue: (stream, playlist, songs) => () => dispatch(addClonedStream(stream, playlist, songs)),
+  addToQueueTopAndPlay: (stream, playlist, songs) => () => dispatch(addClonedPlaylistHolderToTopAndPlay('stream')(stream, playlist, songs)),
+  addToQueue: (stream, playlist, songs) => () => dispatch(addClonedPlaylistHolder('stream')(stream, playlist, songs)),
   play: () => dispatch(play()),
   pause: () => dispatch(pause()),
   dispatchLikeAction: likeAction => (stream, token) => () => dispatch(likeAction(stream, token)),

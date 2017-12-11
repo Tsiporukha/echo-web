@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 import Song from '../components/Song';
 
-import {removeStreamSong} from '../actions/QueueActions';
+import {removePlaylistSong} from '../actions/QueueActions';
 import {setCurrentSong, pause, play} from '../actions/PlayerActions';
 
 
@@ -16,7 +16,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  remove: () => dispatch(removeStreamSong(ownProps.playlist, ownProps.id)),
+  remove: () => dispatch(removePlaylistSong(ownProps.playlist, ownProps.id)),
   setCurrentSong: song => () => dispatch(setCurrentSong(song)),
 
   play: () => dispatch(play()),
