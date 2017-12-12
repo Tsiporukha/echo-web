@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {IconMenu, Button, Tooltip} from 'react-toolbox';
+import {Button, Tooltip} from 'react-toolbox';
 
 import LoginDialog from './LoginDialog';
 import StreamEditing from './StreamEditing';
 import ShareIconMenu from './ShareIconMenu';
+import AddToQueueButton from '../containers/AddToQueueButton';
 
 import moment from 'moment';
 
@@ -92,11 +93,7 @@ const StreamDescriptionRender = props => (
         </div>}
       </div>
       <div className={styles.rightReg}>
-        <TooltipButton theme={styles} raised tooltip='Add to Queue' tooltipDelay={500} onClick={props.addToQueue(props.stream, props.playlist, props.songs)}>
-          <span className={styles.iconDescription}>
-            <i className={styles.playlistAddIcon}>playlist_add</i><span>Add to Queue</span>
-          </span>
-        </TooltipButton>
+        <AddToQueueButton type='stream' holder={props.stream} playlist={props.playlist} songs={props.songs} />
         <TooltipButton theme={styles} raised tooltip='Save to My Likes' tooltipDelay={500}
           onClick={getLikeButtonOnClick(props.token, props.dispatchLikeAction, props.stream, props.toggleLoginVisibility)}>
           <span className={styles.iconDescription}>
