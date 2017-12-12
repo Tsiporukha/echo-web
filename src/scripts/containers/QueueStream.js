@@ -1,29 +1,34 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 
-import QueueStreamSong from './QueueStreamSong';
-
+import QueuePlaylistHolderSong from './QueuePlaylistHolderSong';
 
 import {remove} from '../actions/QueueActions';
 import {playlistDuration, withHours as durationWithHours} from '../lib/duration';
 import {getStreamAndNestedEntities, maybeGetDefaultArtwork} from '../lib/stream';
+import {getWithNestedEntities as getRoomWithNestedEntities} from '../lib/room';
 
-
-import bp from '../../assets/styles/bootstrap.css';
 import styles from '../../assets/styles/queueStream.css';
 
+const getWithNestedEntities = {
+  stream: getStreamAndNestedEntities,
+  room: getRoomWithNestedEntities,
+};
 
-const mapStateToProps = (state, ownProps) => getStreamAndNestedEntities(state, ownProps.id);
+const mapStateToProps = (state, ownProps) => {
+  const {[ownProps.type]: holder, playlist, songs, user, duration} = getWithNestedEntities[ownProps.type](state, ownProps.id);
+  return {holder, playlist, songs, user, duration};
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   remove: () => dispatch(remove(ownProps.id))
 });
 
-class QueueStream extends Component {
+class QueuePlaylistHolder extends Component {
 
   toggleSongList = () => this.setState({opened: !this.state.opened});
 
-  openStreamInNewTab = () => Promise.resolve(window.open(`http://beta.echoapplication.com/#/feed/${this.props.stream.id}`)).then(win => win.focus());
+  openStreamInNewTab = () => Promise.resolve(window.open(`http://beta.echoapplication.com/#/feed/${this.props.holder.id}`)).then(win => win.focus());
 
 
   state = {opened: false}
@@ -35,17 +40,17 @@ class QueueStream extends Component {
       <div className={`${styles.root} ${this.state.opened ? styles.opened : ''}`}>
         <div style={{cursor: 'pointer'}} onClick={this.toggleSongList}>
           <div className={styles.artwork}>
-            <img src={maybeGetDefaultArtwork(this.props.stream.artwork_url)} />
+            <img src={maybeGetDefaultArtwork(this.props.holder.artwork_url)} />
           </div>
           <div className={styles.info}>
             <div className={styles.title}>
               <span>{this.props.playlist.title || 'no title'}</span>
               <i className={styles.openInNewIcon} onClick={this.openStreamInNewTab}>open_in_new</i>
             </div>
-            <div className={styles.userAvatar}>
+            {!!this.props.user && <div className={styles.userAvatar}>
               by <img src={this.props.user.avatar_url} alt='user avatar' />
               <span className={styles.username}>{this.props.user.name}</span>
-            </div>
+            </div>}
             <div className={styles.duration}>
               <i className={styles.timeIcon}>access_time</i>
               <span>{this.props.duration}</span>
@@ -59,11 +64,11 @@ class QueueStream extends Component {
           </div>
         </div>
         <div className={`${styles.songList} ${this.state.opened ? styles.visible : ''}`}>
-          {this.props.playlist.songs.map(songId => <QueueStreamSong playlist={this.props.playlist} id={songId} key={songId} />)}
+          {this.props.playlist.songs.map(songId => <QueuePlaylistHolderSong playlist={this.props.playlist} id={songId} key={songId} />)}
         </div>
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(QueueStream);
+export default connect(mapStateToProps, mapDispatchToProps)(QueuePlaylistHolder);

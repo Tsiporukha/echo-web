@@ -6,7 +6,7 @@ import {arrayMove} from 'react-sortable-hoc';
 
 import LoginDialog from '../components/LoginDialog';
 import QueueSong from './QueueSong';
-import QueueStream from './QueueStream';
+import QueuePlaylistHolder from './QueuePlaylistHolder';
 import StreamCreation from './StreamCreation';
 import RoomCreation from './RoomCreation';
 import SortableQueueItems from '../components/SortableQueueItems';
@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   set: references => dispatch(set(references)),
 });
 
-// const itemTypes = {song: QueueSong, stream: QueueStream};
+// const itemTypes = {song: QueueSong, stream: QueuePlaylistHolder};
 // const createJSXItem = (ItemComponent, itemId) => <ItemComponent key={itemId} id={itemId} />
 // const createItem = item => createJSXItem(itemTypes[item.type], item.id);
 

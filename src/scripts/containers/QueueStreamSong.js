@@ -24,11 +24,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 
-const QueueStreamSong = connect(mapStateToProps, mapDispatchToProps)(Song);
+const QueuePlaylistHolderSong = connect(mapStateToProps, mapDispatchToProps)(Song);
 
-QueueStreamSong.propTypes = {
+QueuePlaylistHolderSong.propTypes = {
   playlist: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired
 };
 
-export default QueueStreamSong;
+export default QueuePlaylistHolderSong;

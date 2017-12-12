@@ -23,6 +23,7 @@
 
 .titleBlock{
   display: flex;
+  flex-wrap: wrap;
 }
 .title{
   margin-right: 8px;

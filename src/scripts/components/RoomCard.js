@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
 import ShareIconMenu from './ShareIconMenu';
+import AddToQueueButton from '../containers/AddToQueueButton';
 
 import styles from '../../assets/styles/card.css';
 
@@ -14,8 +15,11 @@ const RoomCard = ({room, playlist, songs}) => (
         <div className={styles.title}>
           <Link to={`/genres/${room.genre}/rooms/${room.id}`}> {playlist.title} </Link>
         </div>
-        <ShareIconMenu path={`/genres/${room.genre}/rooms/${room.id}`} picture={room.artwork_url}
-          title={playlist.title} description={playlist.description} />
+        <div>
+          <ShareIconMenu path={`/genres/${room.genre}/rooms/${room.id}`} picture={room.artwork_url}
+            title={playlist.title} description={playlist.description} />
+          <AddToQueueButton type='room' holder={room} playlist={playlist} songs={songs} />
+        </div>
       </div>
       <div className={styles.description}> {playlist.description} </div>
     </div>
