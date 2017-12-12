@@ -14,16 +14,22 @@ export const setCurrentSong = song => ({
 
 
 const isSong = item => item.type === 'song';
+const getCollection = type => `${type}s`
 const getSongIndex = (songs, song) => songs.findIndex(sng => sng.id === song.id);
 const getNextSongIndex = (currentSongIndex, songsLength) => currentSongIndex === songsLength - 1 ? 0 : currentSongIndex + 1;
 const getPrevSongIndex = (currentSongIndex, songsLength) => currentSongIndex === 0 ? songsLength - 1 : currentSongIndex - 1;
 
-const getStreamPlaylist = (playlists, stream) => playlists[stream.playlist];
+const getHolderPlaylist = (playlists, holder) => playlists[holder.playlist];
 const getPlaylistSongs = (songs, playlist) => playlist.songs.map(songId => songs[songId]);
-const getStreamSongs = (songs, playlists, stream) => getPlaylistSongs(songs, getStreamPlaylist(playlists, stream));
+const getHolderSongs = (songs, playlists, holder) => getPlaylistSongs(songs, getHolderPlaylist(playlists, holder));
 
 export const getQueueSongs = store =>
-  store.queue.items.reduce((songs, s) => songs.concat(isSong(s) ? store.songs[s.id] : getStreamSongs(store.songs, store.playlists, store.streams[s.id])), []);
+  store.queue.items.reduce(
+    (songs, s) => songs.concat(isSong(s) ?
+      store.songs[s.id] :
+      getHolderSongs(store.songs, store.playlists, store[getCollection(s.type)][s.id])),
+    []
+  );
 
 
 const getNextSongId = (queueSongs, currentSong) => currentSong.id && queueSongs[getNextSongIndex(getSongIndex(queueSongs, currentSong), queueSongs.length)].id;

@@ -5,12 +5,12 @@ import {IconMenu, MenuItem, MenuDivider} from 'react-toolbox/lib/menu';
 import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
 
 import QueueSong from '../containers/QueueSong';
-import QueueStream from '../containers/QueueStream';
+import QueuePlaylistHolder from '../containers/QueuePlaylistHolder';
 
 import styles from '../../assets/styles/queue.css';
 
 
-const itemTypes = {song: QueueSong, stream: QueueStream, room: QueueStream};
+const itemTypes = {song: QueueSong, stream: QueuePlaylistHolder, room: QueuePlaylistHolder};
 
 
 const DragHandle = SortableHandle(() => <i className={styles.dragHandler}>drag_handle</i>);
