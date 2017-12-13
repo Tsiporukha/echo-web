@@ -12,6 +12,7 @@ import {receiveRooms} from '../actions/EntitiesAUDActions';
 
 import {withGenre as fetchRooms} from '../lib/ebApi/rooms';
 import {getGenre, getGenreTags, genres} from '../lib/genres';
+import {dispatchOnBottomReaching} from '../lib/scroll';
 
 import styles from '../../assets/styles/genre.css';
 import cardStyles from '../../assets/styles/card.css';
@@ -38,13 +39,16 @@ class Genre extends Component {
   tags = getGenreTags(this.props.match.params.title);
 
   getRequestFilters = ({tags, limit, offset} = this.state) => ({genre: this.genre.title, tags, limit, offset});
-  maybeConcatWithStateRooms = rooms => this.state.offset ? this.state.rooms.concat(rooms) : rooms
+  maybeConcatWithStateRooms = rooms => this.state.offset ? this.state.rooms.concat(rooms) : rooms;
+  getNewState = (rooms, fetchedAll) => ({rooms, offset: rooms.length, fetchedAll});
 
   fetchAndReceiveRooms = () => this.props.fetchAndReceiveRooms(this.getRequestFilters(), this.props.token)
-    .then(({rooms, fetchedAll}) => this.setState({fetchedAll, rooms: this.maybeConcatWithStateRooms(rooms)}));
+    .then(({rooms, fetchedAll}) => this.setState(this.getNewState(this.maybeConcatWithStateRooms(rooms), fetchedAll)));
 
   setTags = tags => this.setState({tags});
-  handleTagClick = tag => this.setState({offset: 0}, this.fetchAndReceiveRooms);
+  handleTagClick = tag => this.setState({offset: 0, fetchedAll: false}, this.fetchAndReceiveRooms);
+
+  dispatchScrollListener = dispatchOnBottomReaching(() => window, this.fetchAndReceiveRooms);
 
 
   state = {
@@ -57,7 +61,9 @@ class Genre extends Component {
     fetchedAll: false,
   }
 
-  componentDidMount = () => this.fetchAndReceiveRooms();
+  componentDidMount = () => this.fetchAndReceiveRooms().then(this.dispatchScrollListener('addEventListener'));
+
+  componentWillUnmount = () => this.dispatchScrollListener('removeEventListener');
 
   render(){
     return(

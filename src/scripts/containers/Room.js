@@ -48,7 +48,7 @@ class Room extends Component {
         <div className={styles.left}>
 
           <div className={styles.roomHeader} style={{backgroundImage: `url(${this.props.room.background_url})`}}>
-            <RoomCard room={this.props.room} playlist={this.props.playlist} />
+            <RoomCard room={this.props.room} playlist={this.props.playlist} songs={this.props.songs} />
           </div>
 
           <div className='roomTabs'>
@@ -73,7 +73,7 @@ class Room extends Component {
         <div className={styles.right}>
           SIMILAR ROOMS
         </div>
-        
+
         <IndeterminateProgressLine visible={this.state.fetching} />
       </div>
     )
