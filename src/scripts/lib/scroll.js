@@ -8,3 +8,12 @@ const isElementBottomReached = element => element.scrollTop + window.innerHeight
 
 export const onBottomReaching = (fn, element) =>
   ((element && element !== window) ? isElementBottomReached(element) : isWindowBottomReached()) ? fn() : false;
+
+// dispatchOnBottomReaching :: (Function, Function) -> Function -> undefined
+// don't remove closure, cause without closure it wouldn't apply actionName to the same element
+export const dispatchOnBottomReaching = (getElement, callback) => (() => {
+  const element = getElement();
+  const handleScroll = () => onBottomReaching(callback, element);
+
+  return actionName => element[actionName]('scroll', handleScroll);
+})();

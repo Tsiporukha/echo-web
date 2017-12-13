@@ -6,7 +6,7 @@ import IndeterminateProgressLine, {doWithProgressLine} from './IndeterminateProg
 import TagsSelect from './TagsSelect';
 import Stream from '../containers/Stream';
 
-import {onBottomReaching} from '../lib/scroll';
+import {dispatchOnBottomReaching} from '../lib/scroll';
 
 import styles from '../../assets/styles/feed.css';
 import {results as resultsClassName} from '../../assets/styles/search.css';
@@ -34,12 +34,8 @@ export default class Feed extends Component {
 
   onSearchTermChange = (filters, token) => this.setState({filters}, _ => this.loadSubFeedStreams(this.state.activeSubFeed)(token));
 
-  dispatchScrollListener = (() => {
-    const element = document.getElementsByClassName(resultsClassName)[0] || window;
-    const handleScroll = () => onBottomReaching(() => this.loadActiveSubFeedStreams(), element);
-
-    return actionName => element[actionName]('scroll', handleScroll);
-  })();
+  getScrolledElement = () => (document.getElementsByClassName(resultsClassName)[0] || window)
+  dispatchScrollListener = dispatchOnBottomReaching(this.getScrolledElement, this.loadActiveSubFeedStreams);
 
   maybeReloadOnPropsChange = (nextProps, props = this.props) =>
     ((nextProps.initialFilters.term !== props.initialFilters.term) || (nextProps.token !== props.token)) ?
@@ -57,8 +53,7 @@ export default class Feed extends Component {
     tags: [],
   }
 
-  componentDidMount = () => Promise.resolve(this.loadActiveSubFeedStreams())
-    .then(this.dispatchScrollListener('addEventListener'));
+  componentDidMount = () => this.loadActiveSubFeedStreams().then(this.dispatchScrollListener('addEventListener'));
 
   componentWillUnmount = () => this.dispatchScrollListener('removeEventListener');
 
