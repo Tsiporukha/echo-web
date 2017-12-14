@@ -40,7 +40,7 @@ const getRoomData = (room, playlist) => room ?
     title: '',
     description: '',
     artwork_url: '',
-    background_artwork_url: '',
+    background_url: '',
     genre: genresNames[0],
     tags: [],
   };
@@ -61,7 +61,7 @@ export default class RoomEditing extends Component {
   setArtworkUrl = artwork_url => this.setState({artwork_url});
   removeArtworkUrl = () => this.setUploadedArtworkUrl('');
 
-  setBackgroundArtworkUrl = background_artwork_url => this.setState({background_artwork_url});
+  setBackgroundArtworkUrl = background_url => this.setState({background_url});
   removeBackgroundArtworkUrl = () => this.setBackgroundArtworkUrl('');
 /// end Artworks
 
@@ -82,9 +82,9 @@ export default class RoomEditing extends Component {
   isAllFielsFilled = () =>
     this.state.title && this.state.description &&
     this.state.genre && this.state.tags.length &&
-    this.state.artwork_url && this.state.background_artwork_url;
+    this.state.artwork_url && this.state.background_url;
 
-  save = () => this.props.save(this.state.artwork_url, this.state.background_artwork_url, this.state.title,
+  save = () => this.props.save(this.state.artwork_url, this.state.background_url, this.state.title,
     this.state.description, this.state.genre, this.state.tags, this.state.songs, this.props.token)
       .then(this.props.onCancel);
 
@@ -123,11 +123,11 @@ export default class RoomEditing extends Component {
         <div className={styles.body}>
 
           <div className={styles.left}>
-            <div className={styles.coverArea} style={this.state.background_artwork_url ? {backgroundImage: `url(${this.state.background_artwork_url})`} : {}}>
+            <div className={styles.coverArea} style={this.state.background_url ? {backgroundImage: `url(${this.state.background_url})`} : {}}>
 
               <div className={styles.bgArtworkUpdateArea}>
                 <ArtworkUpdate uploadArtwork={this.uploadArtwork} setUploadedArtworkUrl={this.setBackgroundArtworkUrl} />
-                <span className={styles.errMssg}>{this.maybeError(this.state.background_artwork_url, 'Cover is required')}</span>
+                <span className={styles.errMssg}>{this.maybeError(this.state.background_url, 'Cover is required')}</span>
               </div>
 
               <div className={styles.card}>
