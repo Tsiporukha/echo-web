@@ -88,11 +88,13 @@ export const fetchAndReceiveLikedStreamsIds = (userId, limit, offset, token) => 
 
 
 /// Rooms
-export const receiveRooms = rooms => dispatch => Promise.resolve(reduceToNormalizedRooms(rooms))
-  .then(({songs, playlists, rooms}) => Promise.resolve(dispatch(addSongs(songs)))
+export const addNormalizedRoomsData = ({songs, playlists, rooms}) => dispatch =>
+  Promise.resolve(dispatch(addSongs(songs)))
     .then(dispatch(addPlaylists(playlists)))
-    .then(dispatch(addRooms(rooms)))
-  );
+    .then(dispatch(addRooms(rooms)));
+
+
+export const receiveRooms = rooms => addNormalizedRoomsData(reduceToNormalizedRooms(rooms));
 
 export const fetchRoom = (id, token) => dispatch => getRoom(id, token).then(room => receiveRooms([room])(dispatch));
 /// end Rooms
