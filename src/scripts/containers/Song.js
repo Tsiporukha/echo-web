@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Song from '../components/Song';
 
 import {addClonedSongs, addClonedSongToTopAndPlay, remove as removeFromQueue} from '../actions/QueueActions';
-import {setCurrentSong, pause, play} from '../actions/PlayerActions';
+import {pause, play} from '../actions/PlayerActions';
 import {toggleSongLike} from '../actions/EntitiesAUDActions';
 
 
@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   setCurrentSong: song => () => dispatch(addClonedSongToTopAndPlay(song)),
   toggleLike: (song, token) => dispatch(toggleSongLike(song, token)),
 
-  pause: () => dispatch(pause())
+  pause: () => dispatch(pause()),
 });
 
 
