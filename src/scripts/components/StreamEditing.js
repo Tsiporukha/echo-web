@@ -6,14 +6,14 @@ import {arrayMove} from 'react-sortable-hoc';
 import UploadArtwork from './UploadArtwork';
 import TagsAutocomplete from './TagsAutocomplete';
 import QueueSong from '../containers/QueueSong';
-import SortableQueueItems from '../components/SortableQueueItems';
+import SortableItems from '../components/SortableItems';
 
 import {uploadArtwork} from '../lib/ebApi/streams';
 import {playlistDuration, duration} from '../lib/duration';
+import {addSongsType} from '../lib/song';
+import {primaryTags, getSecondaryTagsOf, getPrimaryTagsFrom} from '../lib/genres';
 
 import styles from '../../assets/styles/streamPublication.css';
-
-import {primaryTags, getSecondaryTagsOf, getPrimaryTagsFrom} from '../lib/genres';
 
 
 const getNewStreamData = artwork_url => ({
@@ -61,10 +61,12 @@ export default class StreamEditing extends Component {
     ...this.maybeGetStreamData(),
 
     uploadedArtworkUrl: '',
-    songs: this.props.songs.map(song => ({...song, type: 'song'})),
+    songs: addSongsType(this.props.songs),
 
     triedSave: false,
   };
+
+  componentWillReceiveProps = nextProps => this.setState({songs: addSongsType(nextProps.songs)});
 
   render() {
     return(
@@ -137,7 +139,7 @@ export default class StreamEditing extends Component {
             </div>
 
             <div>
-              <SortableQueueItems items={this.state.songs} onSortEnd={this.onSortEnd} useDragHandle />
+              <SortableItems playlist={this.props.playlist} items={this.state.songs} onSortEnd={this.onSortEnd} useDragHandle />
             </div>
           </div>
 

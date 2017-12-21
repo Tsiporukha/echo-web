@@ -9,7 +9,7 @@ import QueueSong from './QueueSong';
 import QueuePlaylistHolder from './QueuePlaylistHolder';
 import StreamCreation from './StreamCreation';
 import RoomCreation from './RoomCreation';
-import SortableQueueItems from '../components/SortableQueueItems';
+import SortableItems from '../components/SortableItems';
 
 import {remove, set} from '../actions/QueueActions';
 import {clear as clearPlayer, getQueueSongs} from '../actions/PlayerActions';
@@ -85,7 +85,7 @@ class Queue extends Component {
         </div>
 
         <div className={styles.items}>
-          <SortableQueueItems items={this.props.items} onSortEnd={this.onSortEnd} useDragHandle />
+          <SortableItems items={this.props.items} onSortEnd={this.onSortEnd} useDragHandle />
         </div>
       </div>
     )

@@ -6,11 +6,11 @@ import {arrayMove} from 'react-sortable-hoc';
 import UploadArtwork from './UploadArtwork';
 import TagsAutocomplete from './TagsAutocomplete';
 import QueueSong from '../containers/QueueSong';
-import SortableQueueItems from '../components/SortableQueueItems';
+import SortableItems from '../components/SortableItems';
 
 import {uploadArtwork} from '../lib/ebApi/streams';
 import {playlistDuration, duration} from '../lib/duration';
-
+import {addSongsType} from '../lib/song';
 import {genresNames, getGenreTags} from '../lib/genres';
 
 import styles from '../../assets/styles/roomEditing.css';
@@ -35,7 +35,7 @@ class ArtworkUpdate extends Component{
 
 
 const getRoomData = (room, playlist) => room ?
-  {...room, ...playlist} :
+  { ...playlist, ...room} :
   {
     title: '',
     description: '',
@@ -101,10 +101,12 @@ export default class RoomEditing extends Component {
   state = {
     ...getRoomData(this.props.room, this.props.playlist),
 
-    songs: this.props.songs.map(song => ({...song, type: 'song'})),
+    songs: addSongsType(this.props.songs),
 
     triedSave: false,
   };
+
+  componentWillReceiveProps = nextProps => this.setState({songs: addSongsType(nextProps.songs)});
 
   render() {
     return(
@@ -180,7 +182,7 @@ export default class RoomEditing extends Component {
             </div>
 
             <div>
-              <SortableQueueItems items={this.state.songs} onSortEnd={this.onSortEnd} useDragHandle />
+              <SortableItems playlist={this.props.playlist} items={this.state.songs} onSortEnd={this.onSortEnd} useDragHandle />
             </div>
           </div>
         </div>
