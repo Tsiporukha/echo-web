@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import Song from '../components/Song';
 
-import {addClonedSongs, addClonedSongToTopAndPlay, remove as removeFromQueue} from '../actions/QueueActions';
+import {addClonedSongs, addClonedSongToTopAndPlay, remove as removeFromQueue, removePlaylistSong} from '../actions/QueueActions';
 import {setCurrentSong, pause, play} from '../actions/PlayerActions';
 
 
@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   setCurrentSong: song => () => dispatch(setCurrentSong(song)),
 
   play: () => dispatch(play()),
-  pause: () => dispatch(pause())
+  pause: () => dispatch(pause()),
 });
 
 
