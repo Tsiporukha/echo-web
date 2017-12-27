@@ -16,7 +16,7 @@ const DragHandle = SortableHandle(() => <i className={styles.dragHandler}>drag_h
 const SortableItem = SortableElement(({ItemComponent, type, ...props}) => (
   <div className={styles.sortableItem}>
     <DragHandle />
-    <div className={styles.item}> <ItemComponent id={props.id} type={props.type} {...props} /> </div>
+    <div className={styles.item}> <ItemComponent id={props.id} type={type} {...props} /> </div>
   </div>
 ));
 
