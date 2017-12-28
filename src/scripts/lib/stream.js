@@ -27,7 +27,7 @@ export const reduceToNormalized = streams => streams.reduce(
 
 const inQueue = (state, id) => state.playlists[state.streams[id].playlist].songs.some(songId => state.songs[songId].uid === state.player.currentSong.uid);
 
-export const getStreamAndNestedEntities = (state, id) => ({
+export const getWithNestedEntities = (state, id) => ({
   stream:  state.streams[id],
   user: state.users[state.streams[id].user],
   playlist: state.playlists[state.streams[id].playlist],
@@ -37,7 +37,7 @@ export const getStreamAndNestedEntities = (state, id) => ({
   isPlaying: inQueue(state, id) && state.player.playing
 });
 
-export const maybeGetStreamAndNestedEntities = (state, id) => state.streams[id] ? getStreamAndNestedEntities(state, id) : {};
+export const maybeGetWithNestedEntities = (state, id) => state.streams[id] ? getWithNestedEntities(state, id) : {};
 
 export const maybeGetDefaultArtwork = str => str || require('../../assets/images/no_artwork.png');
 

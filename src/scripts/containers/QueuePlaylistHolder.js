@@ -5,13 +5,13 @@ import QueuePlaylistHolderSong from './QueuePlaylistHolderSong';
 
 import {remove} from '../actions/QueueActions';
 import {playlistDuration, withHours as durationWithHours} from '../lib/duration';
-import {getStreamAndNestedEntities, maybeGetDefaultArtwork} from '../lib/stream';
 import {getWithNestedEntities as getRoomWithNestedEntities} from '../lib/room';
+import {getWithNestedEntities as getStreamWithNestedEntities, maybeGetDefaultArtwork} from '../lib/stream';
 
 import styles from '../../assets/styles/queueStream.css';
 
 const getWithNestedEntities = {
-  stream: getStreamAndNestedEntities,
+  stream: getStreamWithNestedEntities,
   room: getRoomWithNestedEntities,
 };
 

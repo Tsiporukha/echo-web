@@ -9,12 +9,12 @@ import {pause, play} from '../actions/PlayerActions';
 import {fetchStream, fetchComments, receiveStreams} from '../actions/EntitiesAUDActions';
 import {updateSearchTerm} from '../actions/SearchActions';
 
-import {maybeGetStreamAndNestedEntities} from '../lib/stream';
+import {maybeGetWithNestedEntities} from '../lib/stream';
 import {update} from '../lib/ebApi/streams';
 
 
 const mapStateToProps = (state, ownProps) => ({
-  ...maybeGetStreamAndNestedEntities(state, ownProps.id || ownProps.match.params.id),
+  ...maybeGetWithNestedEntities(state, ownProps.id || ownProps.match.params.id),
   token: state.session.token,
   currentUserId: !!state.session.user && state.session.user.id,
 });
