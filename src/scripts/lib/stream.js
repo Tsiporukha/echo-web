@@ -1,5 +1,5 @@
 import {playlistDuration, duration} from './duration';
-import {createIdKeyHash, reduceToObject} from './base';
+import {createIdKeyHash, reduceToObject, inQueue} from './base';
 
 const replaceCommentUserWithRefId = comment => ({...comment, user: comment.user.id});
 const getCommentUser = comment => comment.user;
@@ -25,16 +25,14 @@ export const reduceToNormalized = streams => streams.reduce(
   {users: {}, streams: {}, playlists: {}, songs: {}, comments: {}}
 );
 
-const inQueue = (state, id) => state.playlists[state.streams[id].playlist].songs.some(songId => state.songs[songId].uid === state.player.currentSong.uid);
-
 export const getWithNestedEntities = (state, id) => ({
   stream:  state.streams[id],
   user: state.users[state.streams[id].user],
   playlist: state.playlists[state.streams[id].playlist],
   duration: duration(playlistDuration(state.playlists[state.streams[id].playlist].songs.map(song => state.songs[song]))),
   songs: state.playlists[state.streams[id].playlist].songs.map(song => state.songs[song]),
-  inQueue: inQueue(state, id),
-  isPlaying: inQueue(state, id) && state.player.playing
+  inQueue: inQueue('streams', state, id),
+  isPlaying: inQueue('streams', state, id) && state.player.playing
 });
 
 export const maybeGetWithNestedEntities = (state, id) => state.streams[id] ? getWithNestedEntities(state, id) : {};

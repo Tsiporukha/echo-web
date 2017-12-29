@@ -1,4 +1,4 @@
-import {createIdKeyHash, reduceToObject} from './base';
+import {createIdKeyHash, reduceToObject, inQueue} from './base';
 import {playlistDuration, duration} from './duration';
 
 
@@ -20,17 +20,13 @@ export const reduceToNormalized = rooms => rooms.reduce(
 );
 
 
-
-const inQueue = (state, id) => state.playlists[state.rooms[id].playlist].songs.some(songId => state.songs[songId].uid === state.player.currentSong.uid);
-
-
 export const getWithNestedEntities = (state, id) => ({
   room:  state.rooms[id],
   playlist: state.playlists[state.rooms[id].playlist],
   duration: duration(playlistDuration(state.playlists[state.rooms[id].playlist].songs.map(song => state.songs[song]))),
   songs: state.playlists[state.rooms[id].playlist].songs.map(song => state.songs[song]),
-  inQueue: inQueue(state, id),
-  isPlaying: inQueue(state, id) && state.player.playing
+  inQueue: inQueue('rooms', state, id),
+  isPlaying: inQueue('rooms', state, id) && state.player.playing
 });
 
 export const maybeGetWithNestedEntities = (state, id) => state.rooms[id] ? getWithNestedEntities(state, id) : {};

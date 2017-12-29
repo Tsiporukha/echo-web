@@ -7,6 +7,8 @@ import RoomEditing from '../components/RoomEditing';
 import AddToQueueButton from './AddToQueueButton';
 
 import {receiveRooms} from '../actions/EntitiesAUDActions';
+import {addClonedPlaylistHolderToTopAndPlay} from '../actions/QueueActions';
+import {pause, play} from '../actions/PlayerActions';
 
 import {maybeGetWithNestedEntities} from '../lib/room';
 import {update} from '../lib/ebApi/rooms';
@@ -21,6 +23,10 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  addToQueueTopAndPlay: (room, playlist, songs) => () => dispatch(addClonedPlaylistHolderToTopAndPlay('room')(room, playlist, songs)),
+  play: () => dispatch(play()),
+  pause: () => dispatch(pause()),
+
   update: roomId => (artwork_url, background_url, title, description, genre, tags, songs, token) =>
     update(roomId, artwork_url, background_url, title, description, genre, tags, songs, token).then(room => dispatch(receiveRooms([room]))),
 });
@@ -29,7 +35,7 @@ class RoomCard extends Component {
 
   editable = this.props.room.moderators_ids.includes(this.props.currentUserId)
 
-  toggleRoomEditing = () => this.setState({roomEditing: !this.state.roomEditing});
+  toggle = key => () => this.setState({[key]: !this.state[key]});
 
 
   state = {
@@ -39,7 +45,21 @@ class RoomCard extends Component {
   render(){
     return(
       <div className={styles.root}>
-        <img className={styles.artwork} src={this.props.room.artwork_url} alt='room artwork' />
+        <div className={styles.artwork}>
+          <img className={styles.artwork} src={this.props.room.artwork_url} alt='room artwork' />
+
+          <span className={styles.playPause}>
+            {this.props.isPlaying ?
+              <i onClick={this.props.pause} className={styles.playIcon}>pause</i>
+              :
+              <i
+                onClick={this.props.inQueue ?
+                  this.props.play :
+                  this.props.addToQueueTopAndPlay(this.props.room, this.props.playlist, this.props.songs)}
+                className={styles.playIcon}>play_arrow</i>
+            }
+          </span>
+        </div>
         <div className={styles.data}>
           <div className={styles.titleBlock}>
             <div className={styles.title}>
@@ -51,9 +71,9 @@ class RoomCard extends Component {
               <AddToQueueButton type='room' holder={this.props.room} playlist={this.props.playlist} songs={this.props.songs} />
             </div>
             {this.editable && <div className={styles.editBlock}>
-              <span onClick={this.toggleRoomEditing}>Edit</span>
+              <span onClick={this.toggle('roomEditing')}>Edit</span>
               {this.state.roomEditing && <RoomEditing
-                onCancel={this.toggleRoomEditing} save={this.props.update(this.props.room.id)}
+                onCancel={this.toggle('roomEditing')} save={this.props.update(this.props.room.id)}
                 room={this.props.room} playlist={this.props.playlist} songs={this.props.songs}
                 token={this.props.token}
               />}

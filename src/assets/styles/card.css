@@ -1,3 +1,18 @@
+.playIcon, .pauseIcon{
+  composes: material-icons from './fonts.css';
+  cursor: pointer;
+  font-size: 40px;
+  color: white;
+  padding: 14px;
+  cursor: pointer;
+  border-radius: 60px;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  &:hover, &:active {background-color: rgba(0, 0, 0, 0.8);}
+}
+
+
+
 .border{
   border: solid 1px #dbdbdb;
 }
@@ -14,6 +29,14 @@
   height: 120px;
   width: 120px;
   min-width: 120px;
+}
+
+.playPause{
+  position: relative;
+  width: 70px;
+  height: 70px;
+  left: 25px;
+  bottom: 92px;
 }
 
 .data{
