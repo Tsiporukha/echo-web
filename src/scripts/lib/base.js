@@ -11,3 +11,8 @@ export const addIdsAndReduceToObject = items => reduceToObject(addIds(items));
 // inQueue :: String a, Number a => (String, Object, a) -> Boolean
  export const inQueue = (type, state, id) =>
   state.playlists[state[type][id].playlist].songs.some(songId => state.songs[songId].uid === state.player.currentSong.uid);
+
+
+export const getCollectionName = type => `${type}s`;
+
+export const getIndexById = (collection, item) => collection.findIndex(itm => itm.id === item.id);
