@@ -3,27 +3,32 @@ import ReactPlayer from 'react-player';
 import {connect} from 'react-redux';
 
 import Slider from 'react-toolbox/lib/slider';
-import CurrentQueue from './Queue';
+import Queue from './Queue';
 
+import {updatePlaylists, getPlaylist, maybeGetHolderPlaylist, concatSong} from '../actions/EntitiesAUDActions';
 import {play, pause, getNextSong, getPrevSong, setCurrentSong, getQueueSongs} from '../actions/PlayerActions';
 import {duration} from '../lib/duration';
 import {maybeGetDefaultArtwork} from '../lib/stream';
+import {addPlaylistAndHolder} from '../lib/song';
 
 import styles from '../../assets/styles/player.css';
 
 
 const mapStateToProps = state => ({
-  queue: state.queue.items,
   currentSong: state.player.currentSong,
   playing: state.player.playing,
   nextSong: state.queue.items.length ? getNextSong(state) : false,
-  prevSong: state.queue.items.length ? getPrevSong(state) : false
+  prevSong: state.queue.items.length ? getPrevSong(state) : false,
+
+  origPlaylist: getPlaylist(state.playlists, state.player.currentSong.playlist),
+  holderPlaylist: maybeGetHolderPlaylist(state, state.player.currentSong.holder),
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   play: () => dispatch(play()),
   pause: () => dispatch(pause()),
-  setCurrentSong: song => dispatch(setCurrentSong(song))
+  setCurrentSong: song => dispatch(setCurrentSong(song)),
+  concatSong: (playlist, song) => concatSong(playlist, song)(dispatch),
 });
 
 const initialSongState = {
@@ -36,31 +41,37 @@ const initialSongState = {
 
 class Player extends Component {
 
-  playNext = () => this.props.setCurrentSong(this.props.nextSong);
-  playPrev = () => this.props.setCurrentSong(this.props.prevSong);
+  playNext = () => {
+    const maybeConcatSong = (playlist, song, concatFn) =>
+      playlist && !playlist.songs.includes(song.id) && concatFn(playlist, song);
+
+    maybeConcatSong(this.props.holderPlaylist, this.props.nextSong, this.props.concatSong);
+    return this.props.setCurrentSong(addPlaylistAndHolder(this.props.nextSong, this.props.origPlaylist, this.props.currentSong.holder));
+  };
+  playPrev = () => this.props.setCurrentSong(addPlaylistAndHolder(this.props.prevSong, this.props.origPlaylist, this.props.currentSong.holder));
 
   setVolume = volume => this.setState({volume});
   setProgress = val => {
     this.setState({seeking: false});
-    return this.player.seekTo(parseFloat(val))
+    return this.refs.player.seekTo(parseFloat(val))
   };
   onProgress = played => this.setState({...played});
 
-  toggleQueueVisibility = () => this.setState({queueVisibility: !this.state.queueVisibility});
+  toggleIsQueueOpen = () => this.setState({isQueueOpen: !this.state.isQueueOpen});
 
   maybeTitlePlaceholder = str => str || '--//--';
 
   reinitializeSongState = (nextProps, props) => nextProps.currentSong.id !== props.currentSong.id ? this.setState({...initialSongState}) : false;
-  showPlayerOnAddItems = nextProps => nextProps.queue.length && this.setState({playerVisibility: true});
+  showPlayer = () => this.setState({playerVisibility: true});
 
   state = {
-    queueVisibility: true,
+    isQueueOpen: true,
     playerVisibility: false,
     volume: 0.8,
     ...initialSongState
   };
 
-  componentWillReceiveProps = nextProps => this.reinitializeSongState(nextProps, this.props) || this.showPlayerOnAddItems(nextProps);
+  componentWillReceiveProps = nextProps => this.reinitializeSongState(nextProps, this.props) || this.showPlayer();
 
   render() {
     return (
@@ -94,13 +105,13 @@ class Player extends Component {
           </div>
           <span>{duration(this.state.duration - this.state.playedSeconds)}</span>
 
-          <i className={this.state.queueVisibility ? styles.currentQueueIconActive : styles.currentQueueIcon}
-            onClick={this.toggleQueueVisibility}>queue_music</i>
+          <i className={this.state.isQueueOpen ? styles.currentQueueIconActive : styles.currentQueueIcon}
+            onClick={this.toggleIsQueueOpen}>queue_music</i>
 
-          <div style={{visibility: this.state.queueVisibility ? 'visible' : 'hidden', margin: 0}}><CurrentQueue /></div>
+          <div style={{display: this.state.isQueueOpen ? 'block' : 'none'}}><Queue /></div>
 
           <ReactPlayer
-            ref={player => this.player = player}
+            ref='player'
             className={styles.reactPlayer}
             width={240}
             height={135}

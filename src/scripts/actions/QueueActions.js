@@ -80,6 +80,7 @@ const playlistHolderObjToArr = phObj => [phObj.holder, phObj.playlist, phObj.son
 const dispatchClonedPlaylistHolder = action => phType => (holder, playlist, songs) =>
   dispatchPlaylistHolder[phType](action)(...playlistHolderObjToArr(clonePlHolder(holder, playlist, songs)));
 export const addClonedPlaylistHolder = dispatchClonedPlaylistHolder(add);
+export const addClonedPlaylistHolderToTop = dispatchClonedPlaylistHolder(addToTop);
 
 export const addClonedPlaylistHolderToTopAndPlay = phType => (holder, playlist, songs) => dispatch => {
   const {holder: hldr, playlist: pllst, songs: sngs} = clonePlHolder(holder, playlist, songs);

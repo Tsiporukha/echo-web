@@ -11,7 +11,7 @@ import {User, Room, Stream, Playlist, Song, Comment} from '../constants/creators
 
 import {createAUDActions} from './actionsCreators';
 
-import {createIdKeyHash, reduceToObject} from '../lib/base';
+import {createIdKeyHash, reduceToObject, getCollectionName} from '../lib/base';
 import {reduceToNormalized as reduceToNormalizedRooms} from '../lib/room';
 import {appendPublishedCommentRef, appendCommentsRefs, reduceToNormalized as reduceToNormalizedStreams} from '../lib/stream';
 import {addComment as publishComment, getComments, getStream} from '../lib/ebApi/streams';
@@ -69,6 +69,16 @@ export const fetchAndReceiveLikedSongsIds = (userId, limit, offset, token) => di
 /// end Songs
 
 
+/// Playlists
+export const getPlaylist = (playlists, holder) => holder && playlists[holder.playlist];
+
+export const getPlaylistSongs = (songs, playlist) => playlist.songs.map(songId => songs[songId]);
+
+export const concatSong = (playlist, song) => dispatch =>
+  dispatch(updatePlaylists(createIdKeyHash({...playlist, songs: playlist.songs.concat(song.id)})));
+/// end Playlists
+
+
 /// Streams
 export const addNormalizedStreamsData = ({users, streams, playlists, songs, comments}) => dispatch =>
   Promise.resolve(dispatch(addUsers(users)))
@@ -98,3 +108,13 @@ export const receiveRooms = rooms => addNormalizedRoomsData(reduceToNormalizedRo
 
 export const fetchRoom = (id, token) => dispatch => getRoom(id, token).then(room => receiveRooms([room])(dispatch));
 /// end Rooms
+
+
+/// PlaylistHolder(Rooms, Streams)
+const getHolder = (store, type, id) => store[getCollectionName(type)][id];
+
+const getHolderPlaylist = (store, type, id) => store.playlists[getHolder(store, type, id).playlist];
+export const maybeGetHolderPlaylist = (store, holder) => holder && getHolderPlaylist(store, holder.type, holder.id);
+
+export const getHolderSongs = (songs, playlists, holder) => getPlaylistSongs(songs, getPlaylist(playlists, holder));
+/// end PlaylistHolder
