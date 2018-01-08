@@ -108,7 +108,7 @@ class Player extends Component {
           <i className={this.state.isQueueOpen ? styles.currentQueueIconActive : styles.currentQueueIcon}
             onClick={this.toggleIsQueueOpen}>queue_music</i>
 
-          <div style={{display: this.state.isQueueOpen ? 'block' : 'none'}}><Queue /></div>
+          <div style={{display: this.state.isQueueOpen ? 'block' : 'none', margin: 0}}><Queue /></div>
 
           <ReactPlayer
             ref='player'
