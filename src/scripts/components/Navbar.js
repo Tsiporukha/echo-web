@@ -13,7 +13,7 @@ const Navbar = () => (
       <div className={styles.leftReg}>
         <div className={styles.brand}>
           <Link to='/'>
-            <img src={require('../../assets/images/echo_logo.png')} alt='echo logo' className={styles.logo} />
+            {/* <img src={require('../../assets/images/echo_logo.png')} alt='echo logo' className={styles.logo} /> */}
             <span className={styles.title}>ECHO</span>
           </Link>
         </div>
