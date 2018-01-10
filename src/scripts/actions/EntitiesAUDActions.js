@@ -70,7 +70,7 @@ export const fetchAndReceiveLikedSongsIds = (userId, limit, offset, token) => di
 
 
 /// Playlists
-export const getPlaylist = (playlists, holder) => holder && playlists[holder.playlist];
+export const getPlaylist = (playlists, id) => playlists[id];
 
 export const getPlaylistSongs = (songs, playlist) => playlist.songs.map(songId => songs[songId]);
 
@@ -116,5 +116,5 @@ const getHolder = (store, type, id) => store[getCollectionName(type)][id];
 const getHolderPlaylist = (store, type, id) => store.playlists[getHolder(store, type, id).playlist];
 export const maybeGetHolderPlaylist = (store, holder) => holder && getHolderPlaylist(store, holder.type, holder.id);
 
-export const getHolderSongs = (songs, playlists, holder) => getPlaylistSongs(songs, getPlaylist(playlists, holder));
+export const getHolderSongs = (songs, playlists, holder) => getPlaylistSongs(songs, getPlaylist(playlists, holder.playlist));
 /// end PlaylistHolder
