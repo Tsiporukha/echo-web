@@ -6,4 +6,4 @@ export const getLikeAction = (song, token, toggleLike, showLogin) => () => token
 export const addSongType = song => ({type: 'song', ...song});
 export const addSongsType = songs => songs.map(addSongType);
 
-export const addPlaylistAndHolder = (song, playlist, holder) => Object.assign({}, song, playlist ? {playlist: playlist.id, holder} : {});
+export const addPlaylistId = (song, playlist) => Object.assign({}, song, playlist ? {playlist: playlist.id} : {});

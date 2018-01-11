@@ -5,11 +5,12 @@ import {connect} from 'react-redux';
 import Slider from 'react-toolbox/lib/slider';
 import Queue from './Queue';
 
-import {updatePlaylists, getPlaylist, maybeGetHolderPlaylist, concatSong} from '../actions/EntitiesAUDActions';
-import {play, pause, getNextSong, getPrevSong, setCurrentSong, getQueueSongs} from '../actions/PlayerActions';
+import {getPlaylist} from '../actions/EntitiesAUDActions';
+import {play, pause, getNextSong, getPrevSong, setCurrentSong} from '../actions/PlayerActions';
+import {addClonedSongsToTop} from '../actions/QueueActions';
 import {duration} from '../lib/duration';
 import {maybeGetDefaultArtwork} from '../lib/stream';
-import {addPlaylistAndHolder} from '../lib/song';
+import {addPlaylistId} from '../lib/song';
 
 import styles from '../../assets/styles/player.css';
 
@@ -21,14 +22,13 @@ const mapStateToProps = state => ({
   prevSong: state.queue.items.length ? getPrevSong(state) : false,
 
   origPlaylist: getPlaylist(state.playlists, state.player.currentSong.playlist),
-  holderPlaylist: maybeGetHolderPlaylist(state, state.player.currentSong.holder),
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   play: () => dispatch(play()),
   pause: () => dispatch(pause()),
   setCurrentSong: song => dispatch(setCurrentSong(song)),
-  concatSong: (playlist, song) => concatSong(playlist, song)(dispatch),
+  addClonedSongToTop: song => dispatch(addClonedSongsToTop([song])),
 });
 
 const initialSongState = {
@@ -41,14 +41,14 @@ const initialSongState = {
 
 class Player extends Component {
 
-  playNext = () => {
-    const maybeConcatSong = (playlist, song, concatFn) =>
-      playlist && !playlist.songs.includes(song.id) && concatFn(playlist, song);
-
-    maybeConcatSong(this.props.holderPlaylist, this.props.nextSong, this.props.concatSong);
-    return this.props.setCurrentSong(addPlaylistAndHolder(this.props.nextSong, this.props.origPlaylist, this.props.currentSong.holder));
+  addSongToQueueTopAndPlay = song => {
+    this.props.origPlaylist && this.props.addClonedSongToTop(song);
+    return this.props.setCurrentSong(addPlaylistId(song, this.props.origPlaylist));
   };
-  playPrev = () => this.props.setCurrentSong(addPlaylistAndHolder(this.props.prevSong, this.props.origPlaylist, this.props.currentSong.holder));
+
+  playNext = () => this.addSongToQueueTopAndPlay(this.props.nextSong);
+  playPrev = () => this.addSongToQueueTopAndPlay(this.props.prevSong);
+
 
   setVolume = volume => this.setState({volume});
   setProgress = val => {
