@@ -9,7 +9,7 @@ import RoomEditing from '../components/RoomEditing';
 import AddToQueueButton from './AddToQueueButton';
 
 import {receiveRooms, maybeGetHolderPlaylist, concatSong} from '../actions/EntitiesAUDActions';
-import {addClonedPlaylistHolderToTopAndPlay, addClonedPlaylistHolderToTop} from '../actions/QueueActions';
+import {addClonedSongsToTop, addClonedSongToTopAndPlay} from '../actions/QueueActions';
 import {pause, play, setCurrentSong} from '../actions/PlayerActions';
 
 import {maybeGetWithNestedEntities} from '../lib/room';
@@ -27,8 +27,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addToQueueTopAndPlay: (room, playlist, songs) => dispatch(addClonedPlaylistHolderToTopAndPlay('room')(room, playlist, songs)),
-  addToQueueTop: (room, playlist, songs) => dispatch(addClonedPlaylistHolderToTop('room')(room, playlist, songs)),
+  addSongToQueueTopAndPlay: song => dispatch(addClonedSongToTopAndPlay(song)),
+  addSongToQueueTop: song => dispatch(addClonedSongsToTop([song])),
   setCurrentSong: song => dispatch(setCurrentSong(song)),
   play: () => dispatch(play()),
   pause: () => dispatch(pause()),
@@ -45,19 +45,16 @@ class RoomCard extends Component {
 
   toggle = key => () => this.setState({[key]: !this.state[key]});
 
-  addAndPlayFirstSong = () => Promise.resolve(this.props.addToQueueTop(this.props.room, this.props.playlist, []).payload[0])
-    .then(holder => {
-      this.props.concatSong(this.props.getHolderPlaylist(holder), this.props.songs[0]);
-      return this.props.setCurrentSong({...this.props.songs[0], playlist: this.props.playlist.id, holder});
-    });
+  addAndPlayFirstSong = () => Promise.resolve(this.props.addSongToQueueTop(this.props.songs[0]))
+    .then(_ => this.props.setCurrentSong({...this.props.songs[0], playlist: this.props.playlist.id}));
 
-  play = () => this.state.fullAdding ?
-    this.props.addToQueueTopAndPlay(this.props.room, this.props.playlist, this.props.songs) : this.addAndPlayFirstSong();
+  play = () => this.state.autoplay ?
+     this.addAndPlayFirstSong() : this.props.addSongToQueueTopAndPlay(this.props.songs[0]);
 
 
   state = {
     roomEditing: false,
-    fullAdding: true,
+    autoplay: true,
   }
 
   render(){
@@ -96,9 +93,9 @@ class RoomCard extends Component {
           </div>
           <div className={styles.description}> {this.props.playlist.description} </div>
           <Switch
-            checked={this.state.fullAdding}
-            label='Add full playlist'
-            onChange={this.toggle('fullAdding')}
+            checked={this.state.autoplay}
+            label={`Autoplay ${this.state.autoplay ? 'on' : 'off'}`}
+            onChange={this.toggle('autoplay')}
           />
         </div>
       </div>
