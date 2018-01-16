@@ -1,0 +1,34 @@
+.root{
+  display: flex;
+
+  margin: 5px 0;
+  padding: 18px;
+  border: solid 1px #f4cbf9;
+  border-radius: 5px;
+
+  color: #5f00ba;
+  letter-spacing: 1.21px;
+  background-color: #ffffff;
+  background-repeat: repeat;
+  &:hover{
+    border-color: #5f00ba;
+  }
+}
+
+.description{
+  margin: 0 14px 14px 0;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.title{
+  align-self: flex-end;
+  font-size: 24px;
+  font-weight: 900;
+  a{
+    color: #5f00ba;
+    &:hover, &:active{
+      color: #5f00ba;
+    }
+  }
+}
