@@ -5,3 +5,4 @@ node_modules
 .idea
 src/scripts/constants/skeys.js
 src/server/.env.yml
+tasks/s3/credentials.json
