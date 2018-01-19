@@ -3,9 +3,9 @@
 import express from 'express';
 import path from 'path';
 
+import {isProduction} from '../scripts/lib/base';
 import {getStream} from '../scripts/lib/ebApi/streams';
 
-const isProduction = process.env.NODE_ENV === 'production';
 const clientDevServerUrl = 'http://localhost:9001'
 
 const assetsUrl = isProduction ? '' : clientDevServerUrl;

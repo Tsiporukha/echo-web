@@ -8,7 +8,8 @@
     "node-dev-server": "nodemon --exec babel-node src/server/server.js",
     "dev-servers": "npm run client-dev-server -- --port 9001 & npm run node-dev-server",
     "build": "webpack -p",
-    "production": "npm run build && cd build/web && NODE_ENV=production PORT=9000 ../../node_modules/.bin/nodemon server.js",
+    "builded": "cd build/web/ && NODE_ENV=production PORT=9000 nodemon server.js",
+    "production": "npm run build && npm run builded",
     "upload-images": "babel-node ./tasks/s3/uploader.js",
     "deploy-lambda": "cd build/web && ../../node_modules/.bin/serverless deploy"
   },
