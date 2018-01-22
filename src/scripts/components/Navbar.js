@@ -4,6 +4,7 @@ import {Route, Link} from 'react-router-dom';
 import Search from '../containers/Search';
 import Notifications from '../containers/Notifications';
 import MaybeCurrentUser from '../containers/MaybeCurrentUser';
+import {getAssetUrl} from '../lib/assets';
 
 import styles from '../../assets/styles/navbar.css';
 
@@ -13,7 +14,7 @@ const Navbar = () => (
       <div className={styles.leftReg}>
         <div className={styles.brand}>
           <Link to='/'>
-            {/* <img src={require('../../assets/images/echo_logo.png')} alt='echo logo' className={styles.logo} /> */}
+            <img src={getAssetUrl('/images/echo_logo.png')} alt='echo logo' className={styles.logo} />
             <span className={styles.title}>ECHO</span>
           </Link>
         </div>

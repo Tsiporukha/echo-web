@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 
+import {getAssetUrl} from '../lib/assets';
 import {getNotifications, readNotifications} from '../lib/ebApi/users';
 import moment from 'moment';
 
@@ -55,7 +56,7 @@ const Notification = ({notification}) => (
 const EchoMessage = () => (
   <div className={styles.echoMessage}>
     <span className={styles.echoLogo}>
-      <img className={styles.avatar} src={require('../../assets/images/echo_blue_logo.png')} alt='echoLogo' />
+      <img className={styles.avatar} src={getAssetUrl('/images/echo_blue_logo.png')} alt='echoLogo' />
     </span>
     <div className={styles.info}>
       <div>Message from echo</div>

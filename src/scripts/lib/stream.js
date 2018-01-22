@@ -1,5 +1,6 @@
 import {playlistDuration, duration} from './duration';
 import {createIdKeyHash, reduceToObject, inQueue} from './base';
+import {getAssetUrl} from './assets';
 
 const replaceCommentUserWithRefId = comment => ({...comment, user: comment.user.id});
 const getCommentUser = comment => comment.user;
@@ -37,7 +38,7 @@ export const getWithNestedEntities = (state, id) => ({
 
 export const maybeGetWithNestedEntities = (state, id) => state.streams[id] ? getWithNestedEntities(state, id) : {};
 
-export const maybeGetDefaultArtwork = str => str || require('../../assets/images/no_artwork.png');
+export const maybeGetDefaultArtwork = str => str || getAssetUrl('/images/no_artwork.png');
 
 export const appendCommentsRefs = (stream, commentsIds) => ({...stream, comments: commentsIds.concat(stream.comments)})
 export const appendPublishedCommentRef = (stream, commentId) =>
