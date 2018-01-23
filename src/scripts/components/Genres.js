@@ -18,7 +18,6 @@ const MiniWelcomeNote = () => (
         and find fresh, events, venues, culture etc. Sign up to create your
         own library and get updates from communities that interest you.
       </div>
-      <Button raised> <span className={styles.signInTitle}>Sign in</span> </Button>
     </div>
   </div>
 );
