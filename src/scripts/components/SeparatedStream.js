@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import StreamDescription from '../components/StreamDescription';
+import StreamCard from '../components/StreamCard';
 import StreamOpenGraph from '../components/StreamOpenGraph';
 import StreamTabs from '../components/StreamTabs';
 
@@ -18,7 +18,7 @@ export default class SeparatedStream extends Component {
         <StreamOpenGraph stream={this.props.stream} playlist={this.props.playlist} />
         <div className={styles.fullStreamContainer}>
           <div className={styles.fullStream}>
-            <StreamDescription {...this.props} />
+            <StreamCard {...this.props} />
             <StreamTabs {...this.props} />
           </div>
         </div>

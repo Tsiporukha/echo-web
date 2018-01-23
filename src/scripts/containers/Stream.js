@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import StreamDescription from '../components/StreamDescription';
+import StreamCard from '../components/StreamCard';
 import SeparatedStream from '../components/SeparatedStream';
 import {getSearchInput} from './Search';
 import {addClonedPlaylistHolderToTopAndPlay, addClonedPlaylistHolder} from '../actions/QueueActions';
@@ -35,7 +35,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-const Stream = props => props.match ? <SeparatedStream {...props} /> : <StreamDescription {...props} />;
+const Stream = props => props.match ? <SeparatedStream {...props} /> : <StreamCard {...props} />;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stream);
 
