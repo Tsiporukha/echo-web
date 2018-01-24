@@ -2,21 +2,28 @@
   "Atmospheric": {
     "description": "Electronic music is music that employs electronic musical instruments, digital instruments and circuitry-based music technology. An electronic musician is a musician who composes or performs",
     "artwork_url": "https://s3.amazonaws.com/echoapp/el.png",
-    "background_url": "https://s3.amazonaws.com/echoapp/subgenre_pattern1.png"
+    "background_url": "https://s3.amazonaws.com/echoapp/elbck.png",
+    "pattern_url": "https://s3.amazonaws.com/echoapp/subgenre_pattern1.png",
+    "active_pattern": "https://s3.amazonaws.com/echoapp/atmospheric-pattern.png"
   },
   "Jazz": {
     "description": "Jazz is a music genre that originated in African-American communities of New Orleans, United States, in the late 19th and early 20th centuries, and developed from roots in blues and ragtime.Since the 1920s Jaz...read more ",
     "artwork_url": "https://s3.amazonaws.com/echoapp/jzz.png",
-    "background_url": "https://s3.amazonaws.com/echoapp/subgenre_pattern2.png"
+    "background_url": "https://s3.amazonaws.com/echoapp/elbck.png",
+    "pattern_url": "https://s3.amazonaws.com/echoapp/subgenre_pattern2.png",
+    "active_pattern": "https://s3.amazonaws.com/echoapp/jazz-pattern.png"
   },
   "Rock": {
     "description": "Rock music is a broad genre of popular music that originated as 'rock and roll' in the United States in the early 1950s, and developed into a range of different styles in the 1960s and later,  particularly in the United...read more ",
     "artwork_url": "https://s3.amazonaws.com/echoapp/rcnrl.png",
-    "background_url": "https://s3.amazonaws.com/echoapp/subgenre_pattern3.png"
+    "pattern_url": "https://s3.amazonaws.com/echoapp/subgenre_pattern3.png",
+    "active_pattern": "https://s3.amazonaws.com/echoapp/rock-pattern.png"
   },
   "Breaks": {
     "description": "Electronic music is music that employs electronic musical instruments, digital instruments and circuitry-based music technology. An electronic musician is a musician who composes or performs",
     "artwork_url": "https://s3.amazonaws.com/echoapp/el.png",
-    "background_url": "https://s3.amazonaws.com/echoapp/subgenre_pattern4.png"
+    "background_url": "https://s3.amazonaws.com/echoapp/elbck.png",
+    "pattern_url": "https://s3.amazonaws.com/echoapp/subgenre_pattern4.png",
+    "active_pattern": "https://s3.amazonaws.com/echoapp/breaks-pattern.png"
   }
 }
