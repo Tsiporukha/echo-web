@@ -1,4 +1,4 @@
-.root{
+.guestLandingGenreCard{
   display: flex;
 
   margin: 5px 0;
@@ -12,23 +12,30 @@
   background-repeat: repeat;
   &:hover{
     border-color: #5f00ba;
+    box-shadow: 2px 2px 5px 3px rgba(209, 209, 209, 0.5);
+
+    .title{
+      .activePattern{
+        visibility: visible;
+      }
+    }
   }
-}
 
-.description{
-  margin: 0 14px 14px 0;
-  font-size: 13px;
-  font-weight: 400;
-}
+  .description{
+    margin: 0 14px 56px 0;
+    font-size: 24px;
+    font-weight: 400;
+  }
 
-.title{
-  align-self: flex-end;
-  font-size: 24px;
-  font-weight: 900;
-  a{
-    color: #5f00ba;
-    &:hover, &:active{
-      color: #5f00ba;
+  .title{
+    align-self: flex-end;
+    font-size: 48px;
+    font-weight: 900;
+
+    .activePattern{
+      display: block;
+      margin: 0 0 20px auto;
+      visibility: hidden;
     }
   }
 }
