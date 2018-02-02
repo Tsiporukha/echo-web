@@ -9,6 +9,7 @@ import Room from '../containers/Room';
 import Stream from '../containers/Stream';
 import Profile from '../containers/Profile';
 import Player from '../containers/Player';
+import GuestLanding from '../containers/GuestLanding';
 
 import {removeSeparator} from '../lib/route';
 
@@ -26,7 +27,8 @@ class AppBody extends Component {
 
         <Navbar />
         <div>
-          <Route exact path='/' component={FeedSources} />
+          <Route exact path='/' component={GuestLanding} />
+          <Route exact path='/feed' component={FeedSources} />
           <Route exact path='/feed/:id' component={Stream} />
           <Route exact path='/profile/:id' component={Profile} />
           <Route exact path='/genres/:title' component={Genre} />
