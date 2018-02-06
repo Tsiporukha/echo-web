@@ -17,5 +17,8 @@ export const getCollectionName = type => `${type}s`;
 
 export const getIndexById = (collection, item) => collection.findIndex(itm => itm.id === item.id);
 
+// getAttr :: String -> Object -> a
+export const getAttr = name => obj => obj[name];
+
 
 export const isProduction = process.env.NODE_ENV === 'production';
