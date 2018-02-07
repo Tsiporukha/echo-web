@@ -1,10 +1,10 @@
-import {createIdKeyHash, reduceToObject, inQueue} from './base';
+import {createIdKeyHash, reduceToObject, inQueue, getAttr} from './base';
 import {playlistDuration, duration} from './duration';
 
 
 export const normalize = room => ({
   room: {...room, playlist: room.playlist.id},
-  playlist: {...room.playlist, songs: room.playlist.songs.map(song => song.id)},
+  playlist: {...room.playlist, songs: room.playlist.songs.map(getAttr('id'))},
   songs: room.playlist.songs,
 });
 
