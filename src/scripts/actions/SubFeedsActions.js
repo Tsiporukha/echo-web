@@ -8,10 +8,10 @@ import {Latest, Popular, Longest} from '../constants/creatorsArgs';
 
 import {createSubFeedActions} from './actionsCreators';
 
-import {addNormalizedStreamsData, updateStreams, receiveStreams} from './EntitiesAUDActions';
+import {updateStreams, receiveStreams} from './EntitiesAUDActions';
 
 import {getLatest, getPopular, getLongest, like, unlike} from '../lib/ebApi/streams';
-import {reduceToNormalized as reduceStreamsToNormalized} from '../lib/stream';
+import {reduceToNormalized as reduceStreamsToNormalized, handleLike, handleUnlike} from '../lib/stream';
 
 
 // items
@@ -27,16 +27,13 @@ export const fetchAndReceiveStreams =
     );
 
 
-const updateLikedStreamData = stream => ({[stream.id]: {...stream, likes_count: stream.likes_count + 1, your_likes: 1}});
-const updateUnlikedStreamData = stream => ({[stream.id]: {...stream, likes_count: stream.likes_count - 1, your_likes: 0}});
-
-const updateStreamAfterLikeAction = (updateStreamFunc, stream) => dispatch =>
-  resp => resp.status === 200 ? dispatch(updateStreams(updateStreamFunc(stream))) : false;
+const updateStreamOnLikeChange = (updateStreamFunc, stream) => dispatch => resp =>
+  resp.status === 200 ? dispatch(updateStreams(updateStreamFunc(stream))) : false;
 
 export const likeStream = (stream, token) => dispatch =>
-  like(stream.id, token).then(updateStreamAfterLikeAction(updateLikedStreamData, stream)(dispatch));
+  like(stream.id, token).then(updateStreamOnLikeChange(handleLike, stream)(dispatch));
 export const unlikeStream = (stream, token) => dispatch =>
-  unlike(stream.id, token).then(updateStreamAfterLikeAction(updateUnlikedStreamData, stream)(dispatch));
+  unlike(stream.id, token).then(updateStreamOnLikeChange(handleUnlike, stream)(dispatch));
 
 
 

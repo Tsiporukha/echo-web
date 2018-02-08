@@ -1,14 +1,13 @@
 import {playlistDuration, duration} from './duration';
-import {createIdKeyHash, reduceToObject, inQueue} from './base';
+import {createIdKeyHash, reduceToObject, inQueue, getAttr} from './base';
 import {getAssetUrl} from './assets';
 
 const replaceCommentUserWithRefId = comment => ({...comment, user: comment.user.id});
-const getCommentUser = comment => comment.user;
 
 export const normalize = stream => ({
-  users: stream.comments.map(getCommentUser).concat(stream.user),
-  stream: {...stream, playlist: stream.playlist.id, user: stream.user.id, comments: stream.comments.map(cmmnt => cmmnt.id).reverse()},
-  playlist: {...stream.playlist, songs: stream.playlist.songs.map(song => song.id)},
+  users: stream.comments.map(getAttr('user')).concat(stream.user),
+  stream: {...stream, playlist: stream.playlist.id, user: stream.user.id, comments: stream.comments.map(getAttr('id')).reverse()},
+  playlist: {...stream.playlist, songs: stream.playlist.songs.map(getAttr('id'))},
   songs: stream.playlist.songs,
   comments: stream.comments.map(replaceCommentUserWithRefId),
 });
@@ -43,3 +42,7 @@ export const maybeGetDefaultArtwork = str => str || getAssetUrl('/images/no_artw
 export const appendCommentsRefs = (stream, commentsIds) => ({...stream, comments: commentsIds.concat(stream.comments)})
 export const appendPublishedCommentRef = (stream, commentId) =>
   ({...stream, comments: stream.comments.concat(commentId), comments_count: stream.comments_count + 1});
+
+
+export const handleLike = stream => createIdKeyHash({...stream, likes_count: stream.likes_count + 1, your_likes: 1});
+export const handleUnlike = stream => createIdKeyHash({...stream, likes_count: stream.likes_count - 1, your_likes: 0});
