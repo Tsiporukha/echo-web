@@ -9,7 +9,7 @@ import {getAssetUrl} from '../lib/assets';
 import styles from '../../assets/styles/navbar.css';
 
 const Navbar = () => (
-  <navbar className={styles.root}>
+  <nav className={styles.root}>
     <div className={styles.fixed}>
       <div className={styles.leftReg}>
         <div className={styles.brand}>
@@ -27,7 +27,7 @@ const Navbar = () => (
         <MaybeCurrentUser />
       </div>
     </div>
-  </navbar>
+  </nav>
 );
 
 export default Navbar;
