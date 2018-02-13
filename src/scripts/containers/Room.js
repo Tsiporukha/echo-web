@@ -38,7 +38,7 @@ class Room extends Component {
     fetching: false,
   }
 
-  componentWillMount = this.fetchRoom;
+  componentDidMount = this.fetchRoom;
 
   render(){
     return (

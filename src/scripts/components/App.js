@@ -18,18 +18,20 @@ import styles from '../../assets/styles/app.css';
 
 const App = () => (
   <BrowserRouter>
-    <FacebookSDK />
-
-    <Navbar />
     <div>
-      <Route exact path='/' component={GuestLanding} />
-      <Route exact path='/feed' component={FeedSources} />
-      <Route exact path='/feed/:id' component={Stream} />
-      <Route exact path='/profile/:id' component={Profile} />
-      <Route exact path='/genres/:title' component={Genre} />
-      <Route exact path='/genres/:genre/rooms/:id' component={Room} />
+      <FacebookSDK />
+
+      <Navbar />
+      <div>
+        <Route exact path='/' component={GuestLanding} />
+        <Route exact path='/feed' component={FeedSources} />
+        <Route exact path='/feed/:id' component={Stream} />
+        <Route exact path='/profile/:id' component={Profile} />
+        <Route exact path='/genres/:title' component={Genre} />
+        <Route exact path='/genres/:genre/rooms/:id' component={Room} />
+      </div>
+      <Player />
     </div>
-    <Player />
   </BrowserRouter>
 );
 

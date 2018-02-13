@@ -22,7 +22,7 @@ export default class FacebookSDK extends Component {
     });
   };
 
-  componentWillMount = () => Promise.resolve(this.loadSdk()).then(this.asyncInit());
+  componentDidMount = () => Promise.resolve(this.loadSdk()).then(this.asyncInit());
 
   render(){ return null; }
 }

@@ -9,7 +9,7 @@ import styles from '../../assets/styles/stream.css';
 
 export default class SeparatedStream extends Component {
 
-  componentWillMount = () => this.props.fetchStream(this.props.match.params.id, this.props.token);
+  componentDidMount = () => this.props.fetchStream(this.props.match.params.id, this.props.token);
 
   render(){
     return (
