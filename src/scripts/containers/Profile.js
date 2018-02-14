@@ -9,11 +9,11 @@ import User from './User';
 import SimilarUsers from './SimilarUsers';
 import IndeterminateProgressLine, {doWithProgressLine} from '../components/IndeterminateProgressLine';
 
-import {addUsers, addNormalizedStreamsData, followUser, unfollowUser} from '../actions/EntitiesAUDActions';
+import {addUsers, receiveStreams, followUser, unfollowUser} from '../actions/EntitiesAUDActions';
 
 import {get as getStreams} from '../lib/ebApi/streams';
 import {getUser} from '../lib/ebApi/users';
-import {reduceToNormalized as reduceStreamsToNormalized} from '../lib/stream';
+import {dispatchOnBottomReaching} from '../lib/scroll';
 
 import styles from '../../assets/styles/profile.css';
 import tabsTheme from '../../assets/styles/tabsTheme.css';
@@ -27,7 +27,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   addUser: user => dispatch(addUsers({[user.id]: user})),
-  addNormalizedStreamsData: normalizedData => dispatch(addNormalizedStreamsData(normalizedData)),
+  receiveStreams: streams => dispatch(receiveStreams(streams)),
 });
 
 const initialState = {
@@ -40,19 +40,24 @@ const initialState = {
 
 class Profile extends Component {
 
-  handleTabChange = tab => this.setState({tab});
+  setAttr = name => val => this.setState({[name]: val});
 
-  setFetching = fetching => this.setState({fetching});
-  initialLoad = (token = this.props.token) => doWithProgressLine(() => this.initLoad(token), this.setFetching);
+  receiveStreams = ({streams}) => {
+    this.props.receiveStreams(streams);
+    return this.setState({streams: this.state.streams.concat(streams.map(s => s.id))});
+  };
+  getStreams = (offset, token) => getStreams({user_id: this.props.match.params.id, offset: this.state.streams.length, limit: 5}, token)
+    .then(this.receiveStreams);
 
-  initLoad = token => getStreams({user_id: this.props.match.params.id, offset: 0, limit: 5}, token)
-    .then(({streams}) => Promise.resolve(this.props.addNormalizedStreamsData(reduceStreamsToNormalized(streams)))
-      .then(_ => this.setState({streams: streams.map(s => s.id)}) ))
-    .then(_ => getUser(this.props.match.params.id, token).then(user => this.props.addUser(user)));
+  loadStreams = (token = this.props.token) => doWithProgressLine(() => this.getStreams(token), this.setAttr('fetching'));
+  reinit = () => this.setState(initialState, this.loadStreams);
 
-  reloadOnTokenChange = (nextProps, props) => nextProps.token !== props.token ? this.initialLoad(nextProps.token) : false;
-  reinitOnUserChange = (nextProps, props) => nextProps.match.params.id !== props.match.params.id ?
-    this.setState(initialState, this.initialLoad) : false;
+  reinitPropsChanged = (nextProps, props) =>
+    nextProps.token !== props.token
+    || nextProps.match.params.id !== props.match.params.id
+  ;
+
+  dispatchScrollListener = dispatchOnBottomReaching(() => window, this.loadStreams);
 
 
   state = {
@@ -60,9 +65,16 @@ class Profile extends Component {
     fetching: false,
   };
 
-  componentDidMount = () => this.initialLoad(this.props.token);
+  componentDidMount = () => {
+    this.loadStreams();
+    return this.dispatchScrollListener('addEventListener');
+  };
 
-  componentWillReceiveProps = nextProps => this.reinitOnUserChange(nextProps, this.props) || this.reloadOnTokenChange(nextProps, this.props);
+  componentWillUnmount = () => this.dispatchScrollListener('removeEventListener');
+
+
+  componentWillReceiveProps = nextProps => this.reinitPropsChanged(nextProps, this.props) && this.reinit();
+
 
   render() {
     return(
@@ -71,9 +83,11 @@ class Profile extends Component {
           <div className={styles.userData}>
             {this.props.present && <User id={this.props.match.params.id} />}
 
-            <Tabs theme={tabsTheme} index={this.state.tab} onChange={this.handleTabChange}>
+            <Tabs theme={tabsTheme} index={this.state.tab} onChange={this.setAttr('tab')}>
               <Tab label={<i className={styles.feedIcon}>language</i>}>
-                {this.state.streams.map(streamId => (<Stream key={streamId} id={streamId} />))}
+                <div>
+                  {this.state.streams.map(streamId => (<Stream key={streamId} id={streamId} />))}
+                </div>
               </Tab>
               <Tab label={<i className={styles.favoriteIcon}>favorite</i>}>
                 <UserLikes userId={this.props.match.params.id} />
