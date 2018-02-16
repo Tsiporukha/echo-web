@@ -1,9 +1,8 @@
 import luch, {getJson} from 'luch';
-import {getAbsoluteUrl, withoutUndefinedParams} from './api';
+import {withApiUrl} from './api';
 
-export const toggleLike = (id, token) => luch.post(getAbsoluteUrl(`/songs/${id}/toggle_like`), {token});
+export const toggleLike = (id, token) => luch.post(withApiUrl(`/songs/${id}/toggle_like`), {token});
 
 export const getPopular = (term, limit, offset, token) =>
-  luch(getAbsoluteUrl(`/songs/popular?limit=${limit}&offset=${offset}` +
-    `${token ? `&token=${token}` : ''}${term ? `&term=${term}` : ''}`))
-      .then(getJson);
+  luch.get(withApiUrl('/songs/popular'), {term, limit, offset, token})
+    .then(getJson);
