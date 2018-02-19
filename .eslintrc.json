@@ -1,9 +1,11 @@
 {
   "plugins": ["fp"],
-  "extends": ["standard-react", "plugin:fp/recommended"],
+  "extends": ["eslint-config-airbnb", "standard-react", "plugin:fp/recommended"],
   "parser": "babel-eslint",
   "env": {
-    "es6": true
+    "es6": true,
+    "browser": true,
+    "node": true
   },
   "parserOptions": {
     "ecmaVersion": 7,
@@ -17,13 +19,26 @@
     }
   },
   "rules": {
+    "react/prop-types": 1,
+    "react/no-unused-prop-types": 1,
+    "react/sort-comp": 0,
+    "react/jsx-filename-extension": 0,
+    "react/jsx-max-props-per-line": 0,
+    "react/jsx-first-prop-new-line": 0,
+    "react/jsx-closing-bracket-location": 0,
+    "react/jsx-closing-tag-location": 0,
+    "react/no-string-refs": 0,
+    "react/no-unescaped-entities": 0,
+    "react/forbid-prop-types": 0,
+    "react/require-default-props": 0,
+
+    "jsx-a11y/anchor-is-valid": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+
     "fp/no-class": 0,
     "fp/no-this": 0,
     "fp/no-unused-expression": 1,
-    "react/prop-types": 1,
-    "react/no-unused-prop-types": 1,
-    "no-extra-semi": 1,
-
     "fp/no-mutation": ["error", {
       "allowThis": true,
       "exceptions": [
@@ -31,7 +46,31 @@
         {"object": "aliases"},
         {"property": "propTypes"}
       ]
-    }]
+    }],
+
+    "import/prefer-default-export": 0,
+
+    "no-extra-semi": 1,
+    "object-curly-spacing": 0,
+    "object-curly-newline": 0,
+    "no-confusing-arrow": 0,
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "ignore"
+    }],
+    "max-len": 0,
+    "no-undef": 0,
+    "no-unused-vars": 1,
+    "function-paren-newline": 0,
+    "camelcase": 0,
+    "arrow-parens": ["error", "as-needed"],
+    "radix": ["error", "as-needed"],
+    "no-underscore-dangle": 1,
+    "no-nested-ternary": 0,
+    "no-unused-expressions": 0
 
   }
 
