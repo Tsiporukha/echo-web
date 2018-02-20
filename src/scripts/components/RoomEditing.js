@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 
-import {Button, Input, Autocomplete, Dropdown} from 'react-toolbox';
+import {Button, Input, Dropdown} from 'react-toolbox';
 import {arrayMove} from 'react-sortable-hoc';
 
-import UploadArtwork from './UploadArtwork';
 import TagsAutocomplete from './TagsAutocomplete';
-import QueueSong from '../containers/QueueSong';
+import RoomEditingArtworkUpdate from './RoomEditingArtworkUpdate';
 import SortableItems from '../components/SortableItems';
 
 import {uploadArtwork} from '../lib/ebApi/streams';
@@ -15,23 +14,6 @@ import {genresNames, getGenreTags} from '../lib/genres';
 
 import styles from '../../assets/styles/roomEditing.css';
 import streamEditingStyles from '../../assets/styles/streamPublication.css';
-
-
-class ArtworkUpdate extends Component{
-
-  onIconClick = e => this.refs.input.click();
-
-  uploadAndSet = () => this.props.uploadArtwork(this.refs.input.files[0]).then(({artwork_url}) => this.props.setUploadedArtworkUrl(artwork_url));
-
-  render(){
-    return(
-      <span className={styles.editIconArea}>
-        <input type='file' accept='image/*' ref='input' style={{display: 'none'}} onChange={this.uploadAndSet} />
-        <i onClick={this.onIconClick} className={styles.editIcon}>mode_edit</i>
-      </span>
-    )
-  }
-}
 
 
 const getRoomData = (room, playlist) => room ?
@@ -47,55 +29,34 @@ const getRoomData = (room, playlist) => room ?
 
 
 export default class RoomEditing extends Component {
-
-/// Text data
-  setTitle = title => this.setState({title});
-  setDescription = description => this.setState({description});
-  setGenre = genre => this.setState({genre});
-/// end Text data
+  setAttr = name => val => this.setState({[name]: val});
 
 
-/// Artworks
   uploadArtwork = file => uploadArtwork(file, this.props.token);
 
-  setArtworkUrl = artwork_url => this.setState({artwork_url});
-  removeArtworkUrl = () => this.setUploadedArtworkUrl('');
-
-  setBackgroundArtworkUrl = background_url => this.setState({background_url});
-  removeBackgroundArtworkUrl = () => this.setBackgroundArtworkUrl('');
-/// end Artworks
-
-
-/// Genre
   genres = genresNames.map(genreName => ({value: genreName, label: genreName}));
   handleGenreChange = genre => this.setState({genre, tags: []});
-/// end Genre
 
-
-/// Tags
   getTags = () => getGenreTags(this.state.genre);
-  setTags = tags => this.setState({tags});
-/// end Tags
+
+  onSortEnd = ({oldIndex, newIndex}) => this.setState({songs: arrayMove(this.state.songs, oldIndex, newIndex)});
 
 
-/// Validation and Saving
+  // Validation and Saving
   isAllFielsFilled = () =>
     this.state.title && this.state.description &&
     this.state.genre && this.state.tags.length &&
     this.state.artwork_url && this.state.background_url;
 
-  save = () => this.props.save(this.state.artwork_url, this.state.background_url, this.state.title,
-    this.state.description, this.state.genre, this.state.tags, this.state.songs, this.props.token)
-      .then(this.props.onCancel);
+    save = () => this.props.save(
+      this.state.artwork_url, this.state.background_url,
+      this.state.title, this.state.description, this.state.genre, this.state.tags,
+      this.state.songs, this.props.token
+    ).then(this.props.onCancel);
 
   maybeSave = () => this.isAllFielsFilled() ? this.save() : this.setState({triedSave: true});
   maybeError = (filled, errMssg) => (this.state.triedSave && !filled) ? errMssg : false;
-/// end Validation and Saving
-
-
-/// Sorting
-  onSortEnd = ({oldIndex, newIndex}) => this.setState({songs: arrayMove(this.state.songs, oldIndex, newIndex)});
-/// end Sorting
+  // end Validation and Saving
 
 
   state = {
@@ -109,7 +70,7 @@ export default class RoomEditing extends Component {
   componentWillReceiveProps = nextProps => this.setState({songs: addSongsType(nextProps.songs)});
 
   render() {
-    return(
+    return (
       <div className={styles.root}>
 
         <div className={styles.header}>
@@ -128,23 +89,23 @@ export default class RoomEditing extends Component {
             <div className={styles.coverArea} style={this.state.background_url ? {backgroundImage: `url(${this.state.background_url})`} : {}}>
 
               <div className={styles.bgArtworkUpdateArea}>
-                <ArtworkUpdate uploadArtwork={this.uploadArtwork} setUploadedArtworkUrl={this.setBackgroundArtworkUrl} />
+                <RoomEditingArtworkUpdate uploadArtwork={this.uploadArtwork} setUploadedArtworkUrl={this.setAttr('background_url')} />
                 <span className={styles.errMssg}>{this.maybeError(this.state.background_url, 'Cover is required')}</span>
               </div>
 
               <div className={styles.card}>
                 <div className={styles.artworkHolder} style={{backgroundImage: `url(${this.state.artwork_url})`}}>
-                  <ArtworkUpdate uploadArtwork={this.uploadArtwork} setUploadedArtworkUrl={this.setArtworkUrl} />
+                  <RoomEditingArtworkUpdate uploadArtwork={this.uploadArtwork} setUploadedArtworkUrl={this.setAttr('artwork_url')} />
                   <span className={styles.errMssg}>{this.maybeError(this.state.artwork_url, 'Artwork is required')}</span>
                 </div>
 
                 <div className={styles.inputs}>
                   <Input type='text' name='title' label='Room Name'
                     className={styles.title} theme={{...streamEditingStyles, ...styles}} value={this.state.title}
-                    onChange={this.setTitle} error={this.maybeError(this.state.title, 'Room title is required')} />
+                    onChange={this.setAttr('title')} error={this.maybeError(this.state.title, 'Room title is required')} />
                   <Input type='text' multiline name='description' label='Room Description'
                     className={styles.description} theme={{...streamEditingStyles, ...styles}} maxLength={1000} value={this.state.description}
-                    onChange={this.setDescription} error={this.maybeError(this.state.description, 'Room description is required')} />
+                    onChange={this.setAttr('description')} error={this.maybeError(this.state.description, 'Room description is required')} />
                 </div>
               </div>
             </div>
@@ -166,7 +127,7 @@ export default class RoomEditing extends Component {
                 <TagsAutocomplete
                   allTags={this.getTags()}
                   addedTags={this.state.tags}
-                  setTags={this.setTags}
+                  setTags={this.setAttr('tags')}
                   theme={streamEditingStyles}
                   errorHandler={this.maybeError(this.state.tags.length, 'Tags are required')}
                 />
@@ -187,6 +148,6 @@ export default class RoomEditing extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
