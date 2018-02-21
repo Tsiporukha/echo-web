@@ -1,4 +1,4 @@
-import {PLAY, PAUSE, CLEAR_PLAYER, SET_CURRENT_SONG} from "../constants/ActionTypes";
+import {PLAY, PAUSE, CLEAR_PLAYER, SET_CURRENT_SONG} from '../constants/ActionTypes';
 import {getPlaylistSongs, getHolderSongs} from './EntitiesAUDActions';
 import {getCollectionName, getIndexById} from '../lib/base';
 import {isSong} from '../lib/song';
@@ -12,7 +12,7 @@ export const clear = () => ({type: CLEAR_PLAYER});
 
 export const setCurrentSong = song => ({
   type: SET_CURRENT_SONG,
-  payload: song
+  payload: song,
 });
 
 

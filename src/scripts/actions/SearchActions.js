@@ -30,27 +30,11 @@ const fetchAndReceiveSongs = (fetchAction, setItemsAction, addItemsAction) => (f
 
 const setSearchTerm = term => ({
   type: SET_SEARCH_TERM,
-  payload: term
+  payload: term,
 });
 
-const clearSearchResults = () => dispatch => {
-  dispatch(setLatestSearch([]));
-  dispatch(setPopularSearch([]));
-  dispatch(setLongestSearch([]));
-  return dispatch(setYoutube([]));
-}
 
-
-const addToSearchHistory = term => ({
-  type: ADD_TO_SEARCH_HISTORY,
-  payload: term
-});
-
-export const updateSearchTerm = term => dispatch => Promise.resolve(clearSearchResults()(dispatch)).then(_ => dispatch(setSearchTerm(term)))
-  .then(_ => dispatch(addToSearchHistory(term)));
-
-
-//Echo
+// Echo
 export const {setLatestSearch, addToLatestSearch, removeFromLatestSearch} =
   createSubFeedActions(LatestSearch)(SET_LATEST_SEARCH, ADD_TO_LATEST_SEARCH, REMOVE_FROM_LATEST_SEARCH);
 export const fetchAndReceiveLatestStreamsSearch = fetchAndReceiveStreams(getLatest, setLatestSearch, addToLatestSearch);
@@ -64,18 +48,33 @@ export const {setLongestSearch, addToLongestSearch, removeFromLongestSearch} =
 export const fetchAndReceiveLongestStreamsSearch = fetchAndReceiveStreams(getLongest, setLongestSearch, addToLongestSearch);
 
 
-//Youtube
+// Youtube
 export const {setYoutube, addToYoutube, removeFromYoutube} = createSubFeedActions(Youtube)(SET_YOUTUBE, ADD_TO_YOUTUBE, REMOVE_FROM_YOUTUBE);
 export const fetchAndReceiveYoutubeSongs = fetchAndReceiveSongs(searchOnYoutube, setYoutube, addToYoutube);
 
 
-//Soundcloud
+// Soundcloud
 export const {setSoundcloud, addToSoundcloud, removeFromSoundcloud} =
   createSubFeedActions(Soundcloud)(SET_SOUNDCLOUD, ADD_TO_SOUNDCLOUD, REMOVE_FROM_SOUNDCLOUD);
 export const fetchAndReceiveSoundcloudSongs = fetchAndReceiveSongs(searchOnSoundcloud, setSoundcloud, addToSoundcloud);
 
 
-//Vimeo
+// Vimeo
 export const {setVimeo, addToVimeo, removeFromVimeo} =
   createSubFeedActions(Vimeo)(SET_VIMEO, ADD_TO_VIMEO, REMOVE_FROM_VIMEO);
 export const fetchAndReceiveVimeoSongs = fetchAndReceiveSongs(searchOnVimeo, setVimeo, addToVimeo);
+
+const clearSearchResults = () => dispatch => {
+  dispatch(setLatestSearch([]));
+  dispatch(setPopularSearch([]));
+  dispatch(setLongestSearch([]));
+  return dispatch(setYoutube([]));
+};
+
+const addToSearchHistory = term => ({
+  type: ADD_TO_SEARCH_HISTORY,
+  payload: term,
+});
+
+export const updateSearchTerm = term => dispatch => Promise.resolve(clearSearchResults()(dispatch)).then(_ => dispatch(setSearchTerm(term)))
+  .then(_ => dispatch(addToSearchHistory(term)));

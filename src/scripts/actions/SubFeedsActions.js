@@ -1,7 +1,7 @@
 import {
   SET_LATEST, ADD_TO_LATEST, REMOVE_FROM_LATEST,
   SET_POPULAR, ADD_TO_POPULAR, REMOVE_FROM_POPULAR,
-  SET_LONGEST, ADD_TO_LONGEST, REMOVE_FROM_LONGEST
+  SET_LONGEST, ADD_TO_LONGEST, REMOVE_FROM_LONGEST,
 } from '../constants/ActionTypes';
 
 import {Latest, Popular, Longest} from '../constants/creatorsArgs';
@@ -11,7 +11,7 @@ import {createSubFeedActions} from './actionsCreators';
 import {updateStreams, receiveStreams} from './EntitiesAUDActions';
 
 import {getLatest, getPopular, getLongest, like, unlike} from '../lib/ebApi/streams';
-import {reduceToNormalized as reduceStreamsToNormalized, handleLike, handleUnlike} from '../lib/stream';
+import {handleLike, handleUnlike} from '../lib/stream';
 
 
 // items
@@ -34,7 +34,6 @@ export const likeStream = (stream, token) => dispatch =>
   like(stream.id, token).then(updateStreamOnLikeChange(handleLike, stream)(dispatch));
 export const unlikeStream = (stream, token) => dispatch =>
   unlike(stream.id, token).then(updateStreamOnLikeChange(handleUnlike, stream)(dispatch));
-
 
 
 // SubFeeds

@@ -1,4 +1,4 @@
-import {SET_TOKEN, SET_USER_DATA, SET_SESSION, CLEAR_SESSION} from "../constants/ActionTypes";
+import {SET_TOKEN, SET_USER_DATA, SET_SESSION, CLEAR_SESSION} from '../constants/ActionTypes';
 
 import {addUsers} from './EntitiesAUDActions';
 import {createIdKeyHash} from '../lib/base';
@@ -8,17 +8,17 @@ import {emailLogin as emlLogin, networkLogin as ntwrkLogin, getCurrentUserData} 
 
 export const setToken = token => ({
   type: SET_USER_DATA,
-  payload: token
+  payload: token,
 });
 
 export const setUserData = userData => ({
   type: SET_USER_DATA,
-  payload: userData
+  payload: userData,
 });
 
 export const setSession = sessionData => ({
   type: SET_SESSION,
-  payload: sessionData
+  payload: sessionData,
 });
 
 export const clearSession = token => ({type: CLEAR_SESSION});
