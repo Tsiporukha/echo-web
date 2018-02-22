@@ -21,7 +21,7 @@ const ShareButton = () => (
   <span className={styles.iconDescription}>
     <i className={styles.shareIcon}>share</i><span className={styles.shareLabel}>Share</span>
   </span>
-)
+);
 
 
 // {path, title, picture, description}

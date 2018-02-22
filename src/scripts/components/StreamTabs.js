@@ -5,19 +5,17 @@ import Song from '../containers/Song';
 import Comment from '../containers/Comment';
 import CommentPublication from '../containers/CommentPublication';
 
-import styles from '../../assets/styles/stream.css';
 import tabsTheme from '../../assets/styles/tabsTheme.css';
 
 const commentsLoadLimit = 5;
 
 export default class StreamDetails extends Component {
-
   handleTabChange = index => this.setState({index});
 
 
   state = {index: 0}
 
-  render(){
+  render() {
     return (
       <section>
         <Tabs theme={tabsTheme} index={this.state.index} onChange={this.handleTabChange}>

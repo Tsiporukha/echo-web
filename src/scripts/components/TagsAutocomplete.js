@@ -4,7 +4,6 @@ import {Autocomplete} from 'react-toolbox';
 
 
 const TagsAutocomplete = ({allTags, addedTags, setTags, errorHandler, theme}) => {
-
   const tagsSuggestion = allTags.filter(tag => !addedTags.includes(tag));
 
   const handleTagsChange = tags => setTags([...tags.slice(1), tags[0]]);
@@ -12,13 +11,13 @@ const TagsAutocomplete = ({allTags, addedTags, setTags, errorHandler, theme}) =>
   const removeTag = tag => () => setTags(addedTags.filter(t => t !== tag));
 
 
-  return(
+  return (
     <div>
-      {addedTags.map(tag =>
+      {addedTags.map(tag => (
         <span key={tag} className={theme.tag}>
           {tag}<i onClick={removeTag(tag)} className={theme.closeIcon}>close</i>
         </span>
-      )}
+      ))}
       <Autocomplete
         allowCreate
         multiple
@@ -26,16 +25,16 @@ const TagsAutocomplete = ({allTags, addedTags, setTags, errorHandler, theme}) =>
         onChange={handleTagsChange}
         value={addedTags}
         theme={theme}
-        direction={'down'}
+        direction='down'
         error={errorHandler}
       />
       <div>
-        {tagsSuggestion.slice(0,20).map(tag =>
+        {tagsSuggestion.slice(0, 20).map(tag =>
           <span key={tag} onClick={addTag(tag)} className={theme.atag}>{tag}</span>
         )}
       </div>
     </div>
-  )
+  );
 };
 
 export default TagsAutocomplete;

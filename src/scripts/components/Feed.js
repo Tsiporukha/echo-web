@@ -15,11 +15,10 @@ import {primaryTags} from '../lib/genres';
 
 
 export default class Feed extends Component {
-
   reinitializeFilters = () => this.setState({filters: this.props.initialFilters});
   handleTabChange = activeSubFeed => this.setState({filters: this.props.initialFilters, activeSubFeed});
 
-  incrementOffsetFilter = (n = this.state.filters.limit) => this.setState({filters:{...this.state.filters, offset: this.state.filters.offset + n}});
+  incrementOffsetFilter = (n = this.state.filters.limit) => this.setState({filters: {...this.state.filters, offset: this.state.filters.offset + n}});
   setFetching = fetching => this.setState({fetching});
   loadMoreStreams = action => (token = this.props.token) =>
     doWithProgressLine(() => this.props.fetchAndReceiveStreams(action)({...this.state.filters, tags: this.state.tags}, token), this.setFetching)
@@ -47,7 +46,6 @@ export default class Feed extends Component {
 
   state = {
     filters: this.props.initialFilters,
-    fetchedAll: false,
     activeSubFeed: 0,
     fetching: false,
     tags: [],
@@ -59,7 +57,7 @@ export default class Feed extends Component {
 
   componentWillReceiveProps = nextProps => this.maybeReloadOnPropsChange(nextProps, this.props)
 
-  render(){
+  render() {
     return (
       <div>
         {this.props.initialFilters.term === undefined && <div className={styles.tags}>

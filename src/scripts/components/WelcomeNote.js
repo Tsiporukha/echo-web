@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import styles from '../../assets/styles/feed.css';
 
-const WelcomeNote = _ => (
+const WelcomeNote = () => (
   <div className={styles.welcomeNote}>
     <h2>Welcome to Echo (FAQ):</h2>
 
@@ -28,7 +28,7 @@ const WelcomeNote = _ => (
     </div>
 
     <div>
-      <h4>4. ➕ How do I add tracks to Rooms?</h4>
+      <h4>4. How do I add tracks to Rooms?</h4>
       Show me>>On Echo you can search through YouTube, SoundCloud, Spotify and Deezer to find tracks, play and add them to Rooms.
     </div>
 

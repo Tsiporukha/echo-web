@@ -27,6 +27,6 @@ const Genres = props => (
     <MiniWelcomeNote />
     {genres.map(genre => <GenreCard key={genre.title} genre={genre} />)}
   </div>
-)
+);
 
 export default Genres;

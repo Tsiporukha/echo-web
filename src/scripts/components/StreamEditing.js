@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 
-import {Button, Input, Autocomplete} from 'react-toolbox';
+import {Button, Input} from 'react-toolbox';
 import {arrayMove} from 'react-sortable-hoc';
 
 import UploadArtwork from './UploadArtwork';
 import TagsAutocomplete from './TagsAutocomplete';
-import QueueSong from '../containers/QueueSong';
 import SortableItems from '../components/SortableItems';
 
 import {uploadArtwork} from '../lib/ebApi/streams';
@@ -25,28 +24,30 @@ const getNewStreamData = artwork_url => ({
 
 
 export default class StreamEditing extends Component {
-
-  setTitle = title => this.setState({title});
-  setDescription = description => this.setState({description});
+  setAttr = name => val => this.setState({[name]: val});
 
 
   uploadArtwork = file => uploadArtwork(file, this.props.token);
   setArtworkUrl = artwork_url => () => this.setState({artwork_url});
-  setUploadedArtworkUrl = uploadedArtworkUrl => this.setState({uploadedArtworkUrl});
-  rmUploadedArtworkUrl = () => this.setUploadedArtworkUrl('');
+  rmUploadedArtworkUrl = () => this.setAttr('setUploadedArtworkUrl')('');
 
-
-  getTags = (addedPrimaryTags = getPrimaryTagsFrom(this.state.tags)) =>
-    addedPrimaryTags.length  ? getSecondaryTagsOf(addedPrimaryTags) : primaryTags;
-  setTags = tags => this.setState({tags});
-
-  handleTagsChange = tags => this.setState({tags});
+  getTags = () => {
+    const addedPrimaryTags = getPrimaryTagsFrom(this.state.tags);
+    return addedPrimaryTags.length ? getSecondaryTagsOf(addedPrimaryTags) : primaryTags;
+  };
   addTag = tag => () => this.setState({tags: [tag, ...this.state.tags]});
   removeTag = tag => () => this.setState({tags: this.state.tags.filter(t => t !== tag)});
 
-  isAllFielsFilled = () => this.state.title && this.state.description && this.state.tags.length && this.state.artwork_url;
-  save = () => this.props.save(this.state.title, this.state.description, this.state.tags, this.state.artwork_url, this.state.songs, this.props.token)
-    .then(this.props.onCancel);
+  save = () => this.props.save(
+    this.state.title, this.state.description,
+    this.state.tags, this.state.artwork_url, this.state.songs, this.props.token
+  ).then(this.props.onCancel);
+
+  isAllFielsFilled = () => this.state.title
+    && this.state.description
+    && this.state.tags.length
+    && this.state.artwork_url
+  ;
   maybeSave = () => this.isAllFielsFilled() ? this.save() : this.setState({triedSave: true});
   maybeError = (filled, errMssg) => (this.state.triedSave && !filled) ? errMssg : false;
 
@@ -69,7 +70,7 @@ export default class StreamEditing extends Component {
   componentWillReceiveProps = nextProps => this.setState({songs: addSongsType(nextProps.songs)});
 
   render() {
-    return(
+    return (
       <div className={styles.root}>
         <div className={styles.header}>
           <div className={styles.leftReg}>
@@ -92,10 +93,12 @@ export default class StreamEditing extends Component {
               <div>
                 <Input type='text' name='title' label='Room Name'
                   className={styles.pName} theme={styles} value={this.state.title}
-                  onChange={this.setTitle} error={this.maybeError(this.state.title, 'Room title is required')} />
+                  onChange={this.setAttr('title')}
+                  error={this.maybeError(this.state.title, 'Room title is required')} />
                 <Input type='text' multiline name='description' label='Room Description'
                   className={styles.pDescription} theme={styles} maxLength={1000} value={this.state.description}
-                  onChange={this.setDescription} error={this.maybeError(this.state.description, 'Room description is required')} />
+                  onChange={this.setAttr('description')}
+                  error={this.maybeError(this.state.description, 'Room description is required')} />
 
                 <div className={styles.actionTitle}>Choose Artwork:</div>
                 <div className={styles.artworks}>
@@ -105,15 +108,15 @@ export default class StreamEditing extends Component {
                     selectedArtworkUrl={this.state.artwork_url}
                     setArtworkUrl={this.setArtworkUrl}
                     uploadArtwork={this.uploadArtwork}
-                    setUploadedArtworkUrl={this.setUploadedArtworkUrl}
+                    setUploadedArtworkUrl={this.setAttr('uploadedArtworkUrl')}
                     styles={styles} />
                   {this.props.songs.map(song =>
-                    <a key={song.id}>
+                    (<a onClick={this.setArtworkUrl(song.artwork_url)} key={song.id}>
                       <img src={song.artwork_url} alt='artwork'
-                        className={this.state.artwork_url == song.artwork_url ? styles.selected : ''}
-                        onClick={this.setArtworkUrl(song.artwork_url)} />
-                      {this.state.artwork_url == song.artwork_url && <i className={styles.selectedIcon}>check_circle</i>}
-                    </a>
+                        className={this.state.artwork_url === song.artwork_url ? styles.selected : ''}
+                      />
+                      {this.state.artwork_url === song.artwork_url && <i className={styles.selectedIcon}>check_circle</i>}
+                    </a>)
                   )}
                 </div>
               </div>
@@ -123,7 +126,7 @@ export default class StreamEditing extends Component {
                 <TagsAutocomplete
                   allTags={this.getTags()}
                   addedTags={this.state.tags}
-                  setTags={this.setTags}
+                  setTags={this.setAttr('tags')}
                   theme={styles}
                   errorHandler={this.maybeError(this.state.tags.length, 'Tags are required')}
                 />
@@ -145,6 +148,6 @@ export default class StreamEditing extends Component {
 
         </div>
       </div>
-    )
+    );
   }
 }

@@ -41,13 +41,12 @@ const maybeSearchResultsPlaceholder = search => search ?
 
 
 export default class FeedSources extends Component {
-
   handleTabChange = index => this.setState({index});
 
 
   state = {index: 0}
 
-  render(){
+  render() {
     return (
       <section>
         <div className={styles.root}>

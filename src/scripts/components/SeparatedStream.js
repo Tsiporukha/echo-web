@@ -8,10 +8,9 @@ import styles from '../../assets/styles/stream.css';
 
 
 export default class SeparatedStream extends Component {
-
   componentDidMount = () => this.props.fetchStream(this.props.match.params.id, this.props.token);
 
-  render(){
+  render() {
     return (
       !!this.props.stream &&
       <div className={styles.separated}>
@@ -23,6 +22,6 @@ export default class SeparatedStream extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

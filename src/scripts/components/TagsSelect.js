@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import {primaryTags, primaryTagsColors, inTags} from '../lib/genres';
 
 const TagsSelect = ({allTags, selectedTags, setTags, handleTagClick = tag => false, flashPrimary = true, theme}) => {
-
   const addTag = tag => setTags(selectedTags.concat(tag));
   const removeTag = tag => setTags(selectedTags.filter(tg => tg !== tag));
 
@@ -14,15 +13,15 @@ const TagsSelect = ({allTags, selectedTags, setTags, handleTagClick = tag => fal
 
   const isSelectedAndPrimary = tag => inTags(tag, selectedTags) && inTags(tag, primaryTags);
 
-  return(
+  return (
     <div className={theme.tags}>
-      {allTags.map(tag =>
+      {allTags.map(tag => (
         <span key={tag} className={inTags(tag, selectedTags) ? theme.selectedTag : theme.tag}
           style={flashPrimary && isSelectedAndPrimary(tag) ? {backgroundColor: primaryTagsColors[tag]} : {}}
           onClick={onTagClick(tag)}>{tag}</span>
-      )}
+      ))}
     </div>
-  )
+  );
 };
 
 export default TagsSelect;

@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Button, Tooltip} from 'react-toolbox';
 
+import moment from 'moment';
+
 import LoginDialog from './LoginDialog';
 import StreamEditing from './StreamEditing';
 import ShareIconMenu from './ShareIconMenu';
 import AddToQueueButton from '../containers/AddToQueueButton';
 
-import moment from 'moment';
 
 import {likeStream, unlikeStream} from '../actions/SubFeedsActions';
 import {maybeGetDefaultArtwork} from '../lib/stream';
@@ -24,7 +25,6 @@ const getLikeButtonTitle = liked => liked ? 'Liked' : 'Like';
 
 
 class StreamCard extends Component {
-
   toggleLoginVisibility = () => this.setState({loginVisibility: !this.state.loginVisibility});
   toggleStreamEditing = () => this.setState({streamEditing: !this.state.streamEditing});
 
@@ -34,7 +34,7 @@ class StreamCard extends Component {
     streamEditing: false,
   }
 
-  render(){
+  render() {
     return (
       <div className={styles.root}>
         <div className={styles.header}>
@@ -121,7 +121,7 @@ class StreamCard extends Component {
 
         {!this.props.token && <LoginDialog active={this.state.loginVisibility} onEscKeyDown={this.toggleLoginVisibility} />}
       </div>
-    )
+    );
   }
 }
 

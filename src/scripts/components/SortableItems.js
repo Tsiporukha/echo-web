@@ -21,7 +21,7 @@ const SortableItem = SortableElement(({ItemComponent, type, ...props}) => (
 ));
 
 
-/// QueueItems
+// QueueItems
 const queueItemTypes = {song: QueueSong, stream: QueuePlaylistHolder, room: QueuePlaylistHolder};
 
 const SortableQueueItems = props => (
@@ -30,17 +30,17 @@ const SortableQueueItems = props => (
       <SortableItem ItemComponent={queueItemTypes[item.type]} type={item.type} key={item.id} id={item.id} index={index} />)}
   </div>
 );
-/// end QueueItems
+// end QueueItems
 
 
-/// PlaylistHolderItems
+// PlaylistHolderItems
 const SortablePlaylistHolderSongs = props => (
   <div>
     {props.items.map((item, index) =>
       <SortableItem ItemComponent={PlaylistHolderSong} type='song' key={item.id} id={item.id} index={index} playlist={props.playlist} />)}
   </div>
 );
-/// end PlaylistHolderItems
+// end PlaylistHolderItems
 
 
 const SortableItems = props => (props.playlist ? SortablePlaylistHolderSongs : SortableQueueItems)(props);

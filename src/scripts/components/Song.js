@@ -17,7 +17,7 @@ const SongRender = (props, loginVisibility, toggleLoginVisibility) => (
         className={props.song.liked ? styles.likedIcon : styles.likeIcon}>favorite</i>
     </span>}
     <div className={styles.artwork}>
-      <img src={props.song.artwork_url} />
+      <img src={props.song.artwork_url} alt='artwork' />
       <span className={styles.playPause}>
         {props.isPlaying ?
           <i className={styles.pauseIcon} onClick={props.pause}>pause</i> :
@@ -41,13 +41,12 @@ const SongRender = (props, loginVisibility, toggleLoginVisibility) => (
 
     {!props.token && <LoginDialog active={loginVisibility} onEscKeyDown={toggleLoginVisibility} />}
   </div>
-)
+);
 
 
 export default class Song extends Component {
-
   static propTypes = {
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   };
 
 
@@ -58,7 +57,7 @@ export default class Song extends Component {
     loginVisibility: false,
   }
 
-  render(){
-    return SongRender(this.props, this.state.loginVisibility, this.toggleLoginVisibility)
+  render() {
+    return SongRender(this.props, this.state.loginVisibility, this.toggleLoginVisibility);
   }
 }
