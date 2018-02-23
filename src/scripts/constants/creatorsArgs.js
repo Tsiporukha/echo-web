@@ -1,11 +1,11 @@
-const toSnakeUpperCase = str =>  str.split(/(?=[A-Z])/).join('_').toUpperCase();
+const toSnakeUpperCase = str => str.split(/(?=[A-Z])/).join('_').toUpperCase();
 
 const createArgs = (arg, uppercaseArg = toSnakeUpperCase(arg)) => ({
   [arg]: arg,
-  [uppercaseArg]: uppercaseArg
+  [uppercaseArg]: uppercaseArg,
 });
 
-//entities
+// entities
 export const {User, USER} = createArgs('User');
 export const {Room, ROOM} = createArgs('Room');
 export const {Stream, STREAM} = createArgs('Stream');
@@ -13,7 +13,7 @@ export const {Playlist, PLAYLIST} = createArgs('Playlist');
 export const {Song, SONG} = createArgs('Song');
 export const {Comment, COMMENT} = createArgs('Comment');
 
-//subFeeds
+// subFeeds
 export const {Latest, LATEST} = createArgs('Latest');
 export const {Popular, POPULAR} = createArgs('Popular');
 export const {Longest, LONGEST} = createArgs('Longest');
