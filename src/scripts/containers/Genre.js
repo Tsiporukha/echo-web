@@ -34,7 +34,6 @@ const mapDispatchToProps = dispatch => ({
 
 
 class Genre extends Component {
-
   genre = getGenre(this.props.match.params.title);
   tags = getGenreTags(this.props.match.params.title);
 
@@ -53,20 +52,17 @@ class Genre extends Component {
 
   state = {
     offset: 0,
-    limit: 5,
 
     rooms: this.props.rooms,
     tags: [],
-
-    fetchedAll: false,
   }
 
   componentDidMount = () => this.fetchAndReceiveRooms().then(this.dispatchScrollListener('addEventListener'));
 
   componentWillUnmount = () => this.dispatchScrollListener('removeEventListener');
 
-  render(){
-    return(
+  render() {
+    return (
       <div className={styles.genre}>
 
         <div className={styles.left}>
@@ -96,9 +92,8 @@ class Genre extends Component {
           SIMILAR ROOMS
         </div>
       </div>
-    )
+    );
   }
-
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Genre);

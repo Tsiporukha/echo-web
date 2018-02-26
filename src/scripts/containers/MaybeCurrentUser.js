@@ -13,7 +13,7 @@ import styles from '../../assets/styles/maybeCurrentUser.css';
 
 const mapStateToProps = store => ({
   token: store.session.token,
-  user: store.session.user
+  user: store.session.user,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -22,12 +22,11 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class MaybeCurrentUser extends Component {
-
   static propTypes = {
     token: PropTypes.string,
     user:  PropTypes.object,
 
-    clearSession: PropTypes.func
+    clearSession: PropTypes.func.isRequired
   }
 
   toggleDialogVisibility = () => this.setState({dialogVisibility: !this.state.dialogVisibility});
@@ -37,7 +36,7 @@ class MaybeCurrentUser extends Component {
 
   componentDidMount = () => this.props.token && this.props.updateCurrentUserData(this.props.token);
 
-  render(){
+  render() {
     return (
       <span className={styles.root}>
         {this.props.token ?

@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => ({
   song: state.songs[ownProps.id],
   isCurrentSong: state.player.currentSong.id === ownProps.id,
   isPlaying: state.player.playing && (state.player.currentSong.id === ownProps.id),
-  inQueue: true
+  inQueue: true,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   setCurrentSong: song => () => dispatch(setCurrentSong(song)),
 
   play: () => dispatch(play()),
-  pause: () => dispatch(pause())
+  pause: () => dispatch(pause()),
 });
 
 
@@ -28,7 +28,7 @@ const QueuePlaylistHolderSong = connect(mapStateToProps, mapDispatchToProps)(Son
 
 QueuePlaylistHolderSong.propTypes = {
   playlist: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
 };
 
 export default QueuePlaylistHolderSong;

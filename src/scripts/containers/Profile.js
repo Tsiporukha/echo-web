@@ -39,7 +39,6 @@ const initialState = {
 };
 
 class Profile extends Component {
-
   setAttr = name => val => this.setState({[name]: val});
 
   receiveStreams = ({streams}) => {
@@ -77,7 +76,7 @@ class Profile extends Component {
 
 
   render() {
-    return(
+    return (
       <div className={styles.profile}>
         <div className={styles.leftReg}>
           <div className={styles.userData}>
@@ -102,7 +101,7 @@ class Profile extends Component {
 
         <IndeterminateProgressLine visible={this.state.fetching} />
       </div>
-    )
+    );
   }
 }
 

@@ -8,11 +8,11 @@ import {fetchAndReceiveSoundcloudSongs} from '../actions/SearchActions';
 
 const mapStateToProps = store => ({
   songs: store.search.soundcloud,
-  searchTerm: store.search.term
+  searchTerm: store.search.term,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAndReceiveSongs: filters => dispatch(fetchAndReceiveSoundcloudSongs(filters))
+  fetchAndReceiveSongs: filters => dispatch(fetchAndReceiveSoundcloudSongs(filters)),
 });
 
 

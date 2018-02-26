@@ -10,12 +10,16 @@ import {setCurrentSong, pause, play} from '../actions/PlayerActions';
 const mapStateToProps = (state, ownProps) => ({
   song: state.songs[ownProps.id],
   isCurrentSong: state.player.currentSong.id === ownProps.id,
-  isPlaying: state.player.playing &&
-    (state.player.currentSong.id === ownProps.id
-      || state.player.currentSong.playlist &&
+  isPlaying:
+    state.player.playing &&
+    (
+      state.player.currentSong.id === ownProps.id
+      || (
+        state.player.currentSong.playlist &&
         state.player.currentSong.data_url === state.songs[ownProps.id].data_url
+      )
     ),
-  inQueue: true
+  inQueue: true,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

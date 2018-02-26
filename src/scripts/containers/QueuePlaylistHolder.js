@@ -21,11 +21,10 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  remove: () => dispatch(remove(ownProps.id))
+  remove: () => dispatch(remove(ownProps.id)),
 });
 
 class QueuePlaylistHolder extends Component {
-
   toggleSongList = () => this.setState({opened: !this.state.opened});
 
   openStreamInNewTab = () => Promise.resolve(window.open(`http://beta.echoapplication.com/#/feed/${this.props.holder.id}`)).then(win => win.focus());
@@ -35,12 +34,12 @@ class QueuePlaylistHolder extends Component {
 
   componentWillReceiveProps = nextProps => nextProps.playlist.songs.length ? false : this.props.remove();
 
-  render(){
-    return(
+  render() {
+    return (
       <div className={`${styles.root} ${this.state.opened ? styles.opened : ''}`}>
         <div style={{cursor: 'pointer'}} onClick={this.toggleSongList}>
           <div className={styles.artwork}>
-            <img src={maybeGetDefaultArtwork(this.props.holder.artwork_url)} />
+            <img src={maybeGetDefaultArtwork(this.props.holder.artwork_url)} alt='artwork' />
           </div>
           <div className={styles.info}>
             <div className={styles.title}>

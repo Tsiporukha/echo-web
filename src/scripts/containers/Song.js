@@ -17,7 +17,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  addToQueue: song => () =>  dispatch(addClonedSongs([song])),
+  addToQueue: song => () => dispatch(addClonedSongs([song])),
   play: () => dispatch(play()),
   setCurrentSong: song => () => dispatch(addClonedSongToTopAndPlay(song)),
   toggleLike: (song, token) => dispatch(toggleSongLike(song, token)),

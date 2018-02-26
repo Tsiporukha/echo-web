@@ -41,8 +41,7 @@ const User = props => (
       <Button onClick={props.follow(props.user, props.token)} className={styles.followBtn} icon='add' label='follow' raised primary />
     )}
   </div>
-)
-
+);
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);

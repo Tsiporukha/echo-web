@@ -25,7 +25,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   clear: items => () => {
     dispatch(clearPlayer());
-    return dispatch(remove(items))
+    return dispatch(remove(items));
   },
 
   set: references => dispatch(set(references)),
@@ -36,7 +36,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 // const createItem = item => createJSXItem(itemTypes[item.type], item.id);
 
 class Queue extends Component {
-
   toggleStreamPublication = () => this.setState({streamPublication: !this.state.streamPublication});
   toggleRoomPublication = () => this.setState({roomPublication: !this.state.roomPublication});
 
@@ -48,8 +47,8 @@ class Queue extends Component {
     roomPublication: false,
   };
 
-  render(){
-    return(
+  render() {
+    return (
       <div className={styles.root}>
         <div className={styles.header}>
           <div className={styles.length}>
@@ -88,7 +87,7 @@ class Queue extends Component {
           <SortableItems items={this.props.items} onSortEnd={this.onSortEnd} useDragHandle />
         </div>
       </div>
-    )
+    );
   }
 }
 

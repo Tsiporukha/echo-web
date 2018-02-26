@@ -15,10 +15,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-const SearchHistory = ({history, updateSearchTerm}) => (
+const SearchHistory = props => (
   <div className={styles.history}>
     <div className={styles.item}>RECENTLY SEARCHED:</div>
-    {history.map(term => <div className={styles.item}><a onClick={updateSearchTerm(term)}>{term}</a></div>)}
+    {props.history.map(term => <div className={styles.item}><a onClick={props.updateSearchTerm(term)}>{term}</a></div>)}
   </div>
 );
 

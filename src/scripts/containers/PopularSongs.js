@@ -20,7 +20,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class PopularSongs extends Component {
-
   fetchAndReceiveSongsIds = (term = this.props.term, token = this.props.token) =>
     this.props.fetchAndReceiveSongs(term, this.state.limit, this.state.offset, token).then(songs => this.setState({songs}));
 
@@ -41,11 +40,11 @@ class PopularSongs extends Component {
   };
 
   render() {
-    return(
+    return (
       <div>
         {this.state.songs.map(songId => <Song id={songId} key={songId} />)}
       </div>
-    )
+    );
   }
 }
 

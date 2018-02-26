@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Button} from 'react-toolbox';
 
 import User from './User';
-
-import {Button} from 'react-toolbox';
 
 import {addUsers, followUser, unfollowUser} from '../actions/EntitiesAUDActions';
 
@@ -29,7 +28,6 @@ const initialState = {
 };
 
 class SimilarUsers extends Component {
-
   initialLoad = (userId = this.props.userId, token = this.props.token) => getSimilar(userId, token)
     .then(({results}) => Promise.resolve(this.props.addUsers(results)).then(_ => this.setState({users: results.map(usr => usr.id)})));
 
@@ -44,13 +42,13 @@ class SimilarUsers extends Component {
   componentWillReceiveProps = nextProps => this.reinitOnUserChange(nextProps, this.props);
 
   render() {
-    return(
+    return (
       !!this.state.users.length &&
       <div className={styles.similarUsers}>
         <div className={styles.head}>SIMILAR USERS</div>
         {this.state.users.map(userId => <User key={userId} id={userId} />)}
       </div>
-    )
+    );
   }
 }
 

@@ -28,7 +28,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 class PopularSongs extends Component {
-
   handleTabChange = tab => this.setState({tab});
 
 
@@ -66,7 +65,7 @@ class PopularSongs extends Component {
   };
 
   render() {
-    return(
+    return (
       <div>
         <Tabs theme={favSubTabsTheme} index={this.state.tab} onChange={this.handleTabChange}>
           <Tab label='Rooms'>
@@ -81,7 +80,7 @@ class PopularSongs extends Component {
 
         <IndeterminateProgressLine visible={this.state.fetching} />
       </div>
-    )
+    );
   }
 }
 

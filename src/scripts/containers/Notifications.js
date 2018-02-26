@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
+import moment from 'moment';
+
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 
 import {getAssetUrl} from '../lib/assets';
 import {getNotifications, readNotifications} from '../lib/ebApi/users';
-import moment from 'moment';
 
 import styles from '../../assets/styles/notifications.css';
 
@@ -25,7 +26,7 @@ const NotificationIcon = ({toggleNotificationsVisibility, notificationsVisibilit
     <i className={styles[notificationsVisibility ? 'activeRootIcon' : 'rootIcon']}>notifications_none</i>
     <span hidden={!unreadNotificationsLength} className={styles.count}>{unreadNotificationsLength}</span>
   </span>
-)
+);
 
 
 const Notification = ({notification}) => (
@@ -63,7 +64,7 @@ const EchoMessage = () => (
       <div className={styles.message}>"Hi there, Welcome to Echo; like some rooms and users and always stay on top of your music"</div>
     </div>
   </div>
-)
+);
 
 
 const mapStateToProps = (state, ownProps) => ({
@@ -75,14 +76,13 @@ const mapDispatchToProps = dispatch => ({
 
 
 class Notifications extends Component {
-
   showNotifications = () => this.setState({notificationsVisibility: true});
   hideNotifications = () => this.setState({notificationsVisibility: false});
 
   getNotifications = (token = this.props.token) => token && getNotifications(token).then(data => this.setState({notifications: data.pushes}));
   getUnread = (notifications = this.state.notifications) => notifications.filter(notf => !notf.readed_at);
   readNotifications = () => readNotifications(this.getUnread().map(notf => notf.id), this.props.token)
-    .then(resp => resp.status === 200 ? this.setState({notifications: this.state.notifications.map(n => ({...n, readed_at: Date.now()}))}) : false );
+    .then(resp => resp.status === 200 ? this.setState({notifications: this.state.notifications.map(n => ({...n, readed_at: Date.now()}))}) : false);
 
 
   state = {
@@ -96,7 +96,7 @@ class Notifications extends Component {
   componentWillReceiveProps = nextProps => this.getNotifications(nextProps.token);
 
   render() {
-    return(
+    return (
       !!this.props.token &&
       <div className={styles.root}>
         <IconMenu menuRipple theme={styles} position='topRight'
@@ -115,7 +115,7 @@ class Notifications extends Component {
           <MenuItem theme={styles}> <EchoMessage /> </MenuItem>
         </IconMenu>
       </div>
-    )
+    );
   }
 }
 

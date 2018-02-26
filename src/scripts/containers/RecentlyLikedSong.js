@@ -11,7 +11,7 @@ import styles from '../../assets/styles/song.css';
 const RecentlyLikedSong = props => (
   <div className={styles.recentlyLiked}>
     <div className={styles.artwork}>
-      <img src={props.song.artwork_url} />
+      <img src={props.song.artwork_url} alt='artwork' />
       <span className={styles.playPause}>
         {props.isPlaying ?
           <i className={styles.pauseIcon} onClick={props.pause}>pause</i> :

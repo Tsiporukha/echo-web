@@ -13,7 +13,7 @@ const getPlayAction = (isCurrentSong, playCurrentSong, setCurrentSong, song) => 
 const RecentlyLikedStream = props => (
   <div className={styles.recentlyLiked}>
     <div className={styles.streamArtwork}>
-      <img src={props.stream.artwork_url} />
+      <img src={props.stream.artwork_url} alt='artwork' />
       <span className={styles.playPause}>
         {props.isPlaying ?
           <i className={styles.pauseIcon} onClick={props.pause}>pause</i> :

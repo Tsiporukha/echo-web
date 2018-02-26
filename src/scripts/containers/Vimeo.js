@@ -8,11 +8,11 @@ import {fetchAndReceiveVimeoSongs} from '../actions/SearchActions';
 
 const mapStateToProps = store => ({
   songs: store.search.vimeo,
-  searchTerm: store.search.term
+  searchTerm: store.search.term,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAndReceiveSongs: filters => dispatch(fetchAndReceiveVimeoSongs(filters))
+  fetchAndReceiveSongs: filters => dispatch(fetchAndReceiveVimeoSongs(filters)),
 });
 
 

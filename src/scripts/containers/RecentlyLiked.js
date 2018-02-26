@@ -45,7 +45,6 @@ const emptyItems = {
 };
 
 class RecentlyLiked extends Component {
-
   clearLikes = () => this.setState(emptyItems);
 
   fetchAndReceiveStreamsIds = (userId = this.props.userId, token = this.props.token) =>
@@ -70,11 +69,11 @@ class RecentlyLiked extends Component {
   componentWillReceiveProps = nextProps => nextProps.token ? this.fetchAndReceiveItems(nextProps.userId, nextProps.token) : this.clearLikes();
 
   render() {
-    return(
+    return (
       this.state.songs.length || this.state.streams.length ?
         <RecentlyLikedItems songs={this.state.songs} streams={this.state.streams} /> :
         <WelcomeNote />
-    )
+    );
   }
 }
 

@@ -35,12 +35,11 @@ const initialSongState = {
   duration: 0,
   played: 0,
   loaded: 0,
-  playedSeconds: 0
+  playedSeconds: 0,
 };
 
 
 class Player extends Component {
-
   addSongToQueueTopAndPlay = song => {
     this.props.origPlaylist && this.props.addClonedSongToTop(song);
     return this.props.setCurrentSong(addPlaylistId(song, this.props.origPlaylist));
@@ -51,10 +50,7 @@ class Player extends Component {
 
 
   setVolume = volume => this.setState({volume});
-  setProgress = val => {
-    this.setState({seeking: false});
-    return this.refs.player.seekTo(parseFloat(val))
-  };
+  setProgress = val => this.refs.player.seekTo(parseFloat(val));
   onProgress = played => this.setState({...played});
 
   toggleIsQueueOpen = () => this.setState({isQueueOpen: !this.state.isQueueOpen});
@@ -68,7 +64,7 @@ class Player extends Component {
     isQueueOpen: true,
     playerVisibility: false,
     volume: 0.8,
-    ...initialSongState
+    ...initialSongState,
   };
 
   componentWillReceiveProps = nextProps => this.reinitializeSongState(nextProps, this.props) || this.showPlayer();
@@ -120,13 +116,13 @@ class Player extends Component {
             volume={this.state.volume}
             onProgress={this.onProgress}
             onEnded={this.playNext}
-            onDuration={duration => this.setState({duration})}
+            onDuration={drtn => this.setState({duration: drtn})}
           />
         </div>
 
 
       </div>
-    )
+    );
   }
 }
 

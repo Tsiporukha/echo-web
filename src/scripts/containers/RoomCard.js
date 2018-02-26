@@ -40,7 +40,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class RoomCard extends Component {
-
   editable = this.props.room.moderators_ids.includes(this.props.currentUserId)
 
   toggle = key => () => this.setState({[key]: !this.state[key]});
@@ -49,7 +48,7 @@ class RoomCard extends Component {
     .then(_ => this.props.setCurrentSong({...this.props.songs[0], playlist: this.props.playlist.id}));
 
   play = () => this.state.autoplay ?
-     this.addAndPlayFirstSong() : this.props.addSongToQueueTopAndPlay(this.props.songs[0]);
+    this.addAndPlayFirstSong() : this.props.addSongToQueueTopAndPlay(this.props.songs[0]);
 
 
   state = {
@@ -57,8 +56,8 @@ class RoomCard extends Component {
     autoplay: true,
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <div className={styles.root}>
         <div className={styles.artwork}>
           <img className={styles.artwork} src={this.props.room.artwork_url} alt='room artwork' />
@@ -99,7 +98,7 @@ class RoomCard extends Component {
           />
         </div>
       </div>
-    )
+    );
   }
 }
 

@@ -26,7 +26,6 @@ const mapDispatchToProps = dispatch => ({
 
 
 class Room extends Component {
-
   handleTabChange = index => this.setState({index});
 
   setFetching = fetching => this.setState({fetching});
@@ -40,7 +39,7 @@ class Room extends Component {
 
   componentDidMount = this.fetchRoom;
 
-  render(){
+  render() {
     return (
       !!this.props.room &&
       <div className={styles.root}>
@@ -64,7 +63,7 @@ class Room extends Component {
                   {this.props.playlist.songs.map(id => (<Song key={id} id={id} />))}
                 </div>
               </Tab>
-              <Tab label={`EVENTS 0`} disabled />
+              <Tab label='EVENTS 0' disabled />
             </Tabs>
           </div>
 
@@ -76,7 +75,7 @@ class Room extends Component {
 
         <IndeterminateProgressLine visible={this.state.fetching} />
       </div>
-    )
+    );
   }
 }
 

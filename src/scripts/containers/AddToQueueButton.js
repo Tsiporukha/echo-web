@@ -24,7 +24,7 @@ const AddToQueueButton = props => (
       <i className={styles.playlistAddIcon}>playlist_add</i><span>Add to Queue</span>
     </span>
   </TooltipButton>
-)
+);
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddToQueueButton);

@@ -17,14 +17,13 @@ import styles from '../../assets/styles/guestLanding.css';
 
 const mapStateToProps = store => ({
   token: store.session.token,
-  user: store.session.user
+  user: store.session.user,
 });
 
 const mapDispatchToProps = dispatch => ({
 });
 
 class GuestLanding extends Component {
-
   redirectToFeedIfLogged = (props = this.props) => props.token && props.history.push('/feed');
 
   toggle = prop => () => this.setState({[prop]: !this.state[prop]});
@@ -48,7 +47,7 @@ class GuestLanding extends Component {
   componentWillReceiveProps = this.redirectToFeedIfLogged;
 
 
-  render(){
+  render() {
     const isActive = source => this.state.searchSource === source ? styles.active : '';
 
     return (

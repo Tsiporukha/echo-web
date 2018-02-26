@@ -22,7 +22,6 @@ const mapDispatchToProps = dispatch => ({
 
 
 class CommentPublication extends Component {
-
   toggleLoginVisibility = () => this.setState({loginVisibility: !this.state.loginVisibility});
   setComment = comment => this.setState({comment});
 
@@ -38,7 +37,7 @@ class CommentPublication extends Component {
   };
 
   render() {
-    return(
+    return (
       <div className={styles.root}>
         {this.props.user && <img className={styles.publicationAvatar} src={this.props.user.avatar_url} alt='avatar' />}
         <Input type='text' name='comment' hint='Leave a comment'
@@ -47,7 +46,7 @@ class CommentPublication extends Component {
 
         {!this.props.token && <LoginDialog active={this.state.loginVisibility} onEscKeyDown={this.toggleLoginVisibility} />}
       </div>
-    )
+    );
   }
 }
 

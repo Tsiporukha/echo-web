@@ -9,23 +9,22 @@ import {updateSearchTerm} from '../actions/SearchActions';
 import styles from '../../assets/styles/search.css';
 
 const mapStateToProps = (state, ownProps) => ({
-  term: state.search.term
+  term: state.search.term,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  updateSearchTerm: term => dispatch(updateSearchTerm(term))
+  updateSearchTerm: term => dispatch(updateSearchTerm(term)),
 });
 
 
 class Search extends Component {
-
   keyCodeActions = (keyCode, target) => {
     switch (keyCode) {
       case 13: return this.props.updateSearchTerm(target.value);
       case 27: return this.clear().then(target.blur());
       default: return false;
     }
-    return false
+    return false;
   };
 
   isPropChanged = (newProp, oldProp) => newProp !== oldProp;
@@ -46,7 +45,7 @@ class Search extends Component {
 
   componentWillReceiveProps = nextProps => this.onMaybeTermChange(nextProps, this.props) || this.onMaybeLocationChange(nextProps, this.props);
 
-  render(){
+  render() {
     return (
       <div className={styles.root}>
 

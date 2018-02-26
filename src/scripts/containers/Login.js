@@ -9,33 +9,32 @@ import styles from '../../assets/styles/login.css';
 
 const mapDispatchToProps = dispatch => ({
   emailLogin: (email, password) => dispatch(emailLogin(email, password)),
-  networkLogin: (token, network) => dispatch(networkLogin(token, network))
+  networkLogin: (token, network) => dispatch(networkLogin(token, network)),
 });
 
 
 class Login extends Component {
-
   static propTypes = {
-    emailLogin: PropTypes.func,
-    networkLogin: PropTypes.func
+    emailLogin: PropTypes.func.isRequired,
+    networkLogin: PropTypes.func.isRequired,
   };
 
 
   onFacebookLoginStatus = response =>
     response.status === 'connected' ?
       this.props.networkLogin(response.authResponse.accessToken, 'facebook') :
-      window.FB.login(response => response.status === 'connected' ? this.onFacebookLoginStatus(response) : false);
+      window.FB.login(resp => resp.status === 'connected' ? this.onFacebookLoginStatus(resp) : false);
 
   facebookLogin = () => window.FB.getLoginStatus(this.onFacebookLoginStatus);
 
   emailLogin = () => this.props.emailLogin(this.refs.email.value, this.refs.password.value)
-    .catch(_e => this.setState({invalidCredentials: true}));
+    .catch(() => this.setState({invalidCredentials: true}));
   onSubmit = e => Promise.resolve(e.preventDefault()).then(this.emailLogin);
 
 
   state = {invalidCredentials: false};
 
-  render(){
+  render() {
     return (
       <div className={styles.root}>
         <div className={styles.signIn}>Sign in with:</div>
@@ -63,13 +62,15 @@ class Login extends Component {
           </div>
 
           <div className={styles.btns}>
-            <a href='https://itunes.apple.com/us/app/echo-sync-your-devices-in/id772203328?mt=8' target='_blank'>
+            <a href='https://itunes.apple.com/us/app/echo-sync-your-devices-in/id772203328?mt=8'
+              target='_blank' rel='noopener noreferrer'>
               <button className={styles.btn}>
                 <span className={styles.firstLine}>Download on the</span><br />
                 <span className={styles.secondLine}>App Store</span>
               </button>
             </a>
-            <a href='http://play.google.com/store/apps/details?id=com.echo.app' target='_blank'>
+            <a href='http://play.google.com/store/apps/details?id=com.echo.app'
+              target='_blank' rel='noopener noreferrer'>
               <button className={styles.btn}>
                 <span className={styles.firstLine}>Get it on</span><br />
                 <span className={styles.secondLine}>Google Play</span>

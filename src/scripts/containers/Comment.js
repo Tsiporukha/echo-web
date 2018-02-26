@@ -30,7 +30,7 @@ const Comment = props => (
       <div className={styles.commentBody}>{props.comment.body}</div>
     </div>
   </div>
-)
+);
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comment);

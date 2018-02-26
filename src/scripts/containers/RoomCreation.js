@@ -8,7 +8,7 @@ import {create} from '../lib/ebApi/rooms';
 
 const mapStateToProps = (state, ownProps) => ({
   songs: getQueueSongs(state),
-  token: state.session.token
+  token: state.session.token,
 });
 
 const mapDispatchToProps = dispatch => ({
