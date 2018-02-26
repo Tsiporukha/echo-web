@@ -1,15 +1,12 @@
 import luch, {getJson} from 'luch';
 
-import {SOUNDCLOUD_CLIENT_ID} from '../constants/skeys.js';
+import {SOUNDCLOUD_CLIENT_ID} from '../constants/skeys';
+
 const BASE_URL = 'https://api.soundcloud.com';
-
-export const search = ({term, offset, limit}) => luch.get(`${BASE_URL}/tracks`, {client_id: SOUNDCLOUD_CLIENT_ID, q: term, limit, offset})
-  .then(getJson).then(songs => songs.map(parseSong));
-
 
 
 const parseSong = song => {
-  const [artist, title] = song['title'].split(/\s[–-]\s/);
+  const [artist, title] = song.title.split(/\s[–-]\s/);
   return {
     uid: song.uri,
     source: 'soundcloud',
@@ -18,6 +15,11 @@ const parseSong = song => {
     export_data_url: `${song.stream_url}?client_id=${SOUNDCLOUD_CLIENT_ID}`,
     artist,
     title,
-    duration: Math.round(song.duration / 1000)
-  }
+    duration: Math.round(song.duration / 1000),
+  };
 };
+
+export const search = ({term, offset, limit}) => luch.get(
+  `${BASE_URL}/tracks`,
+  {client_id: SOUNDCLOUD_CLIENT_ID, q: term, limit, offset}
+).then(getJson).then(songs => songs.map(parseSong));

@@ -1,17 +1,10 @@
-import luch, {getJson} from 'luch';
+import luch, {getAbsoluteUrl, getJson} from 'luch';
 
-import {VIMEO_TOKEN} from '../constants/skeys.js';
+import {VIMEO_TOKEN} from '../constants/skeys';
 
-const BASE_URL = 'https://api.vimeo.com';
+const withApiUrl = getAbsoluteUrl('https://api.vimeo.com');
 
 const getAuthHeader = token => ({Authorization: `Bearer ${token}`});
-
-
-export const search = ({term, limit, offset}) => luch.get(`${BASE_URL}/videos`,
-  {query: term, per_page: limit, page: parseInt(offset/limit) + 1, fields: 'uri,name,pictures.sizes,link,duration', filter: 'categories', categories: 'music'},
-  {headers: getAuthHeader(VIMEO_TOKEN)})
-    .then(getJson).then(({data}) => data.map(parseSong));
-
 
 
 const parseSong = song => {
@@ -24,6 +17,20 @@ const parseSong = song => {
     export_data_url: song.link,
     artist,
     title,
-    duration: song.duration
-  }
+    duration: song.duration,
+  };
 };
+
+
+export const search = ({term, limit, offset}) => luch.get(
+  withApiUrl('/videos'),
+  {
+    query: term || 'music',
+    per_page: limit,
+    page: parseInt(offset / limit) + 1,
+    fields: 'uri,name,pictures.sizes,link,duration',
+    filter: 'categories',
+    categories: 'music',
+  },
+  {headers: getAuthHeader(VIMEO_TOKEN)}
+).then(getJson).then(({data}) => data.map(parseSong));

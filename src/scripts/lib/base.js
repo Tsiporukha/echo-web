@@ -9,8 +9,8 @@ export const reduceToObject = items => items.reduce((itms, itm) => ({...itms, ..
 export const addIdsAndReduceToObject = items => reduceToObject(addIds(items));
 
 // inQueue :: String a, Number a => (String, Object, a) -> Boolean
- export const inQueue = (type, state, id) =>
-  state.playlists[state[type][id].playlist].songs.some(songId => state.songs[songId].uid === state.player.currentSong.uid);
+export const inQueue = (type, state, id) => state.playlists[state[type][id].playlist]
+  .songs.some(songId => state.songs[songId].uid === state.player.currentSong.uid);
 
 
 export const getCollectionName = type => `${type}s`;
