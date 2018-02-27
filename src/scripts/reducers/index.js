@@ -1,6 +1,6 @@
-import {USER, ROOM, STREAM, PLAYLIST, SONG, COMMENT} from '../constants/creatorsArgs';
-
 import {combineReducers} from 'redux';
+
+import {USER, ROOM, STREAM, PLAYLIST, SONG, COMMENT} from '../constants/creatorsArgs';
 
 import {createNamedAUDReducer} from './reducerCreators';
 import feed from './feed';
@@ -18,7 +18,7 @@ export default combineReducers({
   comments: createNamedAUDReducer(COMMENT),
 
   feedSources: combineReducers({
-    feed
+    feed,
   }),
 
   search,
@@ -27,6 +27,6 @@ export default combineReducers({
 
   player,
 
-  session
+  session,
 
 });

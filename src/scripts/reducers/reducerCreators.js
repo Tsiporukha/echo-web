@@ -1,6 +1,10 @@
-const getObjDiff = (a, b) =>
- Object.keys(a).reduce((newState, key) => Object.keys(b).includes(key) ? newState : ({...newState, [key]: a[key]}), {})
+const getObjDiff = (a, b) => Object.keys(a).reduce(
+  (newState, key) => Object.keys(b).includes(key) ? newState : ({...newState, [key]: a[key]}),
+  {}
+);
 
+
+/* eslint-disable fp/no-nil */
 
 export const createNamedAUDReducer = name => (state = {}, action) => {
   switch (action.type) {
@@ -9,7 +13,6 @@ export const createNamedAUDReducer = name => (state = {}, action) => {
     case `DELETE_${name}S`: return getObjDiff(state, action.payload);
     default: return state;
   }
-  return state;
 };
 
 export const createSubFeedReducer = (name, defaultState = {}) => (state = defaultState, action) => {
@@ -19,13 +22,11 @@ export const createSubFeedReducer = (name, defaultState = {}) => (state = defaul
     case `REMOVE_FROM_${name}`: return state.filter(item => !action.payload.includes(item));
     default: return state;
   }
-  return state;
-}
+};
 
 export const createVisibilityFilterReducer = (name, defaultFilter = '') => (state = defaultFilter, action) => {
   switch (action.type) {
     case `SET_${name}_VISIBILITY_FILTER`: return action.payload;
     default: return state;
   }
-  return state;
-}
+};

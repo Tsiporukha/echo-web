@@ -1,8 +1,11 @@
+import {combineReducers} from 'redux';
+
 import {SET_SEARCH_TERM, ADD_TO_SEARCH_HISTORY} from '../constants/ActionTypes';
 import {LATEST_SEARCH, POPULAR_SEARCH, LONGEST_SEARCH, YOUTUBE, SOUNDCLOUD, VIMEO} from '../constants/creatorsArgs';
 
-import {combineReducers} from 'redux';
 import {createSubFeedReducer, createVisibilityFilterReducer} from './reducerCreators';
+
+/* eslint-disable fp/no-nil */
 
 const term = (state = '', action) => {
   switch (action.type) {
@@ -13,10 +16,11 @@ const term = (state = '', action) => {
 
 const history = (state = [], action) => {
   switch (action.type) {
-    case ADD_TO_SEARCH_HISTORY: return [action.payload, ...state].filter((x, i, a) => a.indexOf(x) == i);
+    case ADD_TO_SEARCH_HISTORY: return [action.payload, ...state].filter((x, i, a) => a.indexOf(x) === i);
     default: return state;
   }
 };
+/* eslint-enable fp/no-nil */
 
 export default combineReducers({
   term,

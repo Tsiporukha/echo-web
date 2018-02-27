@@ -2,9 +2,10 @@ import {PLAY, PAUSE, SET_CURRENT_SONG, CLEAR_PLAYER} from '../constants/ActionTy
 
 const initialState = {
   currentSong: {},
-  playing: false
+  playing: false,
 };
 
+/* eslint-disable fp/no-nil */
 export default (state = initialState, action) => {
   switch (action.type) {
     case PLAY: return {...state, playing: true};
