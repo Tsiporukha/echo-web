@@ -1,19 +1,9 @@
-export const loadState = () => {
-  try {
-    return localStorage.getItem('echoAppExt') ? JSON.parse(localStorage.getItem('echoAppExt')) : undefined;
-  } catch (e) {
-    return undefined;
-  }
-};
+/* eslint-disable fp/no-nil */
 
-export const saveState = (state) => {
-  try {
-    localStorage.setItem('echoAppExt', JSON.stringify(state))
-  } catch (e) {
+export const loadState = () => localStorage.getItem('echoAppExt') ?
+  JSON.parse(localStorage.getItem('echoAppExt')) : undefined;
 
-  }
-}
+export const saveState = state =>
+  localStorage.setItem('echoAppExt', JSON.stringify(state));
 
-export const clearState = () => {
-  localStorage.setItem('echoAppExt', undefined);
-}
+export const clearState = () => localStorage.setItem('echoAppExt', undefined);

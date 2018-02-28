@@ -1,8 +1,8 @@
-import {createStore, applyMiddleware, compose} from 'redux'
-import thunkMiddleware from 'redux-thunk'
+import {createStore, applyMiddleware, compose} from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import throttle from 'lodash/throttle';
 
-import {loadState, saveState} from './localStorage'
+import {loadState, saveState} from './localStorage';
 import rootReducer from '../reducers';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -17,6 +17,6 @@ const configureStore = () => {
   }), 1000));
 
   return store;
-}
+};
 
 export default configureStore;
