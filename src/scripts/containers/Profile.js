@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {Button, Tab, Tabs} from 'react-toolbox';
+import {Tab, Tabs} from 'react-toolbox';
 
 import Stream from './Stream';
 import UserLikes from './UserLikes';
@@ -9,10 +9,9 @@ import User from './User';
 import SimilarUsers from './SimilarUsers';
 import IndeterminateProgressLine, {doWithProgressLine} from '../components/IndeterminateProgressLine';
 
-import {addUsers, receiveStreams, followUser, unfollowUser} from '../actions/EntitiesAUDActions';
+import {addUsers, receiveStreams} from '../actions/EntitiesAUDActions';
 
 import {get as getStreams} from '../lib/ebApi/streams';
-import {getUser} from '../lib/ebApi/users';
 import {dispatchOnBottomReaching} from '../lib/scroll';
 
 import styles from '../../assets/styles/profile.css';
@@ -20,9 +19,7 @@ import tabsTheme from '../../assets/styles/tabsTheme.css';
 
 
 const mapStateToProps = (state, ownProps) => ({
-  present: !!state.users[ownProps.match.params.id],
   token: state.session.token,
-  currentUser: state.session.user,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -77,10 +74,11 @@ class Profile extends Component {
 
   render() {
     return (
-      <div className={styles.profile}>
+      <div className={styles.root}>
         <div className={styles.leftReg}>
           <div className={styles.userData}>
-            {this.props.present && <User id={this.props.match.params.id} />}
+
+            <User id={this.props.match.params.id} />
 
             <Tabs theme={tabsTheme} index={this.state.tab} onChange={this.setAttr('tab')}>
               <Tab label={<i className={styles.feedIcon}>language</i>}>

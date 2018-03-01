@@ -1,0 +1,44 @@
+.editIcon{
+  composes: editIcon from './roomEditing.css';
+  font-size: 14px;
+  color: #444;
+}
+
+.root{
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.avatar{
+  height: 32px;
+  width: 32px;
+}
+
+
+.info{
+  padding-left: 16px;
+}
+.name{
+  font-size: 17px;
+  color: #61b3fa;
+}
+.editIconArea{
+  display: inline-flex;
+  margin-left: 4px;
+}
+.followersCount{
+  font-size: 12px;
+  color: #7c7c7c;
+}
+
+.followedBtn, .followBtn{
+  margin-left: auto;
+}
+.followedBtn{
+  background-color: #0091ea!important;
+}
+.followBtn{
+  color: #606060!important;
+  background-color: #e0e0e0!important;
+}
