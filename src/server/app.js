@@ -6,7 +6,7 @@ import path from 'path';
 import {isProduction} from '../scripts/lib/base';
 import {getStream} from '../scripts/lib/ebApi/streams';
 
-const clientDevServerUrl = 'http://localhost:9001'
+const clientDevServerUrl = 'http://localhost:9001';
 
 const assetsUrl = isProduction ? '' : clientDevServerUrl;
 
@@ -63,7 +63,7 @@ app.use(express.static(staticFilesPath));
 
 app.use((req, res) => {
   res.set('Content-Type', 'text/html');
-  return getStreamIfMatch(req.url.split('/')).then(maybeStream => res.end(renderHTML(createStreamMetaTags(maybeStream))))
+  return getStreamIfMatch(req.url.split('/')).then(maybeStream => res.end(renderHTML(createStreamMetaTags(maybeStream))));
 });
 
 
