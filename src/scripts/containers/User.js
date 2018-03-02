@@ -37,7 +37,7 @@ const User = props => (
           <span className={styles.name}>{props.user.name}</span>
         </Link>
         {props.currentUser.id === props.user.id &&
-          <Link className={styles.editIconArea} to='/profile/edit'>
+          <Link className={styles.editIconArea} to='/settings'>
             <i className={styles.editIcon}>mode_edit</i>
           </Link>
         }

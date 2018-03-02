@@ -10,13 +10,14 @@ import {
 import {User, Room, Stream, Playlist, Song, Comment} from '../constants/creatorsArgs';
 
 import {createAUDActions} from './actionsCreators';
+import {setUserData as setCurrentUserData} from './SessionActions';
 
 import {createIdKeyHash, reduceToObject, getCollectionName} from '../lib/base';
 import {reduceToNormalized as reduceToNormalizedRooms} from '../lib/room';
 import {appendPublishedCommentRef, appendCommentsRefs, reduceToNormalized as reduceToNormalizedStreams} from '../lib/stream';
 import {addComment as publishComment, getComments, getStream} from '../lib/ebApi/streams';
 import {get as getRoom} from '../lib/ebApi/rooms';
-import {follow, unfollow, getLikedSongs, getLikedStreams} from '../lib/ebApi/users';
+import {follow, unfollow, getLikedSongs, getLikedStreams, updateCurrentUser as updCurrentUser} from '../lib/ebApi/users';
 import {toggleLike as apiToggleSongLike} from '../lib/ebApi/songs';
 
 
@@ -29,12 +30,14 @@ export const {addComments, updateComments, deleteComments} = createAUDActions(Co
 
 
 // Comments
-const receiveComments = comments => dispatch => Promise.resolve(dispatch(addUsers(reduceToObject(comments.map(comment => comment.user)))))
-  .then(_ => dispatch(addComments(reduceToObject(comments.map(comment => ({...comment, user: comment.user.id}))))));
+const receiveComments = comments => dispatch =>
+  Promise.resolve(dispatch(addUsers(reduceToObject(comments.map(comment => comment.user)))))
+    .then(_ => dispatch(addComments(reduceToObject(comments.map(comment => ({...comment, user: comment.user.id}))))));
 const updateStreamOnCommentsAction = appendCommentsRefsFn => (stream, commentsIds) => dispatch =>
   dispatch(updateStreams(createIdKeyHash(appendCommentsRefsFn(stream, commentsIds))));
 const receiveCommentsAndUpdateStream = (stream, comments) => appendCommentsRefsFn => dispatch =>
-  receiveComments(comments)(dispatch).then(_ => updateStreamOnCommentsAction(appendCommentsRefsFn)(stream, comments.map(comment => comment.id))(dispatch));
+  receiveComments(comments)(dispatch)
+    .then(_ => updateStreamOnCommentsAction(appendCommentsRefsFn)(stream, comments.map(comment => comment.id))(dispatch));
 
 export const addComment = (stream, body, token) => dispatch => publishComment(stream.id, body, token)
   .then(comment => receiveCommentsAndUpdateStream(stream, [comment])(appendPublishedCommentRef)(dispatch));
@@ -54,6 +57,14 @@ export const followUser = (user, token) => dispatch => follow(user.id, token).th
 export const unfollowUser = (user, token) => dispatch => unfollow(user.id, token).then(resp => maybeUpdateIsFollowed(user, false)(resp)(dispatch));
 // end Followers
 
+
+// Users
+export const updateCurrentUser = (data, token) => dispatch => updCurrentUser(data, token)
+  .then(userData => {
+    dispatch(updateUsers(createIdKeyHash(userData)));
+    return dispatch(setCurrentUserData(userData));
+  });
+// end Users
 
 // Songs
 const updateSongOnToggleLike = song => dispatch =>

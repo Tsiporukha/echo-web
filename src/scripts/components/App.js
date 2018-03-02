@@ -8,6 +8,7 @@ import Genre from '../containers/Genre';
 import Room from '../containers/Room';
 import Stream from '../containers/Stream';
 import Profile from '../containers/Profile';
+import ProfileEditing from '../containers/ProfileEditing';
 import Player from '../containers/Player';
 import GuestLanding from '../containers/GuestLanding';
 
@@ -27,6 +28,7 @@ const App = () => (
         <Route exact path='/feed' component={FeedSources} />
         <Route exact path='/feed/:id' component={Stream} />
         <Route exact path='/profile/:id' component={Profile} />
+        <Route exact path='/settings' component={ProfileEditing} />
         <Route exact path='/genres/:title' component={Genre} />
         <Route exact path='/genres/:genre/rooms/:id' component={Room} />
       </div>

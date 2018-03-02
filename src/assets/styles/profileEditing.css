@@ -1,0 +1,64 @@
+.root{
+  margin: 0;
+  padding: 30px;
+  min-height: calc(100vh - (40px * 2));
+  background-color: white;
+  align-items: flex-start;
+}
+
+.centered{
+  display: flex;
+  justify-content: center;
+}
+
+.title{
+  color: #767676;
+  margin-top: 0;
+}
+
+.avatar{
+  composes: centered;
+
+  img{
+    height: 100px;
+    width: 100px;
+    border-radius: 4px;
+    border: 1px solid #767676;
+  }
+}
+
+.buttonsArea{
+  composes: centered;
+  margin-top: 40px;
+
+  button{
+    margin: 0 4px;
+  }
+}
+
+.editIconArea{
+  width: 0;
+}
+
+.editIcon{
+  display: flex;
+  width: 100px;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  left: -100px;
+}
+
+
+@media (min-width: 640px) {
+  .root {
+    margin: 0 10%;
+  }
+}
+
+@media (min-width: 860px) {
+  .root {
+    margin: 0 17%;
+  }
+}
