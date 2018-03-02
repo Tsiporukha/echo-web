@@ -4,7 +4,7 @@ import {Button, Input, Dropdown} from 'react-toolbox';
 import {arrayMove} from 'react-sortable-hoc';
 
 import TagsAutocomplete from './TagsAutocomplete';
-import RoomEditingArtworkUpdate from './RoomEditingArtworkUpdate';
+import ImageUploaderPenIcon from './ImageUploaderPenIcon';
 import SortableItems from '../components/SortableItems';
 
 import {uploadArtwork} from '../lib/ebApi/streams';
@@ -89,13 +89,13 @@ export default class RoomEditing extends Component {
             <div className={styles.coverArea} style={this.state.background_url ? {backgroundImage: `url(${this.state.background_url})`} : {}}>
 
               <div className={styles.bgArtworkUpdateArea}>
-                <RoomEditingArtworkUpdate uploadArtwork={this.uploadArtwork} setUploadedArtworkUrl={this.setAttr('background_url')} />
+                <ImageUploaderPenIcon upload={this.uploadArtwork} setUploadedImageUrl={this.setAttr('background_url')} />
                 <span className={styles.errMssg}>{this.maybeError(this.state.background_url, 'Cover is required')}</span>
               </div>
 
               <div className={styles.card}>
                 <div className={styles.artworkHolder} style={{backgroundImage: `url(${this.state.artwork_url})`}}>
-                  <RoomEditingArtworkUpdate uploadArtwork={this.uploadArtwork} setUploadedArtworkUrl={this.setAttr('artwork_url')} />
+                  <ImageUploaderPenIcon upload={this.uploadArtwork} setUploadedImageUrl={this.setAttr('artwork_url')} />
                   <span className={styles.errMssg}>{this.maybeError(this.state.artwork_url, 'Artwork is required')}</span>
                 </div>
 

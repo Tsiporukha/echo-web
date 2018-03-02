@@ -8,7 +8,7 @@ const withStreamsUrl = getAbsoluteUrl(withApiUrl('/streams'));
 const withStreamUrl = (streamId, path = '') => withStreamsUrl(`/${streamId}${path}`);
 
 
-export const get = (filters, token) => luch.get(withStreamsUrl('/'), removeUndefinedAttrs({...filters, token})).then(getJson);
+export const get = (filters, token) => luch.get(withStreamsUrl(''), removeUndefinedAttrs({...filters, token})).then(getJson);
 export const getStream = (id, token) => luch.get(withStreamUrl(id), removeUndefinedAttrs({token})).then(getJson);
 
 const getRoute = route => (filters, token) => luch.get(withStreamsUrl(`/${route}`), removeUndefinedAttrs({...filters, token})).then(getJson);
