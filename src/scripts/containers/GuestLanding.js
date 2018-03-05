@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {Button} from 'react-toolbox';
 
-import FeedSources from '../components/FeedSources';
 import GenreCard from '../components/GuestLandingGenreCard';
 import LoginDialog from '../components/LoginDialog';
 
+import {redirectTo} from '../lib/route';
 import {genres} from '../lib/genres';
 import {getAssetUrl} from '../lib/assets';
 
@@ -24,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class GuestLanding extends Component {
-  redirectToFeedIfLogged = (props = this.props) => props.token && props.history.push('/feed');
+  redirectToFeedIfLogged = (props = this.props) => props.token && redirectTo(props.history, '/feed');
 
   toggle = prop => () => this.setState({[prop]: !this.state[prop]});
 
