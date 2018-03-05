@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies, no-unused-vars */
 import s3 from 's3';
 import credentials from './credentials.json';
 
