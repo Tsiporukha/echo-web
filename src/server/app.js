@@ -33,19 +33,30 @@ const createStreamMetaTags = (stream = {}, playlist = stream.playlist || {}) => 
 
 const renderHTML = metaTags => (`
   <!DOCTYPE html>
-  <html>
+  <html lang="en">
     <head>
+      <title>Echo music</title>
+
       <meta charset="utf-8">
+      <meta name="theme-color" content="#2196F3">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A social music streaming service that helps music fans share their music and the way
+   the experience music socially effortlessly, in real-time;">
       ${metaTags}
-      <title>Echo</title>
       <link rel="stylesheet" href="${assetsUrl}/styles.css">
+      <link rel="manifest" href="${assetsUrl}/manifest.json">
     </head>
     <body>
+
+      <noscript>
+        Echo uses javascript, please enable it.
+      </noscript>
+
       <div id="echoRoot"></div>
 
       <script src="${assetsUrl}/loader.js" charset="utf-8"></script>
       <script src="${assetsUrl}/bundle.js" charset="utf-8"></script>
+      <script src="${assetsUrl}/swRegister.js" charset="utf-8"></script>
     </body>
   </html>
 `);

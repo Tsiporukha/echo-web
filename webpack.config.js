@@ -63,6 +63,8 @@ const webClientConfig = {
   entry: {
     bundle: joinToDirname(jointToWebAppDir('/client/index.js')),
     loader: joinToDirname(jointToWebAppDir('/client/loader.js')),
+    swRegister: joinToDirname(jointToWebAppDir('/client/swRegister.js')),
+    sw: joinToDirname(jointToWebAppDir('/client/sw.js')),
   },
   output: {
     path: joinToDirname('/build/web'),
@@ -71,9 +73,10 @@ const webClientConfig = {
 
   plugins: [
     new CopyWebpackPlugin([
-      {from: joinToDirname(jointToWebAppDir('/client/index.html'))},
+      // {from: joinToDirname(jointToWebAppDir('/client/index.html'))},
       {from: joinToDirname(jointToWebAppDir('/client/robots.txt'))},
       {from: joinToDirname(jointToWebAppDir('/client/favicon.ico'))},
+      {from: joinToDirname(jointToWebAppDir('/client/manifest.json'))},
     ]),
     new ExtractTextPlugin({filename: 'styles.css', allChunks: true}),
     new webpack.optimize.ModuleConcatenationPlugin(),

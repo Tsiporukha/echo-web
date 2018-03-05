@@ -1,0 +1,27 @@
+{
+  "name": "Echo music",
+  "short_name": "Echo",
+  "description": "Echo music applocation",
+  "display": "standalone",
+  "start_url": "/feed",
+  "background_color": "#2196F3",
+  "theme_color": "#2196F3",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://s3.amazonaws.com/echoapp/assets/manifest/echo_logo.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "https://s3.amazonaws.com/echoapp/assets/manifest/echo_logo.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "https://s3.amazonaws.com/echoapp/assets/manifest/echo_logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
