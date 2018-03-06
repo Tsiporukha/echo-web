@@ -3,6 +3,7 @@
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const path = require('path');
 // const fs = require('fs');
@@ -24,7 +25,7 @@ const clientConfig = {
         loader: 'babel-loader',
         options: JSON.stringify({
           presets: ['react', 'env', 'stage-0'],
-          plugins: ['transform-object-rest-spread'],
+          plugins: ['lodash', 'transform-object-rest-spread'],
         }),
       },
       {
@@ -72,6 +73,7 @@ const webClientConfig = {
   },
 
   plugins: [
+    new LodashModuleReplacementPlugin(),
     new CopyWebpackPlugin([
       // {from: joinToDirname(jointToWebAppDir('/client/index.html'))},
       {from: joinToDirname(jointToWebAppDir('/client/robots.txt'))},
@@ -100,7 +102,7 @@ const nodeConfig = {
         loader: 'babel-loader',
         options: JSON.stringify({
           presets: ['env', 'stage-0'],
-          plugins: ['transform-object-rest-spread'],
+          plugins: ['lodash', 'transform-object-rest-spread'],
         }),
       },
     ],
@@ -141,7 +143,11 @@ const getFullConfig = commonConfig => envConfig => Object.assign({}, commonConfi
 const getClientConfig = getFullConfig(clientConfig);
 const getNodeConfig = getFullConfig(nodeConfig);
 
-const builds = {webClient: getClientConfig(webClientConfig), server: getNodeConfig(serverConfig), lambda: getNodeConfig(lambdaConfig)};
+const builds = {
+  webClient: getClientConfig(webClientConfig),
+  server: getNodeConfig(serverConfig),
+  lambda: getNodeConfig(lambdaConfig),
+};
 
 
 module.exports = process.env.build ? builds[process.env.build] : Object.keys(builds).map(k => builds[k]);

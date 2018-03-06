@@ -9,7 +9,7 @@ export default class FacebookSDK extends Component {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
-    js.src = "https//connect.facebook.net/en_UK/sdk.js";
+    js.src = "https://connect.facebook.net/en_UK/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 
