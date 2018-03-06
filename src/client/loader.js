@@ -1,3 +1,5 @@
+/* eslint-disable fp/no-mutating-assign, fp/no-unused-expression */
+
 const css = `
   .initLoader {
     border: 6px solid #f3f3f3;
