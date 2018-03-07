@@ -1,10 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import {IconMenu, MenuItem, Tooltip} from 'react-toolbox';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 import styles from '../../assets/styles/shareIconMenu.css';
 
+/* eslint-disable no-undef */
 const shareOnFacebook = (path, title, picture, description) => () => FB.ui({
   method: 'share',
   href: `${document.domain}${path}`,
@@ -12,8 +14,8 @@ const shareOnFacebook = (path, title, picture, description) => () => FB.ui({
   picture,
   caption: document.domain,
   description,
-}, response => true);
-
+}, _response => true);
+/* eslint-enable no-undef */
 
 const TooltipIconMenu = Tooltip(IconMenu);
 
@@ -37,5 +39,12 @@ const ShareIconMenu = props => (
       onClick={shareOnFacebook(props.path, props.title, props.picture, props.description)} />
   </TooltipIconMenu>
 );
+
+ShareIconMenu.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  picture: PropTypes.string,
+  path: PropTypes.string,
+};
 
 export default ShareIconMenu;

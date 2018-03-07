@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {updateSearchTerm} from '../actions/SearchActions';
@@ -21,6 +22,11 @@ const SearchHistory = props => (
     {props.history.map(term => <div className={styles.item}><a onClick={props.updateSearchTerm(term)}>{term}</a></div>)}
   </div>
 );
+
+SearchHistory.propTypes = {
+  history: PropTypes.array,
+  updateSearchTerm: PropTypes.func,
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchHistory);

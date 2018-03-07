@@ -44,7 +44,7 @@ const mapStateToProps = state => ({
 
 class Notifications extends Component {
   static propTypes = {
-    token: PropTypes.String,
+    token: PropTypes.string,
   }
 
   setActive = active => () => this.setState({active});

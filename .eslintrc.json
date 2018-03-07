@@ -69,7 +69,7 @@
     "radix": ["error", "as-needed"],
     "no-underscore-dangle": 1,
     "no-nested-ternary": 0,
-    "no-unused-expressions": 1,
+    "no-unused-expressions": 0,
     "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
 
   }

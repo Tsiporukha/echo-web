@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import Song from '../components/Song';
 
+import {toggleSongLike} from '../actions/EntitiesAUDActions';
 import {addClonedSongToTopAndPlay, removePlaylistSong} from '../actions/QueueActions';
-import {setCurrentSong, pause, play} from '../actions/PlayerActions';
+import {pause, play} from '../actions/PlayerActions';
 
 
 const mapStateToProps = (state, ownProps) => ({

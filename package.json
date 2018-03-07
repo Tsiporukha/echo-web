@@ -4,7 +4,7 @@
   "description": "Echo web cli",
   "main": "src/index.js",
   "scripts": {
-    "client-dev-server": "build=webClient webpack-dev-server ./src/client",
+    "client-dev-server": "build=webClient webpack-dev-server ./src/client -d",
     "node-dev-server": "nodemon --exec babel-node src/server/server.js",
     "dev-servers": "npm run client-dev-server -- --port 9001 & npm run node-dev-server",
     "build": "webpack -p",

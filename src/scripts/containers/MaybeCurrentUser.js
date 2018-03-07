@@ -24,9 +24,9 @@ const mapDispatchToProps = dispatch => ({
 class MaybeCurrentUser extends Component {
   static propTypes = {
     token: PropTypes.string,
-    user:  PropTypes.object,
+    user: PropTypes.object,
 
-    clearSession: PropTypes.func.isRequired
+    clearSession: PropTypes.func.isRequired,
   }
 
   toggleDialogVisibility = () => this.setState({dialogVisibility: !this.state.dialogVisibility});

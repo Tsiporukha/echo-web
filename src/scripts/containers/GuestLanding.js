@@ -16,14 +16,15 @@ import styles from '../../assets/styles/guestLanding.css';
 
 const mapStateToProps = store => ({
   token: store.session.token,
-  user: store.session.user,
-});
-
-const mapDispatchToProps = dispatch => ({
 });
 
 class GuestLanding extends Component {
-  redirectToFeedIfLogged = (props = this.props) => props.token && redirectTo(props.history, '/feed');
+  static propTypes = {
+    token: PropTypes.string,
+    history: PropTypes.object,
+  };
+
+  redirectToFeedIfLogged = () => this.props.token && redirectTo(this.props.history, '/feed');
 
   toggle = prop => () => this.setState({[prop]: !this.state[prop]});
 
@@ -119,4 +120,4 @@ class GuestLanding extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GuestLanding);
+export default connect(mapStateToProps)(GuestLanding);
