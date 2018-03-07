@@ -1,58 +1,16 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
 
-import moment from 'moment';
+import {IconMenu, MenuItem} from 'react-toolbox/lib/menu';
 
-import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
+import Notification from '../components/Notification';
 
 import {getAssetUrl} from '../lib/assets';
 import {getNotifications, readNotifications} from '../lib/ebApi/users';
 
 import styles from '../../assets/styles/notifications.css';
 
-
-const getUserName = user => user.username || user.name || '';
-
-const updateNotificationDescription = (description, username, streamId) =>
-  description.replace(`your ${username} friend`, username).slice(username.length).replace(streamId || '', '');
-
-const getNotificationUrl = (key, userId, streamId) =>
-  ['allow_followers', 'allow_on_air'].includes(key) ? `/profile/${userId}` : `/feed/${streamId}`;
-
-
-const NotificationIcon = ({toggleNotificationsVisibility, notificationsVisibility, unreadNotificationsLength}) => (
-  <span>
-    <i className={styles[notificationsVisibility ? 'activeRootIcon' : 'rootIcon']}>notifications_none</i>
-    <span hidden={!unreadNotificationsLength} className={styles.count}>{unreadNotificationsLength}</span>
-  </span>
-);
-
-
-const Notification = ({notification}) => (
-  <Link to={getNotificationUrl(notification.key, notification.user.id, notification.stream_id)}>
-    <div className={styles.notification}>
-      <Link to={`/profile/${notification.user.id}`}>
-        <img className={styles.avatar} src={notification.user.avatar_url} alt='avatar' />
-      </Link>
-      <div className={styles.info}>
-        <div>
-          <Link to={`/profile/${notification.user.id}`}>
-            <span className={styles.username}>{notification.user.name}</span>
-          </Link>
-          <Link to={getNotificationUrl(notification.key, notification.user.id, notification.stream_id)}>
-            <span className={styles.message}>
-              {updateNotificationDescription(notification.description, getUserName(notification.user), notification.stream_id)}
-            </span>
-          </Link>
-        </div>
-        {!!notification.comment_text && false && <span>{notification.comment_text}</span>}
-        <div className={styles.time}>{moment(notification.created_at).fromNow()}</div>
-      </div>
-      {!notification.readed_at && <i className={styles.unreaded} />}
-    </div>
-  </Link>
-);
 
 const EchoMessage = () => (
   <div className={styles.echoMessage}>
@@ -67,26 +25,43 @@ const EchoMessage = () => (
 );
 
 
-const mapStateToProps = (state, ownProps) => ({
+const NotificationIcon = ({active, unread}) => (
+  <span>
+    <i className={styles[active ? 'activeRootIcon' : 'rootIcon']}>notifications_none</i>
+    <span hidden={!unread} className={styles.count}>{unread}</span>
+  </span>
+);
+
+NotificationIcon.propTypes = {
+  active: PropTypes.bool,
+  unread: PropTypes.number,
+};
+
+
+const mapStateToProps = state => ({
   token: state.session.token,
 });
 
-const mapDispatchToProps = dispatch => ({
-});
-
-
 class Notifications extends Component {
-  showNotifications = () => this.setState({notificationsVisibility: true});
-  hideNotifications = () => this.setState({notificationsVisibility: false});
+  static propTypes = {
+    token: PropTypes.String,
+  }
 
-  getNotifications = (token = this.props.token) => token && getNotifications(token).then(data => this.setState({notifications: data.pushes}));
-  getUnread = (notifications = this.state.notifications) => notifications.filter(notf => !notf.readed_at);
+  setActive = active => () => this.setState({active});
+
+  getUnread = () => this.state.notifications.filter(notif => !notif.readed_at);
+  updateReadedAt = (notifications = this.state.notifications) =>
+    this.setState({notifications: notifications.map(n => ({...n, readed_at: n.readed_at || Date.now()}))});
+
+  getNotifications = (token = this.props.token) =>
+    token && getNotifications(token).then(data => this.setState({notifications: data.pushes}));
+
   readNotifications = () => readNotifications(this.getUnread().map(notf => notf.id), this.props.token)
-    .then(resp => resp.status === 200 ? this.setState({notifications: this.state.notifications.map(n => ({...n, readed_at: Date.now()}))}) : false);
+    .then(resp => resp.status === 200 && this.updateReadedAt());
 
 
   state = {
-    notificationsVisibility: false,
+    active: false,
 
     notifications: [],
   }
@@ -98,25 +73,24 @@ class Notifications extends Component {
   render() {
     return (
       !!this.props.token &&
-      <div className={styles.root}>
-        <IconMenu menuRipple theme={styles} position='topRight'
-          onShow={this.showNotifications} onHide={this.hideNotifications}
-          icon={<NotificationIcon
-            toggleNotificationsVisibility={this.toggleNotificationsVisibility}
-            notificationsVisibility={this.state.notificationsVisibility}
-            unreadNotificationsLength={this.getUnread().length} />
+      <IconMenu menuRipple theme={styles} position='topRight'
+        onShow={this.setActive(true)} onHide={this.setActive(false)}
+        icon={
+          <NotificationIcon
+            active={this.state.active}
+            unread={this.getUnread().length} />
           }>
 
-          <div className={styles.notificationsHeader}>
-            <span>NOTIFICATIONS</span>
-            <a onClick={this.readNotifications}>Mark as read</a>
-          </div>
-          {this.state.notifications.map(notf => <MenuItem key={notf.id} theme={styles}><Notification notification={notf} /> </MenuItem>)}
-          <MenuItem theme={styles}> <EchoMessage /> </MenuItem>
-        </IconMenu>
-      </div>
+        <div className={styles.notificationsHeader}>
+          <span>NOTIFICATIONS</span>
+          <a onClick={this.readNotifications}>Mark as read</a>
+        </div>
+        {this.state.notifications.map(notf =>
+          <MenuItem key={notf.id} theme={styles}><Notification notification={notf} /> </MenuItem>)}
+        <MenuItem theme={styles}> <EchoMessage /> </MenuItem>
+      </IconMenu>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
+export default connect(mapStateToProps)(Notifications);
