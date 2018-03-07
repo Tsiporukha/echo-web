@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import Search from '../containers/Search';
 import Notifications from '../containers/Notifications';
@@ -19,7 +19,7 @@ const Navbar = () => (
           </Link>
         </div>
         <div className={styles.search}>
-          <Route component={Search} />
+          <Search />
         </div>
       </div>
       <div className={styles.rightReg}>
