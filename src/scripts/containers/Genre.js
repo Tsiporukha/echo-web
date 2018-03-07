@@ -1,39 +1,45 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-
-import {Link} from 'react-router-dom';
 
 import GenreCard from '../components/GenreCard';
 import RoomCard from './RoomCard';
-import ShareIconMenu from '../components/ShareIconMenu';
 import TagsSelect from '../components/TagsSelect';
 
 import {receiveRooms} from '../actions/EntitiesAUDActions';
 
 import {withGenre as fetchRooms} from '../lib/ebApi/rooms';
-import {getGenre, getGenreTags, genres} from '../lib/genres';
+import {getGenre, getGenreTags} from '../lib/genres';
 import {dispatchOnBottomReaching} from '../lib/scroll';
 
 import styles from '../../assets/styles/genre.css';
-import cardStyles from '../../assets/styles/card.css';
 import feedStyles from '../../assets/styles/feed.css';
 
 
 const mapStateToProps = (state, ownProps) => ({
   token: state.session.token,
   rooms: Object.values(state.rooms).filter(room => room.genre === ownProps.match.params.title)
-    .sort((a,b) => b.timestamp - a.timestamp).map(room => room.id),
+    .sort((a, b) => b.timestamp - a.timestamp).map(room => room.id),
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchAndReceiveRooms: (filters, token) => fetchRooms(filters, token)
-    .then(({rooms, totalAvailable, count}) => Promise.resolve(dispatch(receiveRooms(rooms)))
+    .then(({rooms, count, _totalAvailable}) => Promise.resolve(dispatch(receiveRooms(rooms)))
       .then(_ => ({rooms: rooms.map(room => room.id), fetchedAll: count < filters.limit}))
     ),
 });
 
 
 class Genre extends Component {
+  static propTypes = {
+    token: PropTypes.string,
+    rooms: PropTypes.array,
+
+    fetchAndReceiveRooms: PropTypes.func,
+
+    match: PropTypes.object,
+  };
+
   genre = getGenre(this.props.match.params.title);
   tags = getGenreTags(this.props.match.params.title);
 
@@ -41,11 +47,12 @@ class Genre extends Component {
   maybeConcatWithStateRooms = rooms => this.state.offset ? this.state.rooms.concat(rooms) : rooms;
   getNewState = (rooms, fetchedAll) => ({rooms, offset: rooms.length, fetchedAll});
 
-  fetchAndReceiveRooms = () => this.props.fetchAndReceiveRooms(this.getRequestFilters(), this.props.token)
-    .then(({rooms, fetchedAll}) => this.setState(this.getNewState(this.maybeConcatWithStateRooms(rooms), fetchedAll)));
+  fetchAndReceiveRooms = () => this.state.fetchedAll ||
+    this.props.fetchAndReceiveRooms(this.getRequestFilters(), this.props.token)
+      .then(({rooms, fetchedAll}) => this.setState(this.getNewState(this.maybeConcatWithStateRooms(rooms), fetchedAll)));
 
   setTags = tags => this.setState({tags});
-  handleTagClick = tag => this.setState({offset: 0, fetchedAll: false}, this.fetchAndReceiveRooms);
+  handleTagClick = _ => this.setState({offset: 0, fetchedAll: false}, this.fetchAndReceiveRooms);
 
   dispatchScrollListener = dispatchOnBottomReaching(() => window, this.fetchAndReceiveRooms);
 
