@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import moment from 'moment';
+import fromNow from 'moment-from-now';
 
 import styles from '../../assets/styles/comment.css';
 
@@ -25,7 +25,7 @@ const Comment = props => (
         <Link to={`/profile/${props.user.id}`}>
           <span className={styles.name}>{props.user.name}</span>
         </Link>
-        <span className={styles.time}>{moment(props.comment.created_at).fromNow()}</span>
+        <span className={styles.time}>{fromNow(new Date(props.comment.created_at))}</span>
       </div>
       <div className={styles.commentBody}>{props.comment.body}</div>
     </div>

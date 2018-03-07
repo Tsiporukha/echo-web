@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Button, Tooltip} from 'react-toolbox';
 
-import moment from 'moment';
+import fromNow from 'moment-from-now';
 
 import LoginDialog from './LoginDialog';
 import StreamEditing from './StreamEditing';
@@ -38,7 +38,7 @@ class StreamCard extends Component {
     return (
       <div className={styles.root}>
         <div className={styles.header}>
-          <span><b>Updated</b> {moment(this.props.stream.updated_at).fromNow()} by </span>
+          <span><b>Updated</b> {fromNow(new Date(this.props.stream.updated_at))} by </span>
           <Link to={`/profile/${this.props.user.id}`}>
             <img src={this.props.user.avatar_url} alt='user avatar' className={styles.avatar} />
             <span>{this.props.user.name}</span>
