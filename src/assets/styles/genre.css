@@ -2,6 +2,7 @@
 
 .genre{
   position: absolute;
+  display: flex;
 }
 
 .genreHeader{
@@ -65,6 +66,7 @@
 .right{
   composes: col-md-4 from './bootstrap.css';
   composes: hidden-sm from './bootstrap.css';
+  composes: hidden-xs from './bootstrap.css';
   font-size: 13px;
   color: #767676;
   padding: 15px;

@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {BrowserRouter, Link, Route} from 'react-router-dom';
+import React from 'react';
+import {BrowserRouter, Route} from 'react-router-dom';
 
 import FacebookSDK from './FacebookSDK';
 import Navbar from './Navbar';
@@ -12,8 +12,6 @@ import ProfileEditing from '../containers/ProfileEditing';
 import Player from '../containers/Player';
 import GuestLanding from '../containers/GuestLanding';
 
-import {removeSeparator} from '../lib/route';
-
 import styles from '../../assets/styles/app.css';
 
 
@@ -23,7 +21,7 @@ const App = () => (
       <FacebookSDK />
 
       <Navbar />
-      <div>
+      <div className={styles.content}>
         <Route exact path='/' component={GuestLanding} />
         <Route exact path='/feed' component={FeedSources} />
         <Route exact path='/feed/:id' component={Stream} />
