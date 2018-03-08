@@ -1,5 +1,5 @@
 .root{
-  margin: auto 36px;
+  min-width: 168px;
 }
 
 .avatar{
@@ -15,7 +15,7 @@
   color: white;
   font-weight: 500;
   padding-left: 10px;
-  max-width: 120px;
+  max-width: 140px;
   display: inline-flex;
   white-space: nowrap;
   overflow: hidden;

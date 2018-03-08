@@ -1,3 +1,7 @@
+.menuIcon{
+  composes: material-icons from './fonts.css';
+}
+
 :root{
   --navHeight: 50px;
 }
@@ -5,65 +9,123 @@
 .root{
   width: 100%;
   height: var(--navHeight);
-  display: block;
+  display: flex;
   z-index: 1;
-}
-
-.fixed{
-  composes: root;
   position: fixed;
+  top: 0;
   background-color: #23365a;
+  flex-wrap: nowrap;
 }
 
-.reg{
-  height: var(--navHeight);
-}
-.leftReg{
-  composes: col-xs-8 from './bootstrap.css';
-  composes: reg;
-  display: flex;
-}
-.rightReg{
-  composes: col-xs-4 from './bootstrap.css';
-  composes: reg;
-  display: flex;
-  justify-content: flex-end;
+.menuIconArea{
+  display: none;
+  height: 0;
 }
 
+.items{
+  display: flex;
+  background-color: #23365a;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 50px;
+}
 
 .brand{
-  composes: col-md-offset-1 from './bootstrap.css';
-  composes: col-md-2 from './bootstrap.css';
   height: var(--navHeight);
-  padding: 2px;
-  min-width: 108px;
   display: inline-flex;
+  align-items: center;
+  margin: 0 2% 0 7%;
+  width: 108px;
 
   .logo{
     width: 24px;
     height: 24px;
-    position: relative;
-    top: -2px;
   }
 
   .title{
-    font-size: 27px;
+    font-size: 26px;
     font-weight: 700;
     padding-left: 3px;
-    position: relative;
-    top: 4px;
     letter-spacing: 1.5px;
+    line-height: normal;
     color: white;
   }
 }
 
 .search{
-  composes: col-md-8 from './bootstrap.css';
-  composes: col-sm-10 from './bootstrap.css';
-  padding: 0;
-  height: var(--navHeight);
-  display: flex;
-  justify-content: center;
-  align-items:center;
   display: inline-flex;
+  align-items: center;
+  width: calc(60% - 9% - 108px);
+  margin-right: 7.5%;
+}
+
+.notifications{
+  display: flex;
+  margin: 0 36px 0 auto;
+}
+
+.maybeUser{
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+}
+
+
+@media (max-width: 992px) {
+  .brand{
+    margin: 0 2%;
+  }
+  .search{
+    width: 100%;
+    margin-right: 0;
+  }
+  .notifications{
+    margin: 0 20px;
+  }
+}
+
+
+@media (max-width: 650px) {
+  .root{
+    flex-wrap: wrap;
+  }
+  .menuIconArea{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--navHeight);
+    background-color: inherit;
+    z-index: 1;
+
+    .brand{
+      display: inline-flex;
+      margin: 0 15px;
+    }
+    .menuIcon{
+      color: white;
+      font-size: 32px;
+      margin-right: 15px;
+    }
+  }
+  .items{
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    height: calc(100vh - 50px);
+    padding: 15px;
+    transform: translateY(-100vh);
+    transition: transform .15s linear;
+    &.visible{
+      transform: translateY(0);
+      transition: transform .15s linear;
+    }
+  }
+  .brand, .notifications{
+    display: none;
+  }
+  .maybeUser{
+    width: 100%;
+    margin: 15px 0;
+  }
 }

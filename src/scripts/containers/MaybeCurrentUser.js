@@ -27,6 +27,7 @@ class MaybeCurrentUser extends Component {
     user: PropTypes.object,
 
     clearSession: PropTypes.func.isRequired,
+    updateCurrentUserData: PropTypes.func,
   }
 
   toggleDialogVisibility = () => this.setState({dialogVisibility: !this.state.dialogVisibility});
@@ -40,12 +41,10 @@ class MaybeCurrentUser extends Component {
     return (
       <span className={styles.root}>
         {this.props.token ?
-          <span className={styles.userArea}>
-            <Link to={`/profile/${this.props.user.id}`}>
-              <img src={this.props.user.avatar_url} alt='avatar' className={styles.avatar} />
-              <span className={styles.username}>{this.props.user.name || this.props.user.username || ''}</span>
-            </Link>
-          </span>
+          <Link to={`/profile/${this.props.user.id}`}>
+            <img src={this.props.user.avatar_url} alt='avatar' className={styles.avatar} />
+            <span className={styles.username}>{this.props.user.name || this.props.user.username || ''}</span>
+          </Link>
           :
           <span>
             <Button icon='account_circle' raised
