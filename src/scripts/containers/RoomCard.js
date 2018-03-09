@@ -59,17 +59,15 @@ class RoomCard extends Component {
   render() {
     return (
       <div className={styles.root}>
-        <div className={styles.artwork}>
-          <img className={styles.artwork} src={this.props.room.artwork_url} alt='room artwork' />
+        <div className={styles.artworkArea}>
+          <img src={this.props.room.artwork_url} alt='room artwork' />
 
-          <span className={styles.playPause}>
-            {this.props.isPlaying ?
-              <i onClick={this.props.pause} className={styles.playIcon}>pause</i>
-              :
-              <i onClick={this.props.inQueue ? this.props.play : this.play}
-                className={styles.playIcon}>play_arrow</i>
-            }
-          </span>
+          {this.props.isPlaying ?
+            <i onClick={this.props.pause} className={styles.playIcon}>pause</i>
+            :
+            <i onClick={this.props.inQueue ? this.props.play : this.play}
+              className={styles.playIcon}>play_arrow</i>
+          }
         </div>
         <div className={styles.data}>
           <div className={styles.titleBlock}>

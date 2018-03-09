@@ -50,7 +50,7 @@ class Room extends Component {
             <RoomCard id={this.props.room.id} />
           </div>
 
-          <div className='roomTabs'>
+          <div className={styles.roomTabs}>
             <Tabs theme={styles} index={this.state.index} onChange={this.handleTabChange}>
               <Tab label={`TRACKLIST(${this.props.playlist.songs.length})`}>
                 <div>

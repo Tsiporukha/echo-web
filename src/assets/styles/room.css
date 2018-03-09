@@ -29,6 +29,9 @@
   composes: tag from './genre.css'
 }
 
+.roomTabs{
+  width: 100%;
+}
 
 /* Tabs theme */
 .tab{
