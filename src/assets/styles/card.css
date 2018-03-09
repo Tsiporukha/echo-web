@@ -28,7 +28,6 @@
 .artwork{
   height: 120px;
   width: 120px;
-  min-width: 120px;
 }
 
 .playPause{
@@ -71,4 +70,34 @@
 
 .iconArea{
   color: #767676;
+}
+
+@media (max-width: 450px) {
+  .root{
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .artwork{
+    width: 100%;
+    height: 100%;
+  }
+
+  .data{
+    padding: 0;
+    margin: 20px 0 0;
+  }
+  .titleBlock{
+    justify-content: center;
+  }
+  .title{
+    width: 100%;
+    margin: 0 0 14px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+  }
+  .description{
+    margin: 10px 0 0;
+    font-size: 14px;
+  }
 }
