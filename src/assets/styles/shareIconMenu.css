@@ -1,11 +1,9 @@
 .shareIcon{
   composes: material-icons from './fonts.css';
-  position: relative;
 }
 
 .shareIcon{
   font-size: 20px;
-  top: 2px;
   margin-right: 4px;
 }
 .facebookIcon{
@@ -16,9 +14,10 @@
 
 
 .icon{
-  composes: button from './streamDescription.css';
+  composes: button from './streamCard.css';
 }
 .iconMenu{
+  display: flex;
   .icon{
     height: initial;
     width: initial;
@@ -30,7 +29,8 @@
       background-color: #f2f2f2;
     }
     span{
-      line-height: normal!important;
+      display: flex;
+      align-items: center;
     }
   }
 
@@ -47,9 +47,4 @@
   .icon{
     font-size: 16px;
   }
-}
-
-.shareLabel{
-  position: relative;
-  top: -2px;
 }

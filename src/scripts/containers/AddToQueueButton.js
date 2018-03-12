@@ -5,7 +5,7 @@ import {Button, Tooltip} from 'react-toolbox';
 
 import {addClonedPlaylistHolder} from '../actions/QueueActions';
 
-import styles from '../../assets/styles/streamDescription.css';
+import styles from '../../assets/styles/streamCard.css';
 
 const TooltipButton = Tooltip(Button);
 

@@ -1,0 +1,246 @@
+.lengthIcon, .durationIcon, .likeIcon, .likedIcon, .playlistAddIcon, .commentsIcon{
+  composes: material-icons from './fonts.css';
+}
+
+.lengthIcon{
+  font-size: 20px;
+  margin-right: 4px;
+}
+.durationIcon{
+  font-size: 16px;
+  margin: 1px 2px 0 12px;
+  align-self: flex-start
+}
+.commentsIcon{
+  font-size: 18px;
+  margin: 0 2px 0 12px;
+}
+
+.likeIcon, .likedIcon{
+  font-size: 18px;
+  margin-right: 4px;
+}
+.likedIcon{
+  color: #fc717b;
+}
+.playlistAddIcon{
+  font-size: 22px;
+  margin-right: 2px;
+}
+
+.playIcon, .pauseIcon{
+  composes: playIcon from './card.css';
+  font-size: 46px;
+  left: 33px;
+  bottom: 106px;
+}
+
+
+.root{
+  background-color: white;
+  margin: 20px 0;
+  color: #040404;
+  padding: 10px 18px;
+  display: flex;
+  flex-wrap: wrap;
+  > div{
+    width: 100%;
+  }
+}
+
+.header{
+  display: flex;
+  flex-wrap: wrap;
+  line-height: 2;
+  b{font-weight: 500;}
+  a{
+    color: #0e8ffc;
+    cursor: pointer;
+  }
+  .avatar{
+    height: 20px;
+    width: 20px;
+    margin: 0 4px;
+    border-radius: 4px;
+  }
+  .editArea{
+    margin-left: auto;
+    span{
+      cursor: pointer;
+      &:hover, &:active{
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.body{
+  margin: 14px 0;
+  display: flex;
+}
+
+.artworkArea{
+  height: 140px;
+  width: 140px;
+  img{
+    width: 100%;
+    height: 100%;
+  }
+}
+.info{
+  display: flex;
+  margin-left: 40px;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  width: calc(100% - 140px - 40px);
+  .title{
+    display: flex;
+    font-size: 22px;
+    text-decoration: underline;
+    width: 100%;
+  }
+
+  .time{
+    margin: 14px 0;
+    color: #757575;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    .length, .duration, .commentsCount{
+      display: inline-flex;
+      align-content: center;
+    }
+  }
+
+  .description{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    b, i{
+      display: flex;
+      width: 100%;
+    }
+    b{
+      font-weight: 500;
+    }
+  }
+}
+
+
+.tags{
+  margin: 10px 0 10px;
+  .t{margin-right: 8px;}
+}
+.tag{
+  composes: tag from './genre.css'
+}
+
+.footer{
+  margin-top: 10px;
+  color: #757575;
+  display: flex;
+  justify-content: space-between;
+
+  .left{
+    display: flex;
+    align-items: center;
+    .likedArea{
+      display: flex;
+      align-items: center;
+      margin: 4px 2px;
+    }
+  }
+  .right{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .iconDescription{
+    cursor: pointer;
+  }
+}
+
+.playPause{
+  position: relative;
+  width: 80px;
+  height: 80px;
+  left: 34px;
+  bottom: 107px;
+}
+
+
+/* Buttons theme */
+.button{
+  height: inherit;
+  padding: 0 6px;
+  margin: 4px 2px;
+  vertical-align: text-bottom;
+  min-width: 0;
+
+  &.neutral:not([disabled]).raised{
+    color: inherit;
+    line-height: inherit;
+    &:hover{
+      color: #343434;
+      background-color: #f2f2f2;
+    }
+  }
+  &.raised{
+    box-shadow: none;
+  }
+  span{
+    text-transform: none;
+    line-height: inherit!important;
+    display: flex!important;
+    align-items: center;
+  }
+}
+/* end Buttons theme */
+
+@media (max-width: 480px) {
+  .playIcon, .pauseIcon{
+    font-size: 96px;
+    left: 58px;
+    bottom: 182px;
+  }
+
+  .body{
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 14px 0 8px;
+    > div{
+      width: 100%;
+    }
+    .artworkArea{
+      width: 240px;
+      height: 240px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .info{
+      margin-left: 0;
+      .title, .time, .description{
+        margin: 14px 0 0;
+      }
+      .time, .title{
+        justify-content: center;
+      }
+      .title{
+        text-align: center;
+      }
+    }
+  }
+  .footer{
+    flex-wrap: wrap;
+    line-height: 2;
+    .right, .left{
+      flex-wrap: wrap;
+      justify-content: space-between;
+      line-height: 2;
+    }
+  }
+}

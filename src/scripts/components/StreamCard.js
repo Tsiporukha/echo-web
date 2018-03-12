@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {Button, Tooltip} from 'react-toolbox';
 
@@ -13,7 +14,7 @@ import AddToQueueButton from '../containers/AddToQueueButton';
 import {likeStream, unlikeStream} from '../actions/SubFeedsActions';
 import {maybeGetDefaultArtwork} from '../lib/stream';
 
-import styles from '../../assets/styles/streamDescription.css';
+import styles from '../../assets/styles/streamCard.css';
 
 
 const TooltipButton = Tooltip(Button);
@@ -25,6 +26,27 @@ const getLikeButtonTitle = liked => liked ? 'Liked' : 'Like';
 
 
 class StreamCard extends Component {
+  static propTypes = {
+    user: PropTypes.object,
+    stream: PropTypes.object,
+    playlist: PropTypes.object,
+    currentUserId: PropTypes.object,
+    songs: PropTypes.array,
+    token: PropTypes.string,
+    duration: PropTypes.string,
+
+    isPlaying: PropTypes.bool,
+    inQueue: PropTypes.bool,
+
+    update: PropTypes.func,
+    play: PropTypes.func,
+    pause: PropTypes.func,
+    dispatchLikeAction: PropTypes.func,
+    addToQueueTopAndPlay: PropTypes.func,
+    searchTag: PropTypes.func,
+  };
+
+
   toggleLoginVisibility = () => this.setState({loginVisibility: !this.state.loginVisibility});
   toggleStreamEditing = () => this.setState({streamEditing: !this.state.streamEditing});
 
@@ -53,24 +75,28 @@ class StreamCard extends Component {
           }
         </div>
 
+
         <div className={styles.body}>
-          <div className={styles.artwork}>
+          <div className={styles.artworkArea}>
             <img src={maybeGetDefaultArtwork(this.props.stream.artwork_url)} alt='artwork' className={styles.artworkImg} />
 
-            <span className={styles.playPause}>
-              {this.props.isPlaying ?
-                <i onClick={this.props.pause} className={styles.playIcon}>pause</i>
-                :
-                <i onClick={this.props.inQueue ? this.props.play : this.props.addToQueueTopAndPlay(this.props.stream, this.props.playlist, this.props.songs)}
-                  className={styles.playIcon}>play_arrow</i>
-              }
-            </span>
+            {this.props.isPlaying ?
+              <i onClick={this.props.pause} className={styles.pauseIcon}>pause</i>
+              :
+              <i className={styles.playIcon}
+                onClick={this.props.inQueue ?
+                  this.props.play :
+                  this.props.addToQueueTopAndPlay(this.props.stream, this.props.playlist, this.props.songs)
+                }>play_arrow</i>
+            }
           </div>
 
           <div className={styles.info}>
-            <Link to={`/feed/${this.props.stream.id}`}>
-              <div className={styles.title}>{this.props.playlist.title || 'no title'}</div>
-            </Link>
+            <div className={styles.title}>
+              <Link to={`/feed/${this.props.stream.id}`}>
+                {this.props.playlist.title || 'no title'}
+              </Link>
+            </div>
 
             <div className={styles.time}>
               <span className={styles.length}>
@@ -85,28 +111,27 @@ class StreamCard extends Component {
             </div>
 
             {this.props.playlist.description && <div className={styles.description}>
-              <b>Room description:</b> <br />
-              <i>
-                <span>"{this.props.playlist.description}"</span>
-              </i>
+              <b>Room description:</b>
+              <i>"{this.props.playlist.description}"</i>
             </div>}
           </div>
         </div>
 
+
         {!!this.props.stream.all_tags.length && <div className={styles.tags}>
-          <span>
-            <span className={styles.t}>Tags:</span>
-            {this.props.stream.all_tags.map(tag => (<span onClick={this.props.searchTag(tag)} key={tag} className={styles.tag}>#{tag}</span>))}
-          </span>
+          <span className={styles.t}>Tags:</span>
+          {this.props.stream.all_tags.map(tag => (<span onClick={this.props.searchTag(tag)} key={tag} className={styles.tag}>#{tag}</span>))}
         </div>}
 
+
         <div className={styles.footer}>
-          <div className={styles.leftReg}>
-            {!!this.props.stream.likes_count && <div className={styles.flex}>
+          <div className={styles.left}>
+            {!!this.props.stream.likes_count && <div className={styles.likedArea}>
               <i className={styles.likedIcon}>favorite</i><span>{this.props.stream.likes_count}</span>
             </div>}
           </div>
-          <div className={styles.rightReg}>
+
+          <div className={styles.right}>
             <AddToQueueButton type='stream' holder={this.props.stream} playlist={this.props.playlist} songs={this.props.songs} />
             <TooltipButton theme={styles} raised tooltip='Save to My Likes' tooltipDelay={500}
               onClick={getLikeButtonOnClick(this.props.token, this.props.dispatchLikeAction, this.props.stream, this.toggleLoginVisibility)}>
@@ -118,6 +143,7 @@ class StreamCard extends Component {
               title={this.props.playlist.title} description={this.props.playlist.description} />
           </div>
         </div>
+
 
         {!this.props.token && <LoginDialog active={this.state.loginVisibility} onEscKeyDown={this.toggleLoginVisibility} />}
       </div>

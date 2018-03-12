@@ -64,7 +64,7 @@
   .t{margin-right: 8px;}
 }
 .tag{
-  composes: tag from './streamDescription.css';
+  composes: tag from './streamCard.css';
   cursor: pointer;
 }
 .selectedTag{
