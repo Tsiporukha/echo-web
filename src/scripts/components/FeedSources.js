@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Tab, Tabs} from 'react-toolbox/lib/tabs';
 
 import Genres from './Genres';
-import Feed from '../containers/Feed';
 import FeedSearch from '../containers/FeedSearch';
 import PopularSongs from '../containers/PopularSongs';
 import Youtube from '../containers/Youtube';
@@ -15,29 +14,12 @@ import styles from '../../assets/styles/feed.css';
 import tabsTheme from '../../assets/styles/tabsTheme.css';
 
 
-const getFeedSourcesTabs = (search, activeTabIndex, handleTabChange) => (search ?
-  <Tabs theme={tabsTheme} index={activeTabIndex} onChange={handleTabChange}>
-    <Tab label={<i className={styles.feedIcon}>language</i>}> <FeedSearch /> </Tab>
-    <Tab label={<i className={styles.whatshotIcon}>whatshot</i>}> <PopularSongs /> </Tab>
-    <Tab label={<i className={styles.youtubeIcon} />}> <Youtube /> </Tab>
-    <Tab label={<i className={styles.soundcloudIcon} />}> <Soundcloud /> </Tab>
-    <Tab label={<i className={styles.vimeoIcon} />}> <Vimeo /> </Tab>
-  </Tabs>
-  :
-  <Tabs theme={tabsTheme} index={activeTabIndex} onChange={handleTabChange}>
-    <Tab label={<i className={styles.genresIcon}>forum</i>}> <Genres /> </Tab>
-    <Tab label={<i className={styles.feedIcon}>language</i>}> <Feed /> </Tab>
-    <Tab label={<i className={styles.whatshotIcon}>whatshot</i>}> <PopularSongs /> </Tab>
-  </Tabs>
-);
-
-
-const maybeSearchResultsPlaceholder = search => search ?
+const MaybeSearchResultsPlaceholder = ({search}) => !!search && (
   <div className={styles.searchResultsPlaceholder}>
-    <i className={styles.searchIcon}>search</i> <br />
+    <i className={styles.searchIcon}>search</i>
     <span>Your search results appear here.</span>
   </div>
-  : false;
+);
 
 
 export default class FeedSources extends Component {
@@ -50,15 +32,22 @@ export default class FeedSources extends Component {
     return (
       <section>
         <div className={styles.root}>
-          <div className={styles.leftReg}>
-            {maybeSearchResultsPlaceholder(this.props.search)}
+          <div className={`${styles.left} ${tabsTheme.feed}`}>
+            <MaybeSearchResultsPlaceholder search={this.props.search} />
 
-            <div className={`${styles.feedSourceContent} ${tabsTheme.feed}`}>
-              {getFeedSourcesTabs(this.props.search, this.state.index, this.handleTabChange)}
-            </div>
+            <Tabs theme={tabsTheme} index={this.state.index} onChange={this.handleTabChange}>
+              {!this.props.search && <Tab label={<i className={styles.genresIcon}>forum</i>}> <Genres /> </Tab>}
+              <Tab label={<i className={styles.feedIcon}>language</i>}> <FeedSearch /> </Tab>
+              <Tab label={<i className={styles.whatshotIcon}>whatshot</i>}> <PopularSongs /> </Tab>
+              {this.props.search && [
+                <Tab label={<i className={styles.youtubeIcon} />}> <Youtube /> </Tab>,
+                <Tab label={<i className={styles.soundcloudIcon} />}> <Soundcloud /> </Tab>,
+                <Tab label={<i className={styles.vimeoIcon} />}> <Vimeo /> </Tab>,
+              ]}
+            </Tabs>
           </div>
 
-          <div className={styles.rightReg}>
+          <div className={styles.right}>
             {this.props.search ? <SearchHistory /> : <RecentlyLiked /> }
           </div>
         </div>

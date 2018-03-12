@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button} from 'react-toolbox/lib/button';
+import PropTypes from 'prop-types';
 import {Tab, Tabs} from 'react-toolbox/lib/tabs';
 
 import IndeterminateProgressLine, {doWithProgressLine} from './IndeterminateProgressLine';
@@ -15,6 +15,20 @@ import {primaryTags} from '../lib/genres';
 
 
 export default class Feed extends Component {
+  static propTypes = {
+    initialFilters: PropTypes.object,
+    token: PropTypes.string,
+
+    popular: PropTypes.array,
+    latest: PropTypes.array,
+    longest: PropTypes.array,
+
+    fetchAndReceiveStreams: PropTypes.func,
+    fetchAndReceiveLatestStreamsAction: PropTypes.func,
+    fetchAndReceivePopularStreamsAction: PropTypes.func,
+    fetchAndReceiveLongestStreamsAction: PropTypes.func,
+  };
+
   reinitializeFilters = () => this.setState({filters: this.props.initialFilters});
   handleTabChange = activeSubFeed => this.setState({filters: this.props.initialFilters, activeSubFeed});
 
@@ -41,7 +55,7 @@ export default class Feed extends Component {
       this.onSearchTermChange(nextProps.initialFilters, nextProps.token) : false;
 
   setTags = tags => this.setState({tags});
-  handleTagClick = tag => Promise.resolve(this.reinitializeFilters()).then(this.loadActiveSubFeedStreams);
+  handleTagClick = _tag => Promise.resolve(this.reinitializeFilters()).then(this.loadActiveSubFeedStreams);
 
 
   state = {

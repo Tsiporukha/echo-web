@@ -20,25 +20,31 @@
   display: flex;
 }
 
-.leftReg{
-  composes: col-md-8 from './bootstrap.css';
+.left{
+  width: 67%;
+  margin: 0 7%;
+  background-color: #f2f2f2;
 
   .searchResultsPlaceholder{
+    display: flex;
+    width: 53.5%;
+    justify-content: center;
+    flex-wrap: wrap;
     position: absolute;
-    top: 142px;
-    left: 35%;
-    text-align: center;
+    top: 106px;
+    z-index: -1;
+    i{
+      width: 100%;
+      text-align: center;
+    }
   }
 }
 
-.rightReg{
-  composes: col-md-4 from './bootstrap.css';
-  composes: hidden-sm from './bootstrap.css';
-  composes: hidden-xs from './bootstrap.css';
+.right{
+  width: 33%;
 }
 
 .recentlyLiked{
-  position: absolute;
   padding-left: 14px;
   width: calc(100% - 15px);
   .itemsTitle{
@@ -47,13 +53,6 @@
   .songs{
     border-top: 1px solid #d0d0d0;
   }
-}
-
-.feedSourceContent{
-  composes: col-md-offset-1 from './bootstrap.css';
-  composes: col-md-10 from './bootstrap.css';
-  padding: 0;
-  background-color: #f2f2f2;
 }
 
 .streams{
@@ -120,5 +119,19 @@
     h4{
       margin: 0;
     }
+  }
+}
+
+@media (max-width: 992px) {
+  .left{
+    width: calc(100% - 30px);
+    margin: 0 15px;
+
+    .searchResultsPlaceholder{
+      width: 84%;
+    }
+  }
+  .right{
+    display: none;
   }
 }

@@ -22,28 +22,17 @@
 
 
 .left{
-  composes: col-md-8 from './bootstrap.css';
-  composes: col-xs-12 from './bootstrap.css';
+  width: 67%;
+  display: flex;
+  flex-wrap: wrap;
   padding: 0 0 58px 0;
   min-height: calc(100vh - 50px);
   background-color: white;
-}
-
-.fullHeight{
-  position: fixed;
-  min-height: 100vh;
-  position: absolute;
-  min-height: calc(100vh - 50px);
-  padding-bottom: 50px;
-  width: 100%;
-  height: 100%;
-  background: white;
-  left: 0;
+  align-content: flex-start;
 }
 
 .leftContent{
-  composes: col-md-offset-1 from './bootstrap.css';
-  composes: col-md-10 from './bootstrap.css';
+  @add-mixin mdPaddingOffsetCol 1;
 }
 
 .tags{
@@ -64,10 +53,25 @@
 
 
 .right{
-  composes: col-md-4 from './bootstrap.css';
-  composes: hidden-sm from './bootstrap.css';
-  composes: hidden-xs from './bootstrap.css';
+  width: 33%;
   font-size: 13px;
   color: #767676;
   padding: 15px;
+}
+
+
+@media (max-width: 992px) {
+  .leftContent{
+    margin: 0 15px;
+  }
+}
+
+@media (max-width: 900px) {
+  .right{
+    background: white;
+    display: none;
+  }
+  .left{
+    width: 100%;
+  }
 }
