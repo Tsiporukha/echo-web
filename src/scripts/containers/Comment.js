@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
@@ -11,19 +12,16 @@ const mapStateToProps = (state, ownProps) => ({
   user: state.users[state.comments[ownProps.id].user],
 });
 
-const mapDispatchToProps = dispatch => ({
-});
-
 
 const Comment = props => (
   <div className={styles.root}>
-    <Link to={`/profile/${props.user.id}`}>
-      <img src={props.user.avatar_url} alt='avatar' className={styles.avatar} />
+    <Link className={styles.avatar} to={`/profile/${props.user.id}`}>
+      <img src={props.user.avatar_url} alt='avatar' />
     </Link>
     <div className={styles.info}>
       <div>
-        <Link to={`/profile/${props.user.id}`}>
-          <span className={styles.name}>{props.user.name}</span>
+        <Link className={styles.name} to={`/profile/${props.user.id}`}>
+          {props.user.name}
         </Link>
         <span className={styles.time}>{fromNow(new Date(props.comment.created_at))}</span>
       </div>
@@ -32,5 +30,10 @@ const Comment = props => (
   </div>
 );
 
+Comment.propTypes = {
+  user: PropTypes.object,
+  comment: PropTypes.object,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Comment);
+
+export default connect(mapStateToProps)(Comment);
