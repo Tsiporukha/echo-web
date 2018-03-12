@@ -9,17 +9,13 @@
   display: flex;
 }
 
-.leftReg{
-  composes: col-md-8 from './bootstrap.css';
+.left{
+  width: 67%;
+  margin: 0 7%;
 }
-.rightReg{
-  composes: col-md-4 from './bootstrap.css';
-  composes: hidden-sm from './bootstrap.css';
-  composes: hidden-xs from './bootstrap.css';
-}
-
-.userData{
-  composes: col-md-offset-1 from './bootstrap.css';
+.right{
+  width: 33%;
+  margin: 0 2%;
 }
 
 .streams{
@@ -30,5 +26,15 @@
     margin: 0 0 14px;
     color: #6b6b6b;
     font-size: 13px;
+  }
+}
+
+@media (max-width: 900px) {
+  .left{
+    width: calc(100% - 30px);
+    margin: 0 15px;
+  }
+  .right{
+    display: none;
   }
 }

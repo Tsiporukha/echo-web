@@ -75,25 +75,22 @@ class Profile extends Component {
   render() {
     return (
       <div className={styles.root}>
-        <div className={styles.leftReg}>
-          <div className={styles.userData}>
+        <div className={styles.left}>
+          <User id={this.props.match.params.id} />
 
-            <User id={this.props.match.params.id} />
-
-            <Tabs theme={tabsTheme} index={this.state.tab} onChange={this.setAttr('tab')}>
-              <Tab label={<i className={styles.feedIcon}>language</i>}>
-                <div>
-                  {this.state.streams.map(streamId => (<Stream key={streamId} id={streamId} />))}
-                </div>
-              </Tab>
-              <Tab label={<i className={styles.favoriteIcon}>favorite</i>}>
-                <UserLikes userId={this.props.match.params.id} />
-              </Tab>
-            </Tabs>
-          </div>
+          <Tabs theme={tabsTheme} index={this.state.tab} onChange={this.setAttr('tab')}>
+            <Tab label={<i className={styles.feedIcon}>language</i>}>
+              <div>
+                {this.state.streams.map(streamId => (<Stream key={streamId} id={streamId} />))}
+              </div>
+            </Tab>
+            <Tab label={<i className={styles.favoriteIcon}>favorite</i>}>
+              <UserLikes userId={this.props.match.params.id} />
+            </Tab>
+          </Tabs>
         </div>
 
-        <div className={styles.rightReg}>
+        <div className={styles.right}>
           <SimilarUsers userId={this.props.match.params.id} />
         </div>
 
