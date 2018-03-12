@@ -41,7 +41,7 @@ class PopularSongs extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{width: '100%'}}>
         {this.state.songs.map(songId => <Song id={songId} key={songId} />)}
       </div>
     );

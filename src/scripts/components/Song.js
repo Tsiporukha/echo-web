@@ -25,7 +25,7 @@ const SongRender = (props, loginVisibility, toggleLoginVisibility) => (
             className={styles.playIcon}>play_arrow</i>}
       </span>
     </div>
-    <div className={`${styles.info} ${props.inQueue ? '' : styles.withLikeArea}`}>
+    <div className={`${styles.info} ${(props.inQueue || !props.song.user_id) ? '' : styles.withLikeArea}`}>
       <div className={styles.title}>{props.song.title}</div>
       <div className={styles.artist}>{props.song.artist}</div>
       <div className={styles.duration}>{duration(props.song.duration)}</div>

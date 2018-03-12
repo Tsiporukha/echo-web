@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import Song from '../components/Song';
 
-import {addClonedSongs, addClonedSongToTopAndPlay, remove as removeFromQueue} from '../actions/QueueActions';
+import {addClonedSongs, addClonedSongToTopAndPlay} from '../actions/QueueActions';
 import {pause, play} from '../actions/PlayerActions';
 import {toggleSongLike} from '../actions/EntitiesAUDActions';
 
@@ -16,7 +15,7 @@ const mapStateToProps = (state, ownProps) => ({
   token: state.session.token,
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   addToQueue: song => () => dispatch(addClonedSongs([song])),
   play: () => dispatch(play()),
   setCurrentSong: song => () => dispatch(addClonedSongToTopAndPlay(song)),
