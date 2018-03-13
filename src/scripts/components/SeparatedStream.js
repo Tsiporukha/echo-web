@@ -15,12 +15,8 @@ export default class SeparatedStream extends Component {
       !!this.props.stream &&
       <div className={styles.separated}>
         <StreamOpenGraph stream={this.props.stream} playlist={this.props.playlist} />
-        <div className={styles.fullStreamContainer}>
-          <div className={styles.fullStream}>
-            <StreamCard {...this.props} />
-            <StreamTabs {...this.props} />
-          </div>
-        </div>
+        <StreamCard {...this.props} />
+        <StreamTabs {...this.props} />
       </div>
     );
   }
