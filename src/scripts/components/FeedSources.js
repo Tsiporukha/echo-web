@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Tab, Tabs} from 'react-toolbox/lib/tabs';
 
 import Genres from './Genres';
+import Feed from '../containers/Feed';
 import FeedSearch from '../containers/FeedSearch';
 import PopularSongs from '../containers/PopularSongs';
 import Youtube from '../containers/Youtube';
@@ -36,13 +37,16 @@ export default class FeedSources extends Component {
             <MaybeSearchResultsPlaceholder search={this.props.search} />
 
             <Tabs theme={tabsTheme} index={this.state.index} onChange={this.handleTabChange}>
-              {!this.props.search && <Tab label={<i className={styles.genresIcon}>forum</i>}> <Genres /> </Tab>}
-              <Tab label={<i className={styles.feedIcon}>language</i>}> <FeedSearch /> </Tab>
-              <Tab label={<i className={styles.whatshotIcon}>whatshot</i>}> <PopularSongs /> </Tab>
-              {this.props.search && [
+              {this.props.search ? [
+                <Tab label={<i className={styles.feedIcon}>language</i>}> <FeedSearch /> </Tab>,
+                <Tab label={<i className={styles.whatshotIcon}>whatshot</i>}> <PopularSongs /> </Tab>,
                 <Tab label={<i className={styles.youtubeIcon} />}> <Youtube /> </Tab>,
                 <Tab label={<i className={styles.soundcloudIcon} />}> <Soundcloud /> </Tab>,
                 <Tab label={<i className={styles.vimeoIcon} />}> <Vimeo /> </Tab>,
+              ] : [
+                <Tab label={<i className={styles.genresIcon}>forum</i>}> <Genres /> </Tab>,
+                <Tab label={<i className={styles.feedIcon}>language</i>}> <Feed /> </Tab>,
+                <Tab label={<i className={styles.whatshotIcon}>whatshot</i>}> <PopularSongs /> </Tab>,
               ]}
             </Tabs>
           </div>
