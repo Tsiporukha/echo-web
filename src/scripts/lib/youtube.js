@@ -15,7 +15,7 @@ const addYTDuration = items => {
   const getByVideoId = (itms, item, itemIndx) =>
     itms[itemIndx].id === item.id.videoId ? itms[itemIndx] : findById(itms, item);
   const addDuration = itemsDetails => (item, index) =>
-    ({...item, snippet: {...item.snippet, duration: getByVideoId(itemsDetails, item, index) || 0}});
+    ({...item, snippet: {...item.snippet, duration: getByVideoId(itemsDetails, item, index).contentDetails.duration || 0}});
 
   return luch.get(`${BASE_URL}/videos`, {part: 'contentDetails', id: idsStr, key: YOUTUBE_API_KEY})
     .then(getJson)
@@ -27,7 +27,7 @@ const ytDurationToSeconds = ytDuration => {
   return ((parseInt(match[1]) || 0) * 3600) + ((parseInt(match[2]) || 0) * 60) + (parseInt(match[3]) || 0);
 };
 
-function parseYoutubeItem(item) {
+const parseYoutubeItem = item => {
   const [artist, title] = item.snippet.title.split(/\s[–-]\s/);
   return {
     uid: `youtube/${item.id.videoId}`,
@@ -39,10 +39,10 @@ function parseYoutubeItem(item) {
     title,
     duration: ytDurationToSeconds(item.snippet.duration),
   };
-}
+};
 
 export const searchOnYoutube = ({term, limit}) =>
   luch.get(`${BASE_URL}/search`, {part: 'snippet', type: 'video', videoCategoryId: 10, maxResults: limit, q: term, key: YOUTUBE_API_KEY})
     .then(getJson)
     .then(json => addYTDuration(json.items))
-    .then(items => items.map(item => parseYoutubeItem(item)));
+    .then(items => items.map(parseYoutubeItem));
