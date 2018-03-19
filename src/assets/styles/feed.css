@@ -22,7 +22,7 @@
 
 .left{
   width: 67%;
-  margin: 0 7%;
+  padding: 0 7%;
   background-color: #f2f2f2;
 
   .searchResultsPlaceholder{
@@ -46,9 +46,9 @@
 
 .recentlyLiked{
   padding-left: 14px;
-  width: calc(100% - 15px);
+  width: 100%;
   .itemsTitle{
-    padding: 8px 0 0;
+    margin: 8px 0 0;
   }
   .songs{
     border-top: 1px solid #d0d0d0;
@@ -56,7 +56,7 @@
 }
 
 .streams{
-  padding: 2px 0;
+  margin: 2px 0;
 }
 
 .tags{
@@ -113,8 +113,7 @@
   }
 
   div{
-    padding: 16px 0;
-    margin: 0;
+    margin: 16px 0;
     color: #343434;
     h4{
       margin: 0;
@@ -124,8 +123,8 @@
 
 @media (max-width: 992px) {
   .left{
-    width: calc(100% - 30px);
-    margin: 0 15px;
+    width: 100%;
+    padding: 0 15px;
 
     .searchResultsPlaceholder{
       width: 84%;

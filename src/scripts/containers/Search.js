@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
-import FeedSources from '../components/FeedSources';
+import SearchSources from '../components/SearchSources';
 
 import {updateSearchTerm} from '../actions/SearchActions';
 
@@ -82,7 +82,7 @@ class Search extends Component {
 
         {this.state.resultsVisibility && <div>
           <div className={styles.results} onFocus={this.showResults}>
-            <FeedSources search />
+            <SearchSources />
           </div>
 
           <i className={styles.backIcon} onClick={this.hideResults}>arrow_back</i>
