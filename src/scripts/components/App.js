@@ -10,7 +10,6 @@ import Stream from '../containers/Stream';
 import Profile from '../containers/Profile';
 import ProfileEditing from '../containers/ProfileEditing';
 import Player from '../containers/Player';
-import GuestLanding from '../containers/GuestLanding';
 
 import styles from '../../assets/styles/app.css';
 
@@ -22,8 +21,7 @@ const App = () => (
 
       <Navbar />
       <div className={styles.content}>
-        <Route exact path='/' component={GuestLanding} />
-        <Route exact path='/feed' component={FeedSources} />
+        <Route exact path='/' component={FeedSources} />
         <Route exact path='/feed/:id' component={Stream} />
         <Route exact path='/profile/:id' component={Profile} />
         <Route exact path='/settings' component={ProfileEditing} />
