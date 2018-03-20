@@ -12,7 +12,7 @@ const parseSong = song => {
     source: 'soundcloud',
     artwork_url: song.artwork_url || song.user.avatar_url,
     data_url: song.permalink_url,
-    export_data_url: `${song.stream_url}?client_id=${SOUNDCLOUD_CLIENT_ID}`,
+    export_data_url: song.permalink_url,
     artist,
     title,
     duration: Math.round(song.duration / 1000),
