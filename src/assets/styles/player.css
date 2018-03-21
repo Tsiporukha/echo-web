@@ -42,7 +42,6 @@
 	font-size: 28px;
 	border-radius: 60px;
 	padding: 5px;
-	margin: 0 30px 0 16px;
 	color: #959fad;
 }
 .currentQueueIconActive{
@@ -50,111 +49,254 @@
 	background-color: #525d7a;
 	color: white;
 }
-
+.playerMenuIcon, .rpIcon{
+  composes: currentQueueIcon;
+  display: none;
+}
+.playerMenuIconActive, .rpIconActive{
+  composes: currentQueueIconActive;
+  display: none;
+}
 
 :root{
   --playerHeight: 50px;
+  --iframePlayerHeight: 135px;
 }
-
 
 .root{
-  display: block;
-  position: absolute;
+  position:fixed;
   bottom: 0;
-  height: var(--playerHeight);
   z-index: 2;
-}
-
-.bottomPlayer {
-	height: var(--playerHeight);
-	position:fixed;
-  bottom: 0;
-	display: flex;
-	align-items: center;
-	width: 100%;
+  display: flex;
+  width: 100%;
   background: #273558;
-	color: #fff;
-	font-size: 13px;
+  color: #fff;
+  font-size: 13px;
+  align-items: center;
 
   i{cursor: pointer;}
 
-	.artwork, .artwork img {
-		height: var(--playerHeight);
-    min-width: var(--playerHeight);
-	}
+  > * {
+    display: flex;
+    align-items: center;
+  }
+}
 
-	.songInfo {
-    padding-top: 8px;
-		width: 12%;
-		height: var(--playerHeight);
-		h5, h6 {
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			font-size: 12px;
-			color: white;
-		}
-		h5{
-			position: relative;
-			top: -3px;
-			font-size: 14px;
-      margin-top: 0;
-      margin-bottom: 0;
-		}
-    h6 {
-      margin-top: 0;
-      font-weight: 400;
+.playerArea{
+  display: flex;
+  width: 100%;
+  > * {
+    display: flex;
+    align-items: center;
+    margin: 0 4px;
+
+    > * {
+      margin: 0 7px;
     }
-	}
+  }
+}
 
-	.songProgress, .playerVolume {
-		padding-top: 10px;
-		padding-bottom: 10px;
-		margin: 0 2px;
-	}
-	.playerVolume {
-		width: 10%;
-	}
-	.songProgress {
-		display: flex;
-		flex-grow: 2;
-	}
 
-  .plLength{
-		display: block;
-		position: absolute;
-		width: 16px;
-		height: 16px;
-		background-color: #0091ea;
-		border-radius: 600px;
-		bottom: 0;
-		right: 37px;
-		font-weight: 500;
-		color: white;
-		font-size: 10px;
-		padding-top: 2px;
-		text-align: center;
-	}
+.infoArea{
+  width: calc(12.5% + var(--playerHeight) * 1.4 + 7px);
+  margin-left: 0;
 
-	> * {
-		margin: 0 7px;
-    &:first-child {
-  		margin-left: 0;
-  	}
-	}
+  .artwork {
+    margin-left: 0;
+    height: var(--playerHeight);
+    width: calc(var(--playerHeight) * 1.4);
 
+    img{
+      height: 100%;
+      max-width: calc(var(--playerHeight) * 1.4);
+    }
+  }
+
+  .info {
+    width: 100%;
+    overflow: hidden;
+    color: white;
+    .title, .artist {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .title{
+      margin: 0 0 4px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .artist{
+      font-size: 12px;
+    }
+  }
+}
+
+
+.volumeArea {
+  width: 12.5%;
+  > * {
+    margin: 0 2px;
+  }
+}
+.progressArea {
+  flex-grow: 1;
+  > * {
+    margin: 0 4px;
+  }
 }
 
 .reactPlayer{
-  position: fixed;
+  position: absolute;
+  height: var(--iframePlayerHeight)!important;
+  width: 33%!important;
+  margin: 0;
   bottom: 50px;
-  right: 100px;
+  right: 0;
+  background-color: black;
 }
 
-.currentQueue{
-  composes: col-xs-3 from './bootstrap.css';
-  position: fixed;
-  bottom: 62px;
-  height: 400px;
+.queueContainer{
+  position: absolute;
+  top: calc(-100vh + 100px);
+  height: calc(100vh - 100px - var(--iframePlayerHeight));
+  width: 33%;
   right: 0;
+  background-color: #e5e5e5;
+  margin: 0;
+
+  transition: transform .15s linear;
+
+  &.p0{
+    transform: translateX(100%);
+  }
+}
+
+.menuIconArea{
+  margin: 0 14px;
+}
+
+
+@media (max-width: 650px) {
+  .playIcon, .pauseIcon, .prevIcon, .nextIcon{
+    font-size: 36px;
+  }
+
+  .root{
+    flex-wrap: wrap;
+    width: 100%;
+
+
+    > * {
+      width: 100%;
+      min-height: var(--playerHeight);
+      justify-content: center;
+      background-color: #273558;
+      transition: transform .15s linear;
+    }
+  }
+
+
+  .playerArea{
+    flex-wrap: wrap;
+    order: 1;
+    z-index: 1;
+    position: absolute;
+    bottom: 50px;
+
+
+    &.p0{
+      transform: translateY(100%);
+    }
+
+    > * {
+      width: 100%;
+      min-height: var(--playerHeight);
+      justify-content: center;
+
+      > * {
+        margin: 0;
+      }
+    }
+
+    .infoArea{
+      order: 1;
+      margin: 4px;
+
+      .artwork{
+        img{
+          border-radius: 4px;
+        }
+      }
+      .info{
+        margin-left: 10px;
+      }
+    }
+
+    .volumeArea{
+      order: 4;
+    }
+
+    .playbackArea{
+      order: 3;
+      justify-content: space-around;
+    }
+
+    .progressArea{
+      order: 2;
+      margin: 0 6px;
+    }
+
+  }
+
+
+  .reactPlayer{
+    order: 0;
+    width: 100%!important;
+    height: calc(100vh - 258px)!important;
+    position: absolute;
+    bottom: 258px;
+
+    transition: transform .15s linear, height .075s linear .075s;
+
+    &.p0{
+      transform: translateY(calc(100% + 208px));
+      height: 208px!important;
+    }
+    &.p1{
+      transform: translateY(208px);
+      height: 208px!important;
+    }
+  }
+
+
+  .queueContainer{
+    order: 0;
+    position: absolute;
+    top: calc(-100vh + 51px);
+    height: calc(100vh - 258px);
+
+    transition: transform .15s linear, height .075s linear .075s;
+
+    &.p0{
+      transform: translate(0, calc(-100vh + 51px));
+    }
+    &.p1{
+      transform: translateY(calc(100vh - 258px));
+      height: 208px;
+    }
+  }
+
+
+  .menuIconArea{
+    order: 3;
+    justify-content: space-around;
+    margin: 0;
+    z-index: 2;
+    height: 51px;
+
+    > * {
+      display: flex;
+    }
+  }
 }

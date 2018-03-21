@@ -16,8 +16,11 @@ export const setCurrentSong = song => ({
 });
 
 
-const getNextSongIndex = (currentSongIndex, songsLength) => currentSongIndex === songsLength - 1 ? 0 : currentSongIndex + 1;
-const getPrevSongIndex = (currentSongIndex, songsLength) => currentSongIndex === 0 ? songsLength - 1 : currentSongIndex - 1;
+const getNextSongIndex = (currentSongIndex, songsLength) =>
+  currentSongIndex === songsLength - 1 ? 0 : currentSongIndex + 1;
+
+const getPrevSongIndex = (currentSongIndex, songsLength) =>
+  currentSongIndex === 0 ? songsLength - 1 : currentSongIndex - 1;
 
 
 export const getQueueSongs = store =>
@@ -30,14 +33,17 @@ export const getQueueSongs = store =>
 
 
 const getCurrentSongPlaylistSongs = store => store.player.currentSong.playlist ?
-  getPlaylistSongs(store.songs, store.playlists[store.player.currentSong.playlist])
-  : getQueueSongs(store);
+  getPlaylistSongs(store.songs, store.playlists[store.player.currentSong.playlist]) :
+  getQueueSongs(store);
 
 
-const getNextSongId = (playlistSongs, currentSong) => currentSong.id &&
-  playlistSongs[getNextSongIndex(getIndexById(playlistSongs, currentSong), playlistSongs.length)].id;
-const getPrevSongId = (playlistSongs, currentSong) => currentSong.id &&
-  playlistSongs[getPrevSongIndex(getIndexById(playlistSongs, currentSong), playlistSongs.length)].id;
+const getSeqSongId = getIndex => (playlistSongs, currentSong) => currentSong && currentSong.id &&
+  playlistSongs[getIndex(getIndexById(playlistSongs, currentSong), playlistSongs.length)].id;
 
-export const getNextSong = store => store.songs[getNextSongId(getCurrentSongPlaylistSongs(store), store.player.currentSong)];
+const getNextSongId = getSeqSongId(getNextSongIndex);
+const getPrevSongId = getSeqSongId(getPrevSongIndex);
+
+
+export const getNextSong = store =>
+  store.songs[getNextSongId(getCurrentSongPlaylistSongs(store), store.player.currentSong)];
 export const getPrevSong = store => store.songs[getPrevSongId(getCurrentSongPlaylistSongs(store), store.player.currentSong)];
