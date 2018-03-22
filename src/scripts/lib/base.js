@@ -1,6 +1,6 @@
 import v4 from 'uuid/v4';
 
-export const addId = item => ({...item, id: v4()});
+export const addId = item => ({...item, originId: item.id, id: v4()});
 export const addIds = items => items.map(addId);
 
 export const createIdKeyHash = item => ({[item.id]: item});

@@ -14,39 +14,34 @@
 
 
 .root{
-  composes: col-xs-4 from './bootstrap.css';
-  padding: 0;
-  position: fixed;
-  top: 50px;
-  right: 0;
-  height: calc(100vh - 50px - 50px);
-  background-color: #e5e5e5;
+  height: 100%;
+  width: 100%;
+  background-color:  #eaeaea;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .header{
-  padding: 18px 14px;
+  height: 50px;
   font-size: 13px;
-  height: 54px;
   color: #6a6a6a;
   font-weight: 500;
   display: flex;
-  background-color:  #eaeaea;
-
-  .length{
-    width: calc(100% - 50px);
-  }
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 14px;
+  width: 100%;
 
   .icons{
-    width: 50px;
     display: flex;
   }
 }
 
 .items{
   padding: 0 14px;
-  height: calc(100% - 54px - 135px);
+  width: 100%;
+  height: calc(100% - 50px);
   overflow: auto;
-  background-color:  #eaeaea;
 }
 
 
@@ -87,7 +82,7 @@
   &.disabled{
     opacity: 1;
     .caption, .icon{
-      color: black;
+      color: #7b7b7b;
     }
   }
 }
@@ -98,11 +93,17 @@
 
 
 .sortableItem{
- display: flex;
- z-index: 2;
- .item{width: calc(100% - 36px);}
+  display: flex;
+  z-index: 2;
+  background-color: inherit;
+
+  .item{
+    width: 100%;
+    overflow: hidden;
+  }
 }
 .dragHandler{
- margin: auto 12px auto 0;
- color: #7b7b7b;
+  margin: auto 12px auto 0;
+  color: #7b7b7b;
+  cursor: move;
 }

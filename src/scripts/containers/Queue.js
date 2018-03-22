@@ -5,8 +5,6 @@ import {IconMenu, MenuItem, MenuDivider} from 'react-toolbox/lib/menu';
 import {arrayMove} from 'react-sortable-hoc';
 
 import LoginDialog from '../components/LoginDialog';
-import QueueSong from './QueueSong';
-import QueuePlaylistHolder from './QueuePlaylistHolder';
 import StreamCreation from './StreamCreation';
 import RoomCreation from './RoomCreation';
 import SortableItems from '../components/SortableItems';
@@ -22,7 +20,7 @@ const mapStateToProps = state => ({
   authed: !!state.session.token,
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   clear: items => () => {
     dispatch(clearPlayer());
     return dispatch(remove(items));
@@ -59,9 +57,10 @@ class Queue extends Component {
             <IconMenu icon='save' menuRipple theme={styles}>
               <MenuItem icon='save' caption='Save To:' disabled theme={styles} />
               <MenuDivider theme={styles} />
-              <MenuItem icon='create_new_folder' caption='Existing Room' theme={styles} />
+              <MenuItem disabled icon='create_new_folder' caption='Existing Room' theme={styles} />
               <MenuItem icon='playlist_add' caption='New Room' theme={styles} onClick={this.toggleRoomPublication} />
-              <MenuItem icon='playlist_add' caption='New Stream' theme={styles} onClick={this.toggleStreamPublication} />
+              <MenuItem icon='playlist_add' caption='New Stream' theme={styles}
+                disabled={!this.props.items.length} onClick={this.toggleStreamPublication} />
             </IconMenu>
             {this.state.streamPublication && (
               this.props.authed ?
