@@ -11,11 +11,11 @@ import styles from '../../assets/styles/song.css';
 
 const SongRender = (props, loginVisibility, toggleLoginVisibility) => (
   <div className={styles.root}>
-    {props.song.user_id && !props.inQueue && <span className={styles.likeArea}>
+    {props.song.user_id && !props.inQueue && <div className={styles.likeArea}>
       <span>{props.song.likers_count}</span>
       <i onClick={getLikeAction(props.song, props.token, props.toggleLike, toggleLoginVisibility)}
         className={props.song.liked ? styles.likedIcon : styles.likeIcon}>favorite</i>
-    </span>}
+    </div>}
     <div className={styles.artwork}>
       <img src={props.song.artwork_url} alt='artwork' />
       <span className={styles.playPause}>
@@ -25,7 +25,7 @@ const SongRender = (props, loginVisibility, toggleLoginVisibility) => (
             className={styles.playIcon}>play_arrow</i>}
       </span>
     </div>
-    <div className={`${styles.info} ${(props.inQueue || !props.song.user_id) ? '' : styles.withLikeArea}`}>
+    <div className={styles.info}>
       <div className={styles.title}>{props.song.title}</div>
       <div className={styles.artist}>{props.song.artist}</div>
       <div className={styles.duration}>{duration(props.song.duration)}</div>

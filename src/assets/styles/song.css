@@ -3,22 +3,29 @@
   cursor: pointer;
 }
 .removeIcon, .addIcon{
-//  padding: 6px 12px 6px 0;
-  border-radius: 50%;
+  border-radius: 100%;
+  margin: 0 8px;
+  padding: 8px;
+  composes: ripple from './effects.css';
 }
 .playIcon, .pauseIcon{
   font-size: 26px;
   color: white;
   padding: 8px;
-  border-radius: 60px;
+  border-radius: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  composes: ripple from './effects.css';
 
-  &:hover, &:active {background-color: rgba(0, 0, 0, 0.8);}
+  &:hover, &:active {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
 }
 .likeIcon{
+  composes: ripple from './effects.css';
+  border-radius: 100%;
   color: #757575;
   font-size: 44px;
-  margin: auto 14px;
+  margin: 0 14px;
 }
 .likedIcon{
   composes: likeIcon;
@@ -49,13 +56,11 @@
 
 .likeArea{
   display: flex;
-  text-align: center;
-  width: 85px;
+  align-items: center;
+  margin-left: 6px;
   span{
     color: #9a9a9a;
     font-size: 13px;
-    margin: auto;
-    padding-left: 6px;
   }
 }
 
@@ -69,12 +74,17 @@
   }
 }
 
+.playPause{
+  display: inline-flex;
+  position: relative;
+  left: 24px;
+  bottom: 55px;
+}
+
 .info{
-  width: calc(100% - 90px - 36px);
-  padding-left: 18px;
-  &.withLikeArea{
-    width: calc(100% - 90px - 36px - 85px);
-  }
+  width: 100%;
+  margin-left: 18px;
+  overflow: hidden;
 
   .title, .artist{
     text-overflow: ellipsis;
@@ -84,7 +94,7 @@
 
   .artist{
     color: #343434;
-    padding: 4px 0 2px 0;
+    margin: 4px 0 2px 0;
   }
 
   .artist, .duration{
@@ -94,17 +104,12 @@
 }
 
 .icons{
-  margin: auto 0;
   visibility: hidden;
+  display: flex;
+  align-items: center;
 }
 
-.playPause{
-  position: relative;
-  width: 40px;
-  height: 40px;
-  left: 24px;
-  bottom: 55px;
-}
+
 
 .recentlyLiked{
   composes: root;
