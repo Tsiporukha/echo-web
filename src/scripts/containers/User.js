@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
@@ -26,6 +26,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
+const getFollowersLabel = count => `${count} follower${count % 10 === 1 ? '' : 's'}`;
+
 const User = props => (
   <div className={styles.root}>
     <Link to={`/profile/${props.user.id}`}>
@@ -36,13 +38,13 @@ const User = props => (
         <Link to={`/profile/${props.user.id}`}>
           <span className={styles.name}>{props.user.name}</span>
         </Link>
-        {props.currentUser.id === props.user.id &&
+        {/* {props.currentUser.id === props.user.id &&
           <Link className={styles.editIconArea} to='/settings'>
             <i className={styles.editIcon}>mode_edit</i>
           </Link>
-        }
+        } */}
       </div>
-      <div className={styles.followersCount}>{props.user.followers_count} followers</div>
+      <div className={styles.followersCount}>{getFollowersLabel(props.user.followers_count)}</div>
     </div>
     {props.token && !!props.user.id && (props.user.id !== props.currentUser.id) && (props.user.is_followed ?
       <Button onClick={props.unfollow(props.user, props.token)} className={styles.followedBtn} icon='done' label='followed' raised primary /> :

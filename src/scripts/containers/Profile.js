@@ -18,7 +18,7 @@ import styles from '../../assets/styles/profile.css';
 import tabsTheme from '../../assets/styles/tabsTheme.css';
 
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   token: state.session.token,
 });
 
@@ -45,7 +45,10 @@ class Profile extends Component {
   getStreams = (offset, token) => getStreams({user_id: this.props.match.params.id, offset: this.state.streams.length, limit: 5}, token)
     .then(this.receiveStreams);
 
-  loadStreams = (token = this.props.token) => doWithProgressLine(() => this.getStreams(token), this.setAttr('fetching'));
+  loadStreams = (token = this.props.token) => doWithProgressLine(
+    () => this.getStreams(this.state.streams.length, token),
+    this.setAttr('fetching')
+  );
   reinit = () => this.setState(initialState, this.loadStreams);
 
   reinitPropsChanged = (nextProps, props) =>
