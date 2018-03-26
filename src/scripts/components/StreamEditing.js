@@ -73,56 +73,55 @@ export default class StreamEditing extends Component {
     return (
       <div className={styles.root}>
         <div className={styles.header}>
-          <div className={styles.leftReg}>
-            <div className={styles.title}>
-              <span>Save Stream</span>
-            </div>
+          <div className={styles.title}>
+            Save Stream
           </div>
-          <div className={styles.rightReg}>
-            <div className={styles.buttons}>
-              <Button theme={styles} icon='save' label='Save' raised onClick={this.maybeSave} />
-              <Button theme={styles} label='Cancel' flat onClick={this.props.onCancel} />
-            </div>
+          <div className={styles.buttons}>
+            <Button theme={styles} icon='save' label='Save' raised onClick={this.maybeSave} />
+            <Button theme={styles} label='Cancel' flat onClick={this.props.onCancel} />
           </div>
         </div>
 
         <div className={styles.body}>
-          <div className={styles.leftReg}>
-            <div className={styles.bodyLeftReg}>
+          <div className={styles.left}>
+            <div className={styles.textData}>
+              <Input type='text' name='title' label='Room Name'
+                className={styles.sTitle} theme={styles} value={this.state.title}
+                onChange={this.setAttr('title')}
+                error={this.maybeError(this.state.title, 'Room title is required')} />
+              <Input type='text' multiline name='description' label='Room Description'
+                className={styles.sDescription} theme={styles} maxLength={1000} value={this.state.description}
+                onChange={this.setAttr('description')}
+                error={this.maybeError(this.state.description, 'Room description is required')} />
+            </div>
 
-              <div>
-                <Input type='text' name='title' label='Room Name'
-                  className={styles.pName} theme={styles} value={this.state.title}
-                  onChange={this.setAttr('title')}
-                  error={this.maybeError(this.state.title, 'Room title is required')} />
-                <Input type='text' multiline name='description' label='Room Description'
-                  className={styles.pDescription} theme={styles} maxLength={1000} value={this.state.description}
-                  onChange={this.setAttr('description')}
-                  error={this.maybeError(this.state.description, 'Room description is required')} />
+            <div className={styles.artworksArea}>
+              <div className={styles.actionTitle}>Choose Artwork:</div>
 
-                <div className={styles.actionTitle}>Choose Artwork:</div>
-                <div className={styles.artworks}>
-                  <UploadArtwork
-                    uploadedArtworkUrl={this.state.uploadedArtworkUrl}
-                    rmUploadedArtworkUrl={this.rmUploadedArtworkUrl}
-                    selectedArtworkUrl={this.state.artwork_url}
-                    setArtworkUrl={this.setArtworkUrl}
-                    uploadArtwork={this.uploadArtwork}
-                    setUploadedArtworkUrl={this.setAttr('uploadedArtworkUrl')}
-                    styles={styles} />
-                  {this.props.songs.map(song =>
-                    (<a onClick={this.setArtworkUrl(song.artwork_url)} key={song.id}>
-                      <img src={song.artwork_url} alt='artwork'
-                        className={this.state.artwork_url === song.artwork_url ? styles.selected : ''}
-                      />
-                      {this.state.artwork_url === song.artwork_url && <i className={styles.selectedIcon}>check_circle</i>}
-                    </a>)
-                  )}
-                </div>
+              <div className={styles.artworks}>
+                <UploadArtwork
+                  uploadedArtworkUrl={this.state.uploadedArtworkUrl}
+                  rmUploadedArtworkUrl={this.rmUploadedArtworkUrl}
+                  selectedArtworkUrl={this.state.artwork_url}
+                  setArtworkUrl={this.setArtworkUrl}
+                  uploadArtwork={this.uploadArtwork}
+                  setUploadedArtworkUrl={this.setAttr('uploadedArtworkUrl')}
+                  styles={styles} />
+
+                {this.props.songs.map(song =>
+                  (<a onClick={this.setArtworkUrl(song.artwork_url)} key={song.id}>
+                    <img src={song.artwork_url} alt='artwork'
+                      className={this.state.artwork_url === song.artwork_url ? styles.selected : ''}
+                    />
+                    {this.state.artwork_url === song.artwork_url && <i className={styles.selectedIcon}>check_circle</i>}
+                  </a>)
+                )}
               </div>
+            </div>
 
+            <div className={styles.tagsArea}>
               <div className={styles.actionTitle}>Choose Tags:</div>
-              <div className={styles.tagsArea}>
+              <div className={styles.tags}>
                 <TagsAutocomplete
                   allTags={this.getTags()}
                   addedTags={this.state.tags}
@@ -131,21 +130,16 @@ export default class StreamEditing extends Component {
                   errorHandler={this.maybeError(this.state.tags.length, 'Tags are required')}
                 />
               </div>
-
-
             </div>
           </div>
 
-          <div className={styles.bodyRightReg}>
-            <div className={styles.tracklistInfo}>
+          <div className={styles.right}>
+            <div className={styles.tracklist}>
               <b>Tracklist:</b> <span>{this.props.songs.length} songs, {duration(playlistDuration(this.props.songs))}</span>
-            </div>
-
-            <div>
               <SortableItems playlist={this.props.playlist} items={this.state.songs} onSortEnd={this.onSortEnd} useDragHandle />
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
     );

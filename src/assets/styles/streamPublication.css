@@ -27,61 +27,53 @@
   background-color: #23365a;
   color: white;
   display: flex;
-}
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
 
-.leftReg{
-  composes: leftReg from './navbar.css';
-  font-size: 15px;
-  font-weight: 500;
-}
-.leftRegContent{
-  composes: col-md-offset-1 from './bootstrap.css';
-  composes: col-md-11 from './bootstrap.css';
-}
-.rightReg{
-  composes: rightReg from './navbar.css';
-
+  .title{
+    display: flex;
+    font-size: 15px;
+    font-weight: 500;
+  }
   .buttons{
-    display: inline-flex;
+    display: flex;
     height: 100%;
   }
 }
 
-.title{
-  composes: leftRegContent;
-  display: flex;
-  span{
-    margin: auto 0;
-  }
-}
 
 .body{
-  .leftReg{height: auto;}
+  display: flex;
 }
 
-.bodyLeftReg{
-  composes: leftRegContent;
-//  width: 100%;
+.left{
+  width: 67%;
+  padding: 0 7%;
 }
-.bodyRightReg{
-  composes: rightReg from './navbar.css';
-  display: block;
-  min-height: calc(100vh - 50px);
-  height: auto;
+
+.right{
+  width: 33%;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: calc(100vh + 50px);
   background-color: #f7f7f7;
   padding: 12px;
+  align-items: flex-start;
 }
 
 
-.pName{
-  width: 45%;
+.sTitle{
+  width: 60%;
   margin-top: 40px;
 }
-.pDescription{
-  width: 65%;
+.sDescription{
+  width: 75%;
 }
 
-.actionTitle{padding: 6px 0;}
+.actionTitle{
+  margin: 6px 0;
+}
 
 .artworks{
   width: 100%;
@@ -105,7 +97,8 @@
   }
 }
 
-.tagsArea{
+
+.tags{
   .tag, .atag{
     display: inline-block;
     background-color: #ececec;
@@ -129,13 +122,17 @@
 }
 
 
+.tracklist{
+  width: 100%;
+}
+
+
 /* UploadArtwork styles */
 .uploadArtwork{
   padding: 0;
   margin: 6px;
   height: 88px;
   width: 88px;
-  text-align: center;
   color: #6e6e6e;
   cursor: pointer;
 
@@ -143,22 +140,25 @@
     border: 1px dashed #6e6e6e;
     border-radius: 10px;
     height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
     i{
-      font-size: 60px;
+      font-size: 64px;
       position: relative;
       left: 2px;
       top: 4px;
     }
     span{
       font-size: 11px;
-      position: relative;
-      top: -4px;
       color: black;
     }
     input{
       display: block;
-      position: absolute;
-      top: 0;
+      position: relative;
+      top: -92%;
       height: 100%;
       width: 100%;
       cursor: pointer;
@@ -270,3 +270,46 @@
   composes: bar;
 }
 /* end Autocomplete theme */
+
+
+@media (max-width: 900px) {
+  .body{
+    flex-wrap: wrap;
+  }
+  .left{
+    width: 100%;
+    padding: 0 15px 25px;
+  }
+  .right{
+    width: 100%;
+    min-height: auto;
+    padding-bottom: 50px;
+  }
+
+  .textData, .artworksArea, .tagsArea{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    > div {
+      justify-content: center;
+    }
+  }
+
+  .sTitle{
+    width: 80%;
+  }
+  .sDescription, .autocomplete{
+    width: 90%;
+  }
+
+}
+
+@media (max-width: 640px) {
+  .sTitle{
+    width: 90%;
+  }
+  .sDescription, .autocomplete{
+    width: 100%;
+  }
+}
