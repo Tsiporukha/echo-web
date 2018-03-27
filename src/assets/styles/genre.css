@@ -39,7 +39,10 @@
   font-size: 13px;
   background-color: white;
   margin: 16px 0;
-  .t{margin: 0 24px 0 6px;}
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .tag{
@@ -48,7 +51,9 @@
   margin: 4px 6px;
   background: #e8e8e8;
   padding: 4px 14px;
+  background: #e8e8e8;
   border-radius: 12px;
+  cursor: pointer;
 }
 
 

@@ -1,8 +1,6 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React from 'react';
 
-import {IconMenu, MenuItem, MenuDivider} from 'react-toolbox/lib/menu';
-import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
+import {SortableContainer, SortableElement, SortableHandle} from 'react-sortable-hoc';
 
 import QueueSong from '../containers/QueueSong';
 import QueuePlaylistHolder from '../containers/QueuePlaylistHolder';

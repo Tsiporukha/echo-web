@@ -74,7 +74,7 @@ class RoomCard extends Component {
             <div className={styles.title}>
               <Link to={`/genres/${this.props.room.genre}/rooms/${this.props.room.id}`}> {this.props.playlist.title} </Link>
             </div>
-            <div>
+            <div style={{display: 'flex'}}>
               <ShareIconMenu path={`/genres/${this.props.room.genre}/rooms/${this.props.room.id}`} picture={this.props.room.artwork_url}
                 title={this.props.playlist.title} description={this.props.playlist.description} />
               <AddToQueueButton type='room' holder={this.props.room} playlist={this.props.playlist} songs={this.props.songs} />

@@ -51,7 +51,6 @@
 .header{
   display: flex;
   flex-wrap: wrap;
-  line-height: 2;
   b{font-weight: 500;}
   a{
     color: #0e8ffc;

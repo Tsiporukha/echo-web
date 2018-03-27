@@ -1,14 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 
 import {getStreamProps} from './Stream';
 
-import {duration} from '../lib/duration';
-
 import styles from '../../assets/styles/song.css';
 
 
-const getPlayAction = (isCurrentSong, playCurrentSong, setCurrentSong, song) => isCurrentSong ? playCurrentSong : setCurrentSong;
+// const getPlayAction = (isCurrentSong, playCurrentSong, setCurrentSong, song) => isCurrentSong ? playCurrentSong : setCurrentSong;
 
 const RecentlyLikedStream = props => (
   <div className={styles.recentlyLiked}>

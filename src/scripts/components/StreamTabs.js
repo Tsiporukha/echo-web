@@ -27,7 +27,7 @@ export default class StreamDetails extends Component {
           <Tab label={`COMMENTS(${this.props.stream.comments_count})`}>
             <CommentPublication stream={this.props.stream} />
             {this.props.stream.comments.length < this.props.stream.comments_count &&
-              <Button label='Load more comments'
+              <Button label='Load more comments' style={{backgroundColor: '#e8e8e8'}}
                 onClick={this.props.fetchComments(this.props.stream, commentsLoadLimit, this.props.stream.comments.length)} />}
             {[...this.props.stream.comments].map(commentId => <Comment id={commentId} key={commentId} />)}
           </Tab>
