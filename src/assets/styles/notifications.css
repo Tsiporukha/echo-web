@@ -116,6 +116,8 @@
 
 
 .menu{
+  max-height: 420px!important;
+  width: 420px!important;
   &.topRight{
     right: -86px;
     top: 48px;
@@ -127,7 +129,12 @@
   }
   .menuInner{
     padding: 0;
+    width: 100%;
   }
+}
+
+.outline{
+  width: 100%!important;
 }
 
 .menuItem{
@@ -135,6 +142,6 @@
   margin: 0;
   line-height: normal;
   display: block;
-  width: 400px;
+  width: 100%;
   height: initial;
 }
