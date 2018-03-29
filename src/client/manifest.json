@@ -1,27 +1,27 @@
 {
   "name": "Echo music",
   "short_name": "Echo",
-  "description": "Echo music applocation",
+  "description": "Echo - music aggregator",
   "display": "standalone",
-  "start_url": "/feed",
+  "start_url": "/",
   "background_color": "#2196F3",
   "theme_color": "#2196F3",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "https://s3.amazonaws.com/echoapp/assets/manifest/echo_logo.png",
+      "src": "https://s3.amazonaws.com/echoapp/assets/images/echo_logo_48.png",
       "type": "image/png",
       "sizes": "48x48"
     },
     {
-      "src": "https://s3.amazonaws.com/echoapp/assets/manifest/echo_logo.png",
+      "src": "https://s3.amazonaws.com/echoapp/assets/images/echo_logo_96.png",
       "type": "image/png",
       "sizes": "96x96"
     },
     {
-      "src": "https://s3.amazonaws.com/echoapp/assets/manifest/echo_logo.png",
+      "src": "https://s3.amazonaws.com/echoapp/assets/images/echo_logo_180.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "180x180 194x194 512x512",
     }
   ]
 }
