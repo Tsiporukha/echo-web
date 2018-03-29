@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {Tab, Tabs} from 'react-toolbox';
+import {Tab, Tabs} from 'react-toolbox/lib/tabs';
 
 import Stream from './Stream';
 import UserLikes from './UserLikes';

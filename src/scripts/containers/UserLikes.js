@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {Tab, Tabs} from 'react-toolbox';
+import {Tab, Tabs} from 'react-toolbox/lib/tabs';
 
 import Song from './Song';
 import Stream from './Stream';
@@ -9,10 +9,6 @@ import IndeterminateProgressLine, {doWithProgressLine} from '../components/Indet
 
 
 import {fetchAndReceiveLikedStreamsIds, fetchAndReceiveLikedSongsIds, addUsers} from '../actions/EntitiesAUDActions';
-
-import {reduceToObject} from '../lib/base';
-import {reduceToNormalized as reduceStreamsToNormalized} from '../lib/stream';
-import {getUser} from '../lib/ebApi/users';
 
 
 import favSubTabsTheme from '../../assets/styles/feed.css';

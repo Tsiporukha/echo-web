@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {Input} from 'react-toolbox';
+import Input from 'react-toolbox/lib/input';
 
 import LoginDialog from '../components/LoginDialog';
 

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {Button} from 'react-toolbox';
+import Button from 'react-toolbox/lib/button';
 
 import GenreCard from '../components/GuestLandingGenreCard';
 import LoginDialog from '../components/LoginDialog';

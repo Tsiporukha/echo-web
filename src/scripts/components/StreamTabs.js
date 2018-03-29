@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Tab, Tabs, Button} from 'react-toolbox';
+import {Tab, Tabs} from 'react-toolbox/lib/tabs';
+import Button from 'react-toolbox/lib/button';
 
 import Song from '../containers/Song';
 import Comment from '../containers/Comment';

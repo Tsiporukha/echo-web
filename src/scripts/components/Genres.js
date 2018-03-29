@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 
-import {Button} from 'react-toolbox/lib/button';
-
 import GenreCard from './GenreCard';
 
 import {genres} from '../lib/genres';

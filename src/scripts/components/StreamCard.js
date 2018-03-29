@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {Button, Tooltip} from 'react-toolbox';
+
+import Button from 'react-toolbox/lib/button';
+import Tooltip from 'react-toolbox/lib/tooltip';
 
 import fromNow from 'moment-from-now';
 
@@ -111,7 +113,7 @@ class StreamCard extends Component {
             </div>
 
             {this.props.playlist.description && <div className={styles.description}>
-              <b>Room description:</b>
+              <b>Stream description:</b>
               <i>"{this.props.playlist.description}"</i>
             </div>}
           </div>

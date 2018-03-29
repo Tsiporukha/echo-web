@@ -1,15 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {Tab, Tabs} from 'react-toolbox';
-
 import RecentlyLikedSong from './RecentlyLikedSong';
 import RecentlyLikedStream from './RecentlyLikedStream';
 import WelcomeNote from '../components/WelcomeNote';
 
 import {fetchAndReceiveLikedStreamsIds, fetchAndReceiveLikedSongsIds} from '../actions/EntitiesAUDActions';
-
-import {getLikedSongs, getLikedStreams} from '../lib/ebApi/users';
 
 import styles from '../../assets/styles/feed.css';
 

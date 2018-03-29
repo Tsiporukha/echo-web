@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {Button, Input} from 'react-toolbox';
+import Button from 'react-toolbox/lib/button';
+import Input from 'react-toolbox/lib/input';
+
 
 import ImageUploaderPenIcon from '../components/ImageUploaderPenIcon';
 

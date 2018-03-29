@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
-import {Button, Input} from 'react-toolbox';
+import Button from 'react-toolbox/lib/button';
+import Input from 'react-toolbox/lib/input';
 import {arrayMove} from 'react-sortable-hoc';
 
 import UploadArtwork from './UploadArtwork';
@@ -77,7 +78,8 @@ export default class StreamEditing extends Component {
             Save Stream
           </div>
           <div className={styles.buttons}>
-            <Button theme={styles} icon='save' label='Save' raised onClick={this.maybeSave} />
+            <Button theme={styles} icon='save' label='Save' raised
+              disabled={!this.state.songs.length} onClick={this.maybeSave} />
             <Button theme={styles} label='Cancel' flat onClick={this.props.onCancel} />
           </div>
         </div>

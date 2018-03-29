@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-import {Autocomplete} from 'react-toolbox';
+import Autocomplete from 'react-toolbox/lib/autocomplete';
 
 
 const TagsAutocomplete = ({allTags, addedTags, setTags, errorHandler, theme}) => {

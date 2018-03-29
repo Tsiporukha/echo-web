@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {IconMenu, MenuItem, Tooltip} from 'react-toolbox';
+import Tooltip from 'react-toolbox/lib/tooltip';
+import {IconMenu, MenuItem} from 'react-toolbox/lib/menu';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 import styles from '../../assets/styles/shareIconMenu.css';
