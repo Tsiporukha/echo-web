@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 
-import {Button, Input, Dropdown} from 'react-toolbox';
+import Button from 'react-toolbox/lib/button';
+import Input from 'react-toolbox/lib/input';
+import Dropdown from 'react-toolbox/lib/dropdown';
 import {arrayMove} from 'react-sortable-hoc';
 
 import TagsAutocomplete from './TagsAutocomplete';
@@ -75,10 +77,11 @@ export default class RoomEditing extends Component {
 
         <div className={styles.header}>
           <div className={styles.title}>
-            <span>Save Room</span>
+            Save Room
           </div>
           <div className={styles.buttons}>
-            <Button theme={streamEditingStyles} icon='save' label='Save' raised onClick={this.maybeSave} />
+            <Button theme={streamEditingStyles} icon='save' label='Save' raised
+              disabled={!this.state.songs.length} onClick={this.maybeSave} />
             <Button theme={streamEditingStyles} label='Cancel' flat onClick={this.props.onCancel} />
           </div>
         </div>
@@ -87,7 +90,6 @@ export default class RoomEditing extends Component {
 
           <div className={styles.left}>
             <div className={styles.coverArea} style={this.state.background_url ? {backgroundImage: `url(${this.state.background_url})`} : {}}>
-
               <div className={styles.bgArtworkUpdateArea}>
                 <ImageUploaderPenIcon upload={this.uploadArtwork} setUploadedImageUrl={this.setAttr('background_url')} />
                 <span className={styles.errMssg}>{this.maybeError(this.state.background_url, 'Cover is required')}</span>
@@ -98,7 +100,6 @@ export default class RoomEditing extends Component {
                   <ImageUploaderPenIcon upload={this.uploadArtwork} setUploadedImageUrl={this.setAttr('artwork_url')} />
                   <span className={styles.errMssg}>{this.maybeError(this.state.artwork_url, 'Artwork is required')}</span>
                 </div>
-
                 <div className={styles.inputs}>
                   <Input type='text' name='title' label='Room Name'
                     className={styles.title} theme={{...streamEditingStyles, ...styles}} value={this.state.title}
@@ -110,20 +111,16 @@ export default class RoomEditing extends Component {
               </div>
             </div>
 
-            <div className={styles.afterCover}>
+            <div className={styles.genreArea}>
+              <div>Choose Genre:</div>
+              <Dropdown
+                source={this.genres}
+                onChange={this.handleGenreChange}
+                value={this.state.genre}
+              />
 
-              <div className={styles.genreArea}>
-                <div>Choose Genre:</div>
-                <Dropdown
-                  source={this.genres}
-                  onChange={this.handleGenreChange}
-                  value={this.state.genre}
-                />
-              </div>
-
-              <div className={streamEditingStyles.tagsArea}>
+              <div className={streamEditingStyles.tags}>
                 <div className={streamEditingStyles.actionTitle}>Add Tags:</div>
-
                 <TagsAutocomplete
                   allTags={this.getTags()}
                   addedTags={this.state.tags}
@@ -132,19 +129,15 @@ export default class RoomEditing extends Component {
                   errorHandler={this.maybeError(this.state.tags.length, 'Tags are required')}
                 />
               </div>
-
             </div>
 
           </div>
 
           <div className={styles.right}>
-            <div className={styles.tracklistInfo}>
+            <div className={styles.tracklist}>
               <b>Tracklist:</b> <span>{this.props.songs.length} songs, {duration(playlistDuration(this.props.songs))}</span>
             </div>
-
-            <div>
-              <SortableItems playlist={this.props.playlist} items={this.state.songs} onSortEnd={this.onSortEnd} useDragHandle />
-            </div>
+            <SortableItems playlist={this.props.playlist} items={this.state.songs} onSortEnd={this.onSortEnd} useDragHandle />
           </div>
         </div>
       </div>
