@@ -2,7 +2,6 @@
 
 const CACHE = 'echoapp-offline-fallback-v1';
 
-// Наш Fallback вместе с нашим собсвенным Динозавриком.
 const FALLBACK = `
   <div>Connection problem</div>
 `;

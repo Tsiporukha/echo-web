@@ -69,7 +69,7 @@ class Login extends Component {
                 <span className={styles.secondLine}>App Store</span>
               </button>
             </a>
-            <a href='http://play.google.com/store/apps/details?id=com.echo.app'
+            <a href='https://play.google.com/store/apps/details?id=com.echo.app'
               target='_blank' rel='noopener noreferrer'>
               <button className={styles.btn}>
                 <span className={styles.firstLine}>Get it on</span><br />

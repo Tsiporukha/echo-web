@@ -21,7 +21,7 @@
     {
       "src": "https://s3.amazonaws.com/echoapp/assets/images/echo_logo_180.png",
       "type": "image/png",
-      "sizes": "180x180 194x194 512x512",
+      "sizes": "180x180 194x194 512x512"
     }
   ]
 }

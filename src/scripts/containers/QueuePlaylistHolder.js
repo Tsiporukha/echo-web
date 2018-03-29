@@ -10,9 +10,11 @@ import {getWithNestedEntities as getStreamWithNestedEntities,
 
 import styles from '../../assets/styles/queueStream.css';
 
+const getStreamUrl = (id, {protocol, hostname, port}) =>
+  `${protocol}//${hostname}${port && `:${port}`}/feed/${id}`;
 
 const openStreamInNewTab = id => () =>
-  Promise.resolve(window.open(`https://www.echoapplication.com/feed/${id}`))
+  Promise.resolve(window.open(getStreamUrl(id, document.location)))
     .then(win => win.focus());
 
 

@@ -103,7 +103,7 @@ class Player extends Component {
     reactPlayer: true,
     playerMenu: true,
 
-    volume: 0,
+    volume: 0.8,
     ...initialSongState,
   };
 

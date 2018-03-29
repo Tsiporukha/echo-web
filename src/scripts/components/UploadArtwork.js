@@ -1,5 +1,4 @@
 import React from 'react';
-import bp from '../../assets/styles/bootstrap.css';
 
 const UploadArtwork = ({uploadedArtworkUrl, rmUploadedArtworkUrl, setArtworkUrl,
   selectedArtworkUrl, uploadArtwork, setUploadedArtworkUrl, styles}) => {
@@ -17,9 +16,9 @@ const UploadArtwork = ({uploadedArtworkUrl, rmUploadedArtworkUrl, setArtworkUrl,
         {selectedArtworkUrl === uploadedArtworkUrl && <i className={styles.selectedIcon}>check_circle</i>}
       </a>
       :
-      <div className={`${bp['col-xs-1']} ${styles.uploadArtwork}`}>
+      <div className={styles.uploadArtwork}>
         <div className={styles.empty}>
-          <i className='material-icons'>file_upload</i> <br />
+          <i className='material-icons'>file_upload</i>
           <span>Upload Artwork</span>
           <input
             type='file'
