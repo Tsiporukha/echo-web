@@ -6,7 +6,7 @@ import Button from 'react-toolbox/lib/button';
 
 import LoginDialog from '../components/LoginDialog';
 
-import {updateCurrentUserData, clearSession} from '../actions/SessionActions';
+import {updateCurrentUserData} from '../actions/SessionActions';
 
 import styles from '../../assets/styles/maybeCurrentUser.css';
 
@@ -17,7 +17,6 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  clearSession: () => dispatch(clearSession()),
   updateCurrentUserData: token => dispatch(updateCurrentUserData(token)),
 });
 
@@ -26,7 +25,6 @@ class MaybeCurrentUser extends Component {
     token: PropTypes.string,
     user: PropTypes.object,
 
-    clearSession: PropTypes.func.isRequired,
     updateCurrentUserData: PropTypes.func,
   }
 
@@ -36,6 +34,9 @@ class MaybeCurrentUser extends Component {
   state = {dialogVisibility: false};
 
   componentDidMount = () => this.props.token && this.props.updateCurrentUserData(this.props.token);
+
+  componentWillReceiveProps = () => this.setState({dialogVisibility: false});
+
 
   render() {
     return (

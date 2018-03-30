@@ -37,7 +37,7 @@
   color: #7c7c7c;
 }
 
-.followedBtn, .followBtn{
+.followedBtn, .followBtn, .logoutBtn{
   margin-left: auto;
 }
 .followedBtn{
