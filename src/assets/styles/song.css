@@ -90,11 +90,11 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    margin: 2px 0;
   }
 
   .artist{
     color: #343434;
-    margin: 4px 0 2px 0;
   }
 
   .artist, .duration{

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import styles from '../../assets/styles/feed.css';
 
@@ -29,7 +29,7 @@ const WelcomeNote = () => (
 
     <div>
       <h4>4. How do I add tracks to Rooms?</h4>
-      Show me>>On Echo you can search through YouTube, SoundCloud, Spotify and Deezer to find tracks, play and add them to Rooms.
+      On Echo you can search through YouTube, SoundCloud and Vimeo to find tracks, play and add them to Rooms.
     </div>
 
     <div>
@@ -37,7 +37,6 @@ const WelcomeNote = () => (
       If you click on “Play” or “Add to Queue”
       anywhere it will appear in the Queue.
       You can add a bunch of songs to the Queue, enjoy them and share (if you want) with the rest of Echo by saving them in a Public Room.
-
     </div>
 
   </div>
