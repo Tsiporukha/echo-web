@@ -9,6 +9,9 @@ const path = require('path');
 // const fs = require('fs');
 
 
+const isProduction = process.env.NODE_ENV === 'production';
+
+
 const joinToDirname = pth => path.join(__dirname, pth);
 const jointToWebAppDir = pth => path.join('./src/', pth);
 
@@ -37,7 +40,8 @@ const clientConfig = {
               modules: true,
               sourceMap: true,
               importLoaders: 1,
-              localIdentName: '[name]__[local]___[hash:base64:5]',
+              localIdentName: isProduction ?
+                '[hash:base64:5]' : '[name]__[local]___[hash:base64:5]',
             })}`,
             'postcss-loader', // has separate config, see postcss.config.js nearby
           ],
@@ -64,6 +68,8 @@ const webClientConfig = {
 
   entry: {
     bundle: joinToDirname(jointToWebAppDir('/client/index.js')),
+    vendor: ['react', 'react-dom', 'react-helmet', 'redux', 'react-redux',
+      'redux-thunk', 'react-router', 'react-router-dom', 'luch'],
     loader: joinToDirname(jointToWebAppDir('/client/loader.js')),
     swRegister: joinToDirname(jointToWebAppDir('/client/swRegister.js')),
     sw: joinToDirname(jointToWebAppDir('/client/sw.js')),
@@ -74,15 +80,21 @@ const webClientConfig = {
   },
 
   plugins: [
-    new LodashModuleReplacementPlugin(),
+    new LodashModuleReplacementPlugin({
+      shorthands: true,
+    }),
     new CopyWebpackPlugin([
       // {from: joinToDirname(jointToWebAppDir('/client/index.html'))},
       {from: joinToDirname(jointToWebAppDir('/client/robots.txt'))},
-      {from: joinToDirname(jointToWebAppDir('/client/favicon.ico'))},
       {from: joinToDirname(jointToWebAppDir('/client/manifest.json'))},
     ]),
     new ExtractTextPlugin({filename: 'styles.css', allChunks: true}),
     new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      chunks: ['bundle'],
+      minChunks: Infinity,
+    }),
   ],
 
 };
@@ -93,8 +105,6 @@ const webClientConfig = {
 const nodeConfig = {
   target: 'node',
   cache: true,
-
-  // externals: fs.readdirSync('node_modules').reduce((acc, mod) => mod === '.bin' ? acc : Object.assign(acc, {[mod]: `commonjs ${mod}`}), {}),
 
   module: {
     rules: [
