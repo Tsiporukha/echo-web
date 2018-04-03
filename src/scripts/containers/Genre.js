@@ -54,7 +54,8 @@ class Genre extends Component {
   setTags = tags => this.setState({tags});
   handleTagClick = _ => this.setState({offset: 0, fetchedAll: false}, this.fetchAndReceiveRooms);
 
-  dispatchScrollListener = dispatchOnBottomReaching(() => window, this.fetchAndReceiveRooms);
+  dispatchScrollListener = actionName =>
+    dispatchOnBottomReaching(() => window, this.fetchAndReceiveRooms)(actionName);
 
 
   state = {

@@ -32,23 +32,29 @@ export default class Feed extends Component {
   reinitializeFilters = () => this.setState({filters: this.props.initialFilters});
   handleTabChange = activeSubFeed => this.setState({filters: this.props.initialFilters, activeSubFeed});
 
-  incrementOffsetFilter = (n = this.state.filters.limit) => this.setState({filters: {...this.state.filters, offset: this.state.filters.offset + n}});
+  incrementOffsetFilter = (n = this.state.filters.limit) =>
+    this.setState({filters: {...this.state.filters, offset: this.state.filters.offset + n}});
   setFetching = fetching => this.setState({fetching});
   loadMoreStreams = action => (token = this.props.token) =>
-    doWithProgressLine(() => this.props.fetchAndReceiveStreams(action)({...this.state.filters, tags: this.state.tags}, token), this.setFetching)
-      .then(this.incrementOffsetFilter);
+    doWithProgressLine(
+      () => this.props.fetchAndReceiveStreams(action)({...this.state.filters, tags: this.state.tags}, token),
+      this.setFetching
+    ).then(this.incrementOffsetFilter);
 
   loadMoreLatestStreams = this.loadMoreStreams(this.props.fetchAndReceiveLatestStreamsAction);
   loadMorePopularStreams = this.loadMoreStreams(this.props.fetchAndReceivePopularStreamsAction);
   loadMoreLongestStreams = this.loadMoreStreams(this.props.fetchAndReceiveLongestStreamsAction);
 
-  loadSubFeedStreams = subFeedIndex => token => [this.loadMorePopularStreams, this.loadMoreLatestStreams, this.loadMoreLongestStreams][subFeedIndex](token);
+  loadSubFeedStreams = subFeedIndex => token =>
+    [this.loadMorePopularStreams, this.loadMoreLatestStreams, this.loadMoreLongestStreams][subFeedIndex](token);
   loadActiveSubFeedStreams = () => this.loadSubFeedStreams(this.state.activeSubFeed)(this.props.token);
 
-  onSearchTermChange = (filters, token) => this.setState({filters}, _ => this.loadSubFeedStreams(this.state.activeSubFeed)(token));
+  onSearchTermChange = (filters, token) =>
+    this.setState({filters}, _ => this.loadSubFeedStreams(this.state.activeSubFeed)(token));
 
   getScrolledElement = () => (document.getElementsByClassName(resultsClassName)[0] || window)
-  dispatchScrollListener = dispatchOnBottomReaching(this.getScrolledElement, this.loadActiveSubFeedStreams);
+  dispatchScrollListener = actionName =>
+    dispatchOnBottomReaching(this.getScrolledElement, this.loadActiveSubFeedStreams)(actionName);
 
   maybeReloadOnPropsChange = (nextProps, props = this.props) =>
     ((nextProps.initialFilters.term !== props.initialFilters.term) || (nextProps.token !== props.token)) ?

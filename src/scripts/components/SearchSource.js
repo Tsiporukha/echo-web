@@ -32,7 +32,8 @@ export default class SearchSource extends Component {
     this.getSongs(this.props.searchTerm),
     document.getElementsByClassName(resultsClassName)[0]
   );
-  dispatchScrollListener = actionName => document.getElementsByClassName(resultsClassName)[0][actionName]('scroll', this.handleScroll);
+  dispatchScrollListener = actionName =>
+    document.getElementsByClassName(resultsClassName)[0][actionName]('scroll', this.handleScroll);
 
 
   state = {
@@ -46,7 +47,8 @@ export default class SearchSource extends Component {
 
   componentWillUnmount = () => this.dispatchScrollListener('removeEventListener');
 
-  componentWillReceiveProps = nextProps => nextProps.searchTerm === this.props.searchTerm || this.getFirstSongsFor(nextProps.searchTerm);
+  componentWillReceiveProps = nextProps =>
+    nextProps.searchTerm === this.props.searchTerm || this.getFirstSongsFor(nextProps.searchTerm);
 
   render() {
     return (

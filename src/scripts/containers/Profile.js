@@ -42,8 +42,10 @@ class Profile extends Component {
     this.props.receiveStreams(streams);
     return this.setState({streams: this.state.streams.concat(streams.map(s => s.id))});
   };
-  getStreams = (offset, token) => getStreams({user_id: this.props.match.params.id, offset: this.state.streams.length, limit: 5}, token)
-    .then(this.receiveStreams);
+  getStreams = (offset, token) => getStreams(
+    {user_id: this.props.match.params.id, offset: this.state.streams.length, limit: 5},
+    token
+  ).then(this.receiveStreams);
 
   loadStreams = (token = this.props.token) => doWithProgressLine(
     () => this.getStreams(this.state.streams.length, token),
@@ -56,7 +58,8 @@ class Profile extends Component {
     || nextProps.match.params.id !== props.match.params.id
   ;
 
-  dispatchScrollListener = dispatchOnBottomReaching(() => window, this.loadStreams);
+  dispatchScrollListener = actionName =>
+    dispatchOnBottomReaching(() => window, this.loadStreams)(actionName);
 
 
   state = {
