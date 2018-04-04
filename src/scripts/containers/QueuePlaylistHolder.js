@@ -7,15 +7,13 @@ import {remove} from '../actions/QueueActions';
 import {getWithNestedEntities as getRoomWithNestedEntities} from '../lib/room';
 import {getWithNestedEntities as getStreamWithNestedEntities,
   maybeGetDefaultArtwork} from '../lib/stream';
+import {getClientUrl} from '../lib/url';
 
 import styles from '../../assets/styles/queueStream.css';
 
-const getStreamUrl = (id, {protocol, hostname, port}) =>
-  `${protocol}//${hostname}${port && `:${port}`}/feed/${id}`;
 
-const openStreamInNewTab = id => () =>
-  Promise.resolve(window.open(getStreamUrl(id, document.location)))
-    .then(win => win.focus());
+const openStreamInNewTab = id => () => Promise.resolve(window.open(getClientUrl(`/feed/${id}`)))
+  .then(win => win.focus());
 
 
 const getWithNestedEntities = {

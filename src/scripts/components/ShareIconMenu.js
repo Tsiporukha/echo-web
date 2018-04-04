@@ -5,6 +5,8 @@ import Tooltip from 'react-toolbox/lib/tooltip';
 import {IconMenu, MenuItem} from 'react-toolbox/lib/menu';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
+import {getClientUrl} from '../lib/url';
+
 import styles from '../../assets/styles/shareIconMenu.css';
 
 /* eslint-disable no-undef */
@@ -32,7 +34,7 @@ const ShareIconMenu = props => (
   <TooltipIconMenu icon={<ShareButton />} iconRipple={false} theme={styles} tooltip='Share' tooltipDelay={500} >
     <MenuItem caption='Share via:' disabled theme={styles} />
 
-    <CopyToClipboard text={`${document.domain}${props.path}`}>
+    <CopyToClipboard text={getClientUrl(props.path)}>
       <MenuItem icon='link' caption='Link' theme={styles} />
     </CopyToClipboard>
 
