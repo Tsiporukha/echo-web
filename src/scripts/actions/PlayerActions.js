@@ -23,27 +23,32 @@ const getPrevSongIndex = (currentSongIndex, songsLength) =>
   currentSongIndex === 0 ? songsLength - 1 : currentSongIndex - 1;
 
 
-export const getQueueSongs = store =>
-  store.queue.items.reduce(
+export const getQueueSongs = state =>
+  state.queue.items.reduce(
     (songs, s) => songs.concat(isSong(s) ?
-      store.songs[s.id] :
-      getHolderSongs(store.songs, store.playlists, store[getCollectionName(s.type)][s.id])),
+      state.songs[s.id] :
+      getHolderSongs(state.songs, state.playlists, state[getCollectionName(s.type)][s.id])),
     []
   );
 
 
-const getCurrentSongPlaylistSongs = store => store.player.currentSong.playlist ?
-  getPlaylistSongs(store.songs, store.playlists[store.player.currentSong.playlist]) :
-  getQueueSongs(store);
+const getCurrentSongPlaylistSongs = state => state.player.currentSong.playlist ?
+  getPlaylistSongs(state.songs, state.playlists[state.player.currentSong.playlist]) :
+  getQueueSongs(state);
 
 
-const getSeqSongId = getIndex => (playlistSongs, currentSong) => currentSong && currentSong.id &&
-  playlistSongs[getIndex(getIndexById(playlistSongs, currentSong), playlistSongs.length)].id;
+const getValidIndex = (playlistSongs, currentSong, getIndex) => {
+  const index = getIndex(getIndexById(playlistSongs, currentSong), playlistSongs.length);
+  return index < 0 ? 0 : index;
+};
+
+const getSeqSongId = getIndex => (playlistSongs, currentSong) => (currentSong || {}).id &&
+  playlistSongs[getValidIndex(playlistSongs, currentSong, getIndex)].id;
 
 const getNextSongId = getSeqSongId(getNextSongIndex);
 const getPrevSongId = getSeqSongId(getPrevSongIndex);
 
 
-export const getNextSong = store =>
-  store.songs[getNextSongId(getCurrentSongPlaylistSongs(store), store.player.currentSong)];
-export const getPrevSong = store => store.songs[getPrevSongId(getCurrentSongPlaylistSongs(store), store.player.currentSong)];
+export const getNextSong = state =>
+  state.songs[getNextSongId(getCurrentSongPlaylistSongs(state), state.player.currentSong)];
+export const getPrevSong = state => state.songs[getPrevSongId(getCurrentSongPlaylistSongs(state), state.player.currentSong)];

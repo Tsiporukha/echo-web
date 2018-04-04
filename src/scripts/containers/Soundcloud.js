@@ -6,9 +6,9 @@ import SearchSource from '../components/SearchSource';
 import {fetchAndReceiveSoundcloudSongs} from '../actions/SearchActions';
 
 
-const mapStateToProps = store => ({
-  songs: store.search.soundcloud,
-  searchTerm: store.search.term,
+const mapStateToProps = state => ({
+  songs: state.search.soundcloud,
+  searchTerm: state.search.term,
 });
 
 const mapDispatchToProps = dispatch => ({

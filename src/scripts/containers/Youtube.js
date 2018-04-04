@@ -6,9 +6,9 @@ import SearchSource from '../components/SearchSource';
 import {fetchAndReceiveYoutubeSongs} from '../actions/SearchActions';
 
 
-const mapStateToProps = store => ({
-  songs: store.search.youtube,
-  searchTerm: store.search.term,
+const mapStateToProps = state => ({
+  songs: state.search.youtube,
+  searchTerm: state.search.term,
 });
 
 const mapDispatchToProps = dispatch => ({

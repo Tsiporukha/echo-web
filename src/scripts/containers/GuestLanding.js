@@ -14,8 +14,8 @@ import {getAssetUrl} from '../lib/assets';
 import styles from '../../assets/styles/guestLanding.css';
 
 
-const mapStateToProps = store => ({
-  token: store.session.token,
+const mapStateToProps = state => ({
+  token: state.session.token,
 });
 
 class GuestLanding extends Component {

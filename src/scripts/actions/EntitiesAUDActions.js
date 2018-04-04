@@ -17,7 +17,8 @@ import {reduceToNormalized as reduceToNormalizedRooms} from '../lib/room';
 import {appendPublishedCommentRef, appendCommentsRefs, reduceToNormalized as reduceToNormalizedStreams} from '../lib/stream';
 import {addComment as publishComment, getComments, getStream} from '../lib/ebApi/streams';
 import {get as getRoom} from '../lib/ebApi/rooms';
-import {follow, unfollow, getLikedSongs, getLikedStreams, updateCurrentUser as updCurrentUser} from '../lib/ebApi/users';
+import {follow, unfollow, getLikedSongs, getLikedStreams, getUser,
+  updateCurrentUser as updCurrentUser} from '../lib/ebApi/users';
 import {toggleLike as apiToggleSongLike} from '../lib/ebApi/songs';
 
 
@@ -64,6 +65,9 @@ export const updateCurrentUser = (data, token) => dispatch => updCurrentUser(dat
     dispatch(updateUsers(createIdKeyHash(userData)));
     return dispatch(setCurrentUserData(userData));
   });
+
+export const fetchUser = (id, token) => dispatch => getUser(id, token)
+  .then(user => dispatch(addUsers(reduceToObject([user]))));
 // end Users
 
 // Songs
@@ -122,10 +126,10 @@ export const fetchRoom = (id, token) => dispatch => getRoom(id, token).then(room
 
 
 // PlaylistHolder(Rooms, Streams)
-const getHolder = (store, type, id) => store[getCollectionName(type)][id];
+export const getHolder = (state, type, id) => state[getCollectionName(type)][id];
 
-const getHolderPlaylist = (store, type, id) => store.playlists[getHolder(store, type, id).playlist];
-export const maybeGetHolderPlaylist = (store, holder) => holder && getHolderPlaylist(store, holder.type, holder.id);
+const getHolderPlaylist = (state, type, id) => state.playlists[getHolder(state, type, id).playlist];
+export const maybeGetHolderPlaylist = (state, holder) => holder && getHolderPlaylist(state, holder.type, holder.id);
 
 export const getHolderSongs = (songs, playlists, holder) => getPlaylistSongs(songs, getPlaylist(playlists, holder.playlist));
 // end PlaylistHolder
