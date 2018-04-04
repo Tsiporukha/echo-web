@@ -9,7 +9,7 @@ import User from './User';
 import SimilarUsers from './SimilarUsers';
 import IndeterminateProgressLine, {doWithProgressLine} from '../components/IndeterminateProgressLine';
 
-import {addUsers, receiveStreams} from '../actions/EntitiesAUDActions';
+import {receiveStreams} from '../actions/EntitiesAUDActions';
 
 import {get as getStreams} from '../lib/ebApi/streams';
 import {dispatchOnBottomReaching} from '../lib/scroll';
@@ -23,7 +23,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addUser: user => dispatch(addUsers({[user.id]: user})),
   receiveStreams: streams => dispatch(receiveStreams(streams)),
 });
 
@@ -82,7 +81,7 @@ class Profile extends Component {
     return (
       <div className={styles.root}>
         <div className={styles.left}>
-          <User id={this.props.match.params.id} />
+          <User id={this.props.match.params.id} withOG />
 
           <Tabs theme={tabsTheme} index={this.state.tab} onChange={this.setAttr('tab')}>
             <Tab label={<i className={styles.feedIcon}>language</i>}>

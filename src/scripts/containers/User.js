@@ -5,8 +5,14 @@ import {Link} from 'react-router-dom';
 
 import Button from 'react-toolbox/lib/button';
 
+import OpenGraph from '../components/OpenGraph';
+
 import {followUser, unfollowUser} from '../actions/EntitiesAUDActions';
 import {clearSession} from '../actions/SessionActions';
+
+import {getClientUrl} from '../lib/url';
+import {getAssetUrl} from '../lib/assets';
+
 
 import styles from '../../assets/styles/user.css';
 
@@ -14,6 +20,7 @@ const userPlaceholder = {
   id: 0,
   name: '-//-',
   followers_count: 0,
+  avatar_url: getAssetUrl('/images/no_avatar.jpg'),
 };
 
 const mapStateToProps = (state, ownProps) => ({
@@ -56,6 +63,9 @@ const User = props => (
     )}
     {props.token && (props.user.id === props.currentUser.id) &&
       <Button icon='exit_to_app' className={styles.logoutBtn} raised onClick={props.clearSession}>Log out</Button>}
+
+    {props.withOG && <OpenGraph title={props.user.name} description={`See ${props.user.name} on Echo`}
+      image={props.user.avatar_url} url={getClientUrl(`/profile/${props.user.id}`)} />}
   </div>
 );
 
@@ -63,6 +73,8 @@ User.propTypes = {
   user: PropTypes.object,
   currentUser: PropTypes.object,
   token: PropTypes.string,
+
+  withOG: PropTypes.bool,
 
   follow: PropTypes.func,
   unfollow: PropTypes.func,
