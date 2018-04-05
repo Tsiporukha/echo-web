@@ -1,14 +1,12 @@
 /* eslint-disable no-restricted-globals, fp/no-unused-expression */
 
-const CACHE = 'echoapp-offline-fallback-v1';
+import offlinePage from './offline.html';
 
-const FALLBACK = `
-  <div>Connection problem</div>
-`;
+const CACHE = 'echoapp-offline-fallback-v1';
 
 
 const useFallback = () => Promise.resolve(new Response(
-  FALLBACK,
+  offlinePage,
   {headers: {'Content-Type': 'text/html; charset=utf-8'}},
 ));
 
