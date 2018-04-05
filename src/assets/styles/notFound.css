@@ -1,0 +1,26 @@
+.root{
+  flex-wrap: wrap;
+  margin: 20% 0 0;
+
+  > * {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.status{
+  font-size: 42px;
+  color: #454545;
+}
+
+.message{
+  font-size: 24px;
+  color: #757575;
+}
+
+@media (max-width: 650px) {
+  .root{
+    margin: 40% 0 0;
+  }
+}
