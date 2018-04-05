@@ -44,7 +44,7 @@ class QueuePlaylistHolder extends Component {
   render() {
     return (
       <div className={`${styles.root} ${this.state.opened ? styles.opened : ''}`}>
-        <div style={{cursor: 'pointer'}} onClick={this.toggleSongList}>
+        <div className={styles.holder} onClick={this.toggleSongList}>
           <div className={styles.artwork}>
             <img src={maybeGetDefaultArtwork(this.props.holder.artwork_url)} alt='artwork' />
           </div>

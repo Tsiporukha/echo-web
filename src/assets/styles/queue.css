@@ -45,53 +45,6 @@
 }
 
 
-
-/* IconMenu */
-.icon{}
-.iconMenu{
-  line-height: normal;
-  .icon{
-    height: auto;
-    line-height: normal;
-    margin-right: 10px;
-    width: initial;
-    span{
-      color: #6f6f6f;
-      line-height: normal;
-      font-size: 17px;
-      position: relative;
-      top: 1px;
-    }
-  }
-}
-
-.menuInner{
-  padding: 4px 0;
-}
-
-.menuItem{
-  height: 28px;
-  font-size: 12px;
-  padding: 8px;
-  .caption{
-    font-size: 12px;
-  }
-  .icon{
-    font-size: 16px;
-  }
-  &.disabled{
-    opacity: 1;
-    .caption, .icon{
-      color: #7b7b7b;
-    }
-  }
-}
-
-.menuDivider{
-  margin: 2px 0;
-}
-
-
 .sortableItem{
   display: flex;
   z-index: 2;

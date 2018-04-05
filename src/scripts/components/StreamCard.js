@@ -32,7 +32,10 @@ class StreamCard extends Component {
     user: PropTypes.object,
     stream: PropTypes.object,
     playlist: PropTypes.object,
-    currentUserId: PropTypes.number,
+    currentUserId: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.number,
+    ]),
     songs: PropTypes.array,
     token: PropTypes.string,
     duration: PropTypes.string,

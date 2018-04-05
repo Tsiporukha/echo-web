@@ -13,6 +13,7 @@ import {remove, set} from '../actions/QueueActions';
 import {clear as clearPlayer, getQueueSongs} from '../actions/PlayerActions';
 
 import styles from '../../assets/styles/queue.css';
+import saveMenuStyles from '../../assets/styles/queueSaveMenu.css';
 
 const mapStateToProps = state => ({
   items: state.queue.items,
@@ -54,12 +55,12 @@ class Queue extends Component {
           </div>
 
           <div className={styles.icons}>
-            <IconMenu icon='save' menuRipple theme={styles}>
-              <MenuItem icon='save' caption='Save To:' disabled theme={styles} />
-              <MenuDivider theme={styles} />
-              <MenuItem disabled icon='create_new_folder' caption='Existing Room' theme={styles} />
-              <MenuItem icon='playlist_add' caption='New Room' theme={styles} onClick={this.toggleRoomPublication} />
-              <MenuItem icon='playlist_add' caption='New Stream' theme={styles}
+            <IconMenu icon='save' menuRipple theme={saveMenuStyles}>
+              <MenuItem icon='save' caption='Save To:' disabled theme={saveMenuStyles} />
+              <MenuDivider theme={saveMenuStyles} />
+              <MenuItem disabled icon='create_new_folder' caption='Existing Stream' theme={saveMenuStyles} />
+              {/* <MenuItem icon='playlist_add' caption='New Room' theme={saveMenuStyles} onClick={this.toggleRoomPublication} /> */}
+              <MenuItem icon='playlist_add' caption='New Stream' theme={saveMenuStyles}
                 disabled={!this.props.items.length} onClick={this.toggleStreamPublication} />
             </IconMenu>
             {this.state.streamPublication && (

@@ -40,7 +40,7 @@
 }
 
 .menuItem{
-  composes: menuItem from './queue.css';
+  composes: menuItem from './queueSaveMenu.css';
   .caption{
     font-size: 14px;
   }
