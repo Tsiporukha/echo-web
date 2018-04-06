@@ -60,7 +60,7 @@ class RecentlyLiked extends Component {
     offset: 0,
   };
 
-  componentDidMount = () => this.props.token && this.fetchAndReceiveItems();
+  componentDidMount = () => this.props.token && this.props.userId && this.fetchAndReceiveItems();
 
   componentWillReceiveProps = nextProps => nextProps.token ? this.fetchAndReceiveItems(nextProps.userId, nextProps.token) : this.clearLikes();
 

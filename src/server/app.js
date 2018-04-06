@@ -1,29 +1,54 @@
-/* eslint "fp/no-unused-expression": 0 */
 import express from 'express';
-import path from 'path';
+import cookieParser from 'cookie-parser';
 
-import {renderHTML, getStreamMetaTags} from './html';
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import {Provider} from 'react-redux';
+import {StaticRouter} from 'react-router';
+import {matchRoutes, renderRoutes} from 'react-router-config';
+import {Helmet} from 'react-helmet';
 
-import {isProduction} from '../scripts/lib/base';
-import {getStream} from '../scripts/lib/ebApi/streams';
+import {configureServerStore, getSessionState} from '../scripts/store/configureStore';
+import {renderHTML} from './html';
+
+import routes from '../scripts/routes';
 
 
-const maybeGetStream = splittedUrl => splittedUrl[1] === 'feed' ?
-  getStream(Number(splittedUrl[2])) : Promise.resolve({});
-
-
+/* eslint-disable fp/no-unused-expression */
 const app = express();
 
 
-const staticFilesPath = isProduction ? './' : path.join(__dirname, '../');
+app.use(cookieParser());
+
+const staticFilesPath = './'; // isProduction ? './' : path.join(__dirname, '../');
 app.use(express.static(staticFilesPath));
 
 
 app.use((req, res) => {
-  res.set('Content-Type', 'text/html');
-  return maybeGetStream(req.url.split('/'))
-    .then(maybeStream => res.end(renderHTML({meta: getStreamMetaTags(maybeStream)})));
-});
+  const {token} = req.cookies;
+  const store = configureServerStore(getSessionState(token));
 
+  const branch = matchRoutes(routes, req.url);
+  const promises = branch.map(({route}) => {
+    const {fetchData} = route;
+    return fetchData instanceof Function ?
+      fetchData(store, {url: req.url, token}) : Promise.resolve(false);
+  });
+
+  return Promise.all(promises).then(_ => {
+    const context = {};
+    const body = ReactDOMServer.renderToString(
+      <Provider store={store}>
+        <StaticRouter context={context} location={req.url}>
+          {renderRoutes(routes)}
+        </StaticRouter>
+      </Provider>
+    );
+    const helmet = Helmet.renderStatic();
+    const serializedState = JSON.stringify(store.getState());
+
+    return res.send(renderHTML({body, serializedState, meta: helmet.meta.toString()}));
+  });
+});
 
 export default app;

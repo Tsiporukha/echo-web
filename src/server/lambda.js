@@ -3,7 +3,8 @@
 // require('babel-core/register');
 // require('babel-polyfill');
 //
-require.extensions && ['.css', '.less', '.sass', '.ttf', '.woff', '.woff2'].forEach(ext => (require.extensions[ext] = () => {}));
+require.extensions && ['.css', '.less', '.sass', '.ttf', '.woff', '.woff2']
+  .forEach(ext => (require.extensions[ext] = () => {}));
 
 
 const awsServerlessExpress = require('aws-serverless-express');
