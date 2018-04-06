@@ -8,12 +8,14 @@ import LoginDialog from '../components/LoginDialog';
 
 import {updateCurrentUserData} from '../actions/SessionActions';
 
+import {getAssetUrl} from '../lib/assets';
+
 import styles from '../../assets/styles/maybeCurrentUser.css';
 
 
-const mapStateToProps = store => ({
-  token: store.session.token,
-  user: store.session.user,
+const mapStateToProps = state => ({
+  token: state.session.token,
+  user: state.session.user || {avatar_url: getAssetUrl('/images/no_avatar.jpg')},
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -40,11 +40,13 @@ NotificationIcon.propTypes = {
 
 const mapStateToProps = state => ({
   token: state.session.token,
+  userPresent: !!state.session.user,
 });
 
 class Notifications extends Component {
   static propTypes = {
     token: PropTypes.string,
+    userPresent: PropTypes.bool,
   }
 
   setActive = active => () => this.setState({active});
@@ -72,7 +74,7 @@ class Notifications extends Component {
 
   render() {
     return (
-      !!this.props.token &&
+      !!this.props.token && !!this.props.userPresent &&
       <IconMenu menuRipple theme={styles} position='topRight'
         onShow={this.setActive(true)} onHide={this.setActive(false)}
         icon={
