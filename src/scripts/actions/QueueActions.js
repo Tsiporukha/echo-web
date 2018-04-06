@@ -1,5 +1,3 @@
-import v4 from 'uuid/v4';
-
 import {
   ADD_TO_QUEUE, ADD_TO_QUEUE_TOP, REMOVE_FROM_QUEUE, SET_QUEUE,
 } from '../constants/ActionTypes';
@@ -8,19 +6,38 @@ import {Queue} from '../constants/creatorsArgs';
 
 import {createSubFeedActions} from './actionsCreators';
 
-import {addRooms, addStreams, addPlaylists, addSongs, updatePlaylists} from './EntitiesAUDActions';
+import {addRooms, addStreams, addPlaylists, addSongs, updatePlaylists, getHolder,
+  getPlaylist, getPlaylistSongs} from './EntitiesAUDActions';
 import {setCurrentSong} from './PlayerActions';
 
-import {create as createStream} from '../lib/ebApi/streams';
-import {addId as clone, reduceToObject} from '../lib/base';
+import {addId as clone, reduceToObject, getCollectionName} from '../lib/base';
 
 
-export const {setQueue: set, addToQueue: add, removeFromQueue: remove} = createSubFeedActions(Queue)(SET_QUEUE, ADD_TO_QUEUE, REMOVE_FROM_QUEUE);
+export const {setQueue: set, addToQueue: add, removeFromQueue: remove} =
+  createSubFeedActions(Queue)(SET_QUEUE, ADD_TO_QUEUE, REMOVE_FROM_QUEUE);
 
 export const addToTop = references => ({
   type: ADD_TO_QUEUE_TOP,
   payload: references,
 });
+
+
+export const getEntities = state => state.queue.items.reduce(
+  (entities, item) => {
+    const entity = getHolder(state, item.type, item.id);
+    const playlist = entity.playlist && getPlaylist(state.playlists, entity.playlist);
+    const songs = playlist && getPlaylistSongs(state.songs, playlist);
+    const user = entity.user && state.users[entity.user];
+    return {
+      ...entities,
+      [getCollectionName(item.type)]: {...entities[getCollectionName(item.type)], ...reduceToObject([entity])},
+      ...(playlist ? {playlists: {...entities.playlists, ...reduceToObject([playlist])}} : {}),
+      ...(songs ? {songs: {...entities.songs, ...reduceToObject(songs)}} : {}),
+      ...(user ? {users: {...entities.users, ...reduceToObject([user])}} : {}),
+    };
+  },
+  {streams: {}, playlists: {}, songs: {}, users: {}}
+);
 
 
 // Songs

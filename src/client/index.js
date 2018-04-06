@@ -1,12 +1,24 @@
 import 'babel-polyfill';
 
 import React from 'react';
-import {render} from 'react-dom';
+import {hydrate} from 'react-dom';
+import {BrowserRouter} from 'react-router-dom';
+import {renderRoutes} from 'react-router-config';
+import {Provider} from 'react-redux';
 
-import Root from '../scripts/components/Root';
+import routes from '../scripts/routes';
 
-import configureStore from '../scripts/store/configureStore';
+import {configureClientStore} from '../scripts/store/configureStore';
 
-export const store = configureStore();
+export const store = configureClientStore();
 
-render(<Root store={store} />, document.getElementById('echoRoot'));
+
+/* eslint-disable fp/no-unused-expression */
+hydrate(
+  <Provider store={store}>
+    <BrowserRouter>
+      {renderRoutes(routes)}
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById('echoRoot')
+);
