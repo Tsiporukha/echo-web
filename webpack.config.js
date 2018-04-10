@@ -132,6 +132,11 @@ const lambdaConfig = {
       {from: joinToDirname(jointToWebAppDir('/server/.env.yml'))},
       {from: joinToDirname(jointToWebAppDir('/server/serverless.yml'))},
     ]),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      },
+    }),
   ],
 };
 
@@ -161,10 +166,14 @@ const getNodeConfig = getFullConfig(nodeConfig);
 const builds = {
   webClient: getClientConfig(webClientConfig),
   server: getNodeConfig(serverConfig),
-  lambda: getNodeConfig(lambdaConfig),
 };
 
+// lambda build breaks with -p flag
+const lambdaBuild = getNodeConfig(lambdaConfig);
 
-module.exports = process.env.build ?
-  builds[process.env.build] :
-  Object.keys(builds).map(k => builds[k]);
+
+module.exports = process.env.build === 'lambda' ?
+  lambdaBuild :
+  process.env.build ?
+    builds[process.env.build] :
+    Object.keys(builds).map(k => builds[k]);
